@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- ========================= SECTION MAIN  ========================= -->
+<section class="section-intro padding-y">
+    <div class="container">
+    <!-- ==============  COMPONENT SLIDER  BOOTSTRAP ============  -->
+    <div id="carousel1_indicator" class="slider-home-banner carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carousel1_indicator" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel1_indicator" data-slide-to="1"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          {% if image %}
+          {% for i in image %}
+          {% if i.menimage %}
+          <img style="width: 100%; height: 250px;" src="{{ i.menimage.url }}" alt="First slide"> 
+          {% endif %}
+          {% endfor %}
+          {% endif %} 
+        </div>
+        <div class="carousel-item">
+          {% if image %}
+          {% for i in image %}
+          {% if i.menimage1 %}
+          <img style="width: 100%; height: 250px;" src="{{ i.menimage1.url }}" alt="First slide"> 
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carousel1_indicator" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carousel1_indicator" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div> 
+    <!-- ============ COMPONENT SLIDER BOOTSTRAP end.// ===========  .// -->	
+        
+    </div> <!-- container end.// -->
+    </section>
+    <!-- ========================= SECTION MAIN END// ========================= -->
+    
+    <div class="container">
+    
+    <!-- =============== SECTION 1 =============== -->
+    <section class="padding-bottom">
+    <header class="section-heading mb-4">
+        <h3 class="title-section">New Items</h3>
+    </header>
+    
+    <div class="row">
+        <!-- col.// -->
+        {% for i in menproduct %}
+        <div class="col-xl-3 col-lg-3 col-md-4 col-6">
+            <div class="card card-product-grid" style="width: 100%; height: 500px;">
+                <a href="{% url 'productdetail' %}?id={{i.id}}" class="img-wrap mt-5"> <img src="{{i.image.url}}"> </a>
+                <figcaption class="info-wrap">
+                    
+                       
+                    
+                    <div class="rating-wrap my-3">
+                      <ul class="rating-stars">
+                        <li style="width:80%" class="stars-active"> 
+                          <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                          <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                          <i class="fa fa-star"></i> 
+                        </li>
+                        <li>
+                          <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                          <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                          <i class="fa fa-star"></i> 
+                        </li>
+                      </ul>
+                    </div>  
+                    <div>
+                        <a href="/productdetail?id={{i.id}}" class="text-muted">{{i.name}}</a>
+                        <a href="" class="title">{{i.brand}}</a>
+                    </div>
+                    <div class="price h5 mt-2">{{i.price}}</div> <!-- price.// -->
+                </figcaption>
+            </div>
+            
+        </div> <!-- col.// -->
+         <!-- col.// -->
+        <!-- col.// -->
+         <!-- row.// -->
+        <!-- col.// -->
+        {% endfor %}
+    </div>
+  </div>
+    </section>
+    <!-- =============== SECTION 1 END =============== -->
+    
+    
+   
+        
+    <!-- =============== SECTION 2 =============== -->
+   
+    <!-- =============== SECTION 2 END =============== -->
+    
+    
+       <!-- container end.// -->
+    
+{% endblock content  %}

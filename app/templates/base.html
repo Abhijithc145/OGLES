@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="en">
+
+<!-- Mirrored from bootstrap-ecommerce.com/templates/alistyle-html/_HTML-Components/_header-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jan 2022 14:07:57 GMT -->
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Bootstrap-ecommerce by Vosidiy M.">
+
+  <title>Website title - bootstrap html template</title>
+
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'http://bootstrap-ecommerce.com' %}">
+
+  <script src="{% static 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js' %}"></script>
+  <!-- jQuery -->
+  <script src="{% static 'js/jquery-2.0.0.min.js' %}" type="text/javascript"></script>
+
+  <!-- Bootstrap4 files-->
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+
+  <!-- Font awesome 5 -->
+  <link href="{% static 'fonts/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet">
+
+  <!-- custom style -->
+  <link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+  <!-- custom javascript -->
+  <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
+  <style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      opacity: 0;
+      pointer-events: none;
+      
+    }
+    /* .imgkey{width:50px;height:50px;border:1px solid #ddd;}
+.previewPane{display:inline-block;border:1px solid #ddd;width:250px;height:250px;cursor:crosshair;background-repeat:no-repeat;background-position:center;background-size:100% 100%}
+#zoomer{display:none;background-repeat:no-repeat;border:1px solid #ddd;width:250px;height:250px;z-index:1000;} */
+  </style>
+
+</head>
+
+<body>
+
+  <header class="section-header">
+    <section class="navbar-light border-bottom">
+      <div class="container">
+
+
+        {% if found %}
+
+        <nav class="d-flex align-items-center flex-column flex-md-row">
+          <ul class="nav mr-md-auto">
+            <!-- <div class="input-group">
+        <button class="btn btn-dark" >
+          <a href="/logout"> logout</a>
+        </buttton>
+      </div> -->
+          </ul>
+
+
+          <ul class="nav ">
+            <li class="nav-item"><a href="#" class="nav-link"> <i class="fa fa-user-circle"></i> My Account </a></li>
+            <li class="nav-item"><a href="#" class="nav-link"> <i class="fa fa-heart"></i> Wishlist </a></li>
+            <li class="nav-item"><a href="#" class="nav-link"> <i class="fa fa-shopping-cart"></i> My Cart <span
+                  class="badge badge-pill badge-danger">1</span> </a></li>
+            <li class="nav-item"><a href="/logout" class="nav-link"> <i class="fa fas fa-users-slash"></i> Logout </a>
+            </li>
+          </ul>
+        </nav>
+        {% else %}
+        {% endif %}
+        <!-- nav .// -->
+      </div> <!-- container //  -->
+    </section> <!-- header-top .// -->
+
+    <section class="border-bottom">
+      <nav class="navbar navbar-main  navbar-expand-lg navbar-light">
+        <div class="container">
+          <a class="navbar-brand" href="/"><img src="{% static 'images/logo3661.png' %}" class="logo"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav2"
+            aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="main_nav2">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/">HOME </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/men">MEN</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/women">WOMEN</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/sports">SPORTS</a>
+              </li>
+
+
+            </ul>
+
+            <!-- <div>
+        {% if found %}
+        <button><a href="/logout"> logout</a></buttton>
+        {% else %}        
+        <button>login</buttton>
+        <button>register</buttton>
+        {% endif %}
+      </div> -->
+
+            <form class="form-inline my-2 my-lg-0">
+              <div class="input-group">
+                {% if found %}
+                <input type="text" class="form-control" placeholder="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-warning" type="submit">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+                <br>
+                <br>
+
+
+                <!-- <div class="input-group">
+            <button class="btn btn-warning" >
+              <a href="/logout"> logout</a>
+            </buttton> -->
+                {% else %}
+
+
+
+
+                <div class="input-group">
+                  <button class="btn btn-primary">
+                    <a href="/login"> login/Registration</a>
+                  </button>
+                </div>
+
+
+                {% endif %}
+              </div>
+            </form>
+
+          </div> <!-- collapse .// -->
+        </div> <!-- container .// -->
+      </nav>
+    </section> <!-- header-main .// -->
+  </header> <!-- section-header.// -->
+
+
+
+
+
+
+
+  {% block content %}
+
+  {% endblock %}
+
+  <!-- ========================= FOOTER ========================= -->
+  <footer class="section-footer bg-secondary">
+    <div class="container">
+      <!-- footer-top.// -->
+
+      <section class="footer-bottom text-center">
+
+        <p class="text-white">Privacy Policy - Terms of Use - User Information Legal Enquiry Guide</p>
+        <p class="text-muted"> &copy 2022 Company name, All rights reserved </p>
+        <br>
+      </section>
+    </div><!-- //container -->
+  </footer>
+  <!-- ========================= FOOTER END // ========================= -->
+
+
+
+
+</body>
+
+</html>

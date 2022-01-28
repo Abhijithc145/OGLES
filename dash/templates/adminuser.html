@@ -1,0 +1,36 @@
+{% extends 'adminbase.html' %}
+{% load static %}
+{% block content %}
+<table class="table table-dark">
+    <thead>
+      <tr>
+       
+        <th scope="col">username</th>
+        <th scope="col">name</th>
+        <th scope="col"> Email</th>
+        <th scope="col">phone </th>
+        <th scope="col">Statues </th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for user in user %}
+      <tr>
+        <th scope="col">{{user.username}}</th>
+        <th scope="col">{{user.first_name}}</th>
+        <th scope="col"> {{user.email}}</th>
+        <th scope="col">{{user.number}} </th>
+        <th scope="col"><a href="{% url 'block' %}?id={{user.id}}">
+            {% if user.is_active %}
+            <button type="button" class="btn btn-success">Active</button>
+            {% else %}
+            <button type="button" class="btn btn-danger">Not Active</button> 
+            {% endif %}
+        </a>
+         </th>
+      </tr>
+      {% endfor %}
+      
+    </tbody>
+  </table>
+  
+  {% endblock content  %}

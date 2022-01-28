@@ -1,0 +1,43 @@
+{% extends 'adminbase.html' %}
+ {% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<style>@media (min-width: 1025px) {
+    .h-custom {
+      height: 100vh !important;
+    }
+  }
+  </style>
+
+
+<section class="h-100 h-custom" >
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-8 col-xl-6">
+          <div class="card rounded-3">
+            
+            <div class="card-body p-4 p-md-5">
+             
+              <h1>Add Category</h1>
+             
+              <form action="/dash/adminadsadd"   method="POST">
+                    {% csrf_token %}
+                    {{form.homeimage|crispy}}
+                    
+                    <div class="form-group">
+                      <button type="submit" name="" class="btn btn-success btn-block"> submit  </button>
+                  </div>
+  
+                 
+  
+              </form>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content  %}

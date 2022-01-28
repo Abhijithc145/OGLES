@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+ 
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content bg-white padding-y">
+<div class="container">
+
+<!-- ============================ ITEM DETAIL ======================== -->
+	<div class="row">
+		<aside class="col-md-6">
+<div class="card">
+<article class=" img-big-wrap"> 
+
+
+	<div class="previewPane"></div><div id="zoomer"></div>
+		<div class="thumbs-wrap">
+			<img class="imgkey" src="{{products.image.url}}">
+			<img class="imgkey" src="{{products.image2.url}}">
+			<img class="imgkey" src="{{products.image1.url}}">
+		</div>
+
+
+	<!-- <div class="img-big-wrap">
+	  <div> <a href="#"><img src=""></a></div>
+
+	</div> 
+	<div class="thumbs-wrap">
+	  <a href="#" class=""> <img src=""></a>
+	  <a href="#" class="item-thumb"> <img src=""></a>
+	  <a href="#" class="item-thumb"> <img src="{{products.image.url}}"></a>
+	</div>  -->
+</article> <!-- gallery-wrap .end// -->
+</div> <!-- card.// -->
+		</aside>
+		<main class="col-md-6">
+<article class="product-info-aside">
+
+<h2 class="title mt-3">{{products.brand}} </h2>
+
+<div class="rating-wrap my-3">
+	<ul class="rating-stars">
+		<li style="width:80%" class="stars-active"> 
+			<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+			<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+			<i class="fa fa-star"></i> 
+		</li>
+		<li>
+			<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+			<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+			<i class="fa fa-star"></i> 
+		</li>
+	</ul>
+	<small class="label-rating text-muted00px;}
+    .previewPane{
+        /* display:inline-block; */
+        width:500px;">132 reviews</small>
+	<small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> 154 orders </small>
+</div> <!-- rating-wrap.// -->
+
+<div class="mb-3"> 
+	<var class="price h4">Rs : {{products.price}}</var> 
+	<span class="text-muted"></span> 
+</div> <!-- price-detail-wrap .// -->
+
+<p>{{products.name}} </p>
+
+
+<dl class="row">
+  <dt class="col-sm-3">Manufacturer</dt>
+  <dd class="col-sm-9"><a href="#">Great textile Ltd.</a></dd>
+
+  <dt class="col-sm-3">Article number</dt>
+  <dd class="col-sm-9">596 065</dd>
+
+  <dt class="col-sm-3">Guarantee</dt>
+  <dd class="col-sm-9">2 year</dd>
+
+  <dt class="col-sm-3">Delivery time</dt>
+  <dd class="col-sm-9">3-4 days</dd>
+
+  <dt class="col-sm-3">Availabilty</dt>
+  <dd class="col-sm-9">{{products.stock}}</dd>
+</dl>
+
+	<!-- row.// -->
+
+
+
+
+
+
+
+
+
+	<div class="form-row  mt-4">
+		<!-- <div class="form-group col-md flex-grow-0">
+			<div class="input-group mb-3 input-spinner">
+			  <div class="input-group-pre00px;}
+    .previewPane{
+        /* display:inline-block; */
+        width:500px;pend">
+			    <button class="btn btn-light" type="button" id="button-plus"> + </button>
+			  </div>
+			  <input type="text" class="form-control" value="1">
+			  <div class="input-group-append">
+			    <button class="btn btn-light" type="button" id="button-minus"> &minus; </button>
+			  </div>
+			</div>
+		</div>  -->
+
+       <form action="add_to_cart" class="d-inline">
+		   <input type="hidden" name="prod_id" value="{{products.id}}" id="prod_id">
+		   <button type="submit" class="btn btn-primary shadow px-5 py-2">Add Cart</button>
+	   </form>
+
+		<div class="form-group col-md">
+			<!-- <a href="/cart?id={{products.id}}"  class="btn  btn-primary"> 
+				<i class="fas fa-shopping-cart"></i> <span class="text">Add to cart</span> 
+			</a> -->
+			<a href="#"  class="btn  btn-success"> 
+				<i class="fas fa-shopping-cart"></i> <span class="text">Buy Now</span> 
+			</a>
+		</div> <!-- col.// -->
+	</div>
+
+</article> <!-- product-info-aside .// -->
+<!-- col.// -->
+	</div> <!-- row.// -->
+
+<!-- ================ ITEM DETAIL END .// ================= -->
+
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+<!-- ========================= SECTION  ========================= -->
+<section class="section-name padding-y bg">
+<div class="container">
+
+<div class="row">
+	<div class="col-md-8">
+		
+	</div> <!-- col.// -->
+	
+	
+
+
+	 <!-- col.// -->
+</div> <!-- row.// -->
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+
+<!-- ========================= SECTION SUBSCRIBE  ========================= -->
+
+<!-- ========================= SECTION SUBSCRIBE END// ========================= -->
+
+<style>
+    .imgkey{
+        width:100px;
+        height:100px;}
+    .previewPane{
+        /* display:inline-block; */
+        width:500px;
+        height:500px;
+        cursor:crosshair;
+        margin-right: 20rem;
+        background-size:100% 100%}
+    #zoomer{
+        background: #fff;
+        display:none;
+        background-repeat:no-repeat;
+        width:900px;
+        height:650px;
+        z-index: 1000;
+        position: fixed;
+        right: 5%;
+        top: 13%;
+    }
+</style>
+<script>
+    $(function(){
+    $('.previewPane, #zoomer').css('background-image','url('+$('.imgkey').first().attr('src')+')');
+    $('.imgkey').click(function(){
+    $('.previewPane').css('background-image','url('+$(this).attr('src')+')');
+                });
+    $('.previewPane').mousemove(function(ev){
+    $('#zoomer').css('display','inline-block');
+    var img = $(this).css('background-image').replace(/^url\(['"](.+)['"]\)/, '$1');
+    var posX = ev.offsetX ? (ev.offsetX) : ev.pageX - $(this).offset().left;
+    var posY = ev.offsetY ? (ev.offsetY) : ev.pageY - $(this).offset().top;
+    $('#zoomer').css('background-position',((-posX ) + "px " + (-posY ) + "px"));
+    $('#zoomer').css('background-image','url('+img+')');
+                });
+    $('.previewPane').mouseleave(function(){$('#zoomer').css('display','none');});
+            });
+</script>
+
+{% endblock %}

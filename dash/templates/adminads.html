@@ -1,0 +1,147 @@
+{% extends 'adminbase.html' %}
+{% load static %}
+{% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Ads list</h1>
+    <a href="/dash/adminadsedit" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
+            class="fas fa-sm text-white-50"></i> Edite </a>
+       
+</div>
+<table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Home Image 1</th>
+            <th scope="col">Home Image 2</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+                {% if image %}
+                {% for i in image %}
+                {% if i.homeimage %}
+            <th scope="row"><img style="width: 100%; height: 200px;" src="{{i.homeimage.url}}" class="img-fluid" alt="..."></th>
+            {% endif %}
+            {% if i.homeimage1 %} 
+            <th scope="row"><img style="width: 100%; height: 200px;" src="{{i.homeimage1.url}}" class="img-fluid" alt="..."></th>
+            {% endif %}
+             {% endfor %}
+            {% endif %}
+          </tr>
+         
+        </tbody>
+      </table>
+<div>
+<!-- <h6>Home image </h6>
+{% if image %}
+{% for i in image %}
+{% if i.homeimage %}
+<img style="width: 50%; height: 200px;" src="{{i.homeimage.url}}" class="img-fluid" alt="...">
+{% endif %}
+{% if i.homeimage1 %}
+<img style="width: 50%; height: 200px;" src="{{i.homeimage1.url}}" class="img-fluid" alt="...">
+{% endif %}
+{% endfor %}
+{% endif %}
+</div>
+
+<h6>00</h6>
+{% if image %}
+{% for i in image %}
+{% if i.homeimage %}
+<img style="width: 50%; height: 200px;" src="{{i.homeimages1.url}}" class="img-fluid" alt="...">
+{% endif %}
+{% endfor %}
+{% endif %}
+
+<h6>Men image </h6>
+{% if image %}
+{% for i in image %}
+{% if i.homeimage %}
+<img style="width: 50%; height: 200px;" src="{{i.menimage.url}}" class="img-fluid" alt="...">
+{% endif %}
+{% endfor %}
+{% endif %} -->
+<table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Men Image 1</th>
+            <th scope="col">Men Image 2</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+                {% if image %}
+                {% for i in image %}
+                {% if i.menimage %}
+            <th scope="row"><img style="width: 100%; height: 200px;" src="{{i.menimage.url}}" class="img-fluid" alt="..."></th>
+            {% endif %}
+            {% if i.menimage1 %} 
+            <th scope="row"><img style="width: 100%; height: 200px;" src="{{i.menimage1.url}}" class="img-fluid" alt="..."></th>
+            {% endif %}
+             {% endfor %}
+            {% endif %}
+          </tr>
+         
+        </tbody>
+      </table>
+<div>
+        <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Women Image 1</th>
+                    <th scope="col">Women Image 2</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                        {% if image %}
+                        {% for i in image %}
+                        {% if i.womenimage %}
+                    <th scope="row"><img style="width: 100%; height: 200px;" src="{{i.womenimage.url}}" class="img-fluid" alt="..."></th>
+                    {% endif %}
+                    {% if i.womenimage1 %} 
+                    <th scope="row"><img style="width: 100%; height: 200px;" src="{{i.womenimage1.url}}" class="img-fluid" alt="..."></th>
+                    {% endif %}
+                     {% endfor %}
+                    {% endif %}
+                  </tr>
+                 
+                </tbody>
+              </table>
+        <div>
+                <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Sports Image 1</th>
+                            <th scope="col">Sports Image 2</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                                {% if image %}
+                                {% for i in image %}
+                                {% if i.sportsimage %}
+                            <th scope="row"><img style="width: 100%; height: 200px;" src="{{i.sportsimage.url}}" class="img-fluid" alt="..."></th>
+                            {% endif %}
+                            {% if i.sportsimage1 %} 
+                            <th scope="row"><img style="width: 100%; height: 200px;" src="{{i.sportsimage1.url}}" class="img-fluid" alt="..."></th>
+                            {% endif %}
+                             {% endfor %}
+                            {% endif %}
+                          </tr>
+                         
+                        </tbody>
+                      </table>
+                <div>         
+
+
+
+
+
+{% endblock content  %}
+
+

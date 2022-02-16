@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+background-color: #fdfbfa;
+font-family: 'Montserrat', sans-serif
+}
+
+.card {
+border: none
+}
+
+.logo {
+background-color: #aaa9a9a8
+}
+
+.totals tr td {
+font-size: 13px
+}
+
+.footer {
+background-color: #575a5aa8
+}
+
+.footer span {
+font-size: 12px
+}
+
+.product-qty span {
+font-size: 12px;
+color: #db1818
+}
+</style>
+
+
+<div class="container mt-5  mb-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8">
+            <div style="background-color: rgb(218, 221, 221);" class="card">
+                <div class="text-left logo p-2 px-5"> <img src="https://i.imgur.com/2zDU056.png" width="50"> </div>
+                <div class="invoice p-5">
+                   <u> <h5>Your order Confirmed!</h5></u>
+
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-md-5">
+                            <table class="table table-borderless">
+                                <tbody class="totals">
+                                    <tr>
+                                        <td>
+                                            <div class="text-left"> <span class="font-weight-bold">To</span> </div>
+                                        </td>
+
+                                      
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="text-left"> <span class="text-muted">Name</span> </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-right"> <span class="font-weight-bold">{{user.username}}</span> </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="text-left"> <span class="text-muted">Address</span> </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-right"> <span class="font-weight-bold">{{addres.locality}}<br>{{addres.city}}</span> </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="text-left"> <span class="text-muted">Pincode</span> </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-right"> <span class="font-weight-bold">{{addres.pincode}}</span> </div>
+                                        </td>
+                                    </tr>
+                                    <tr >
+                                        <td>
+                                            <div class="text-left"> <span class="font-weight-bold">State</span> </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-right"> <span class="font-weight-bold">{{addres.state}}</span> </div>
+                                        </td>
+                                    </tr>
+                                    <tr >
+                                        <td>
+                                            <div class="text-left"> <span class="font-weight-bold">Payment</span> </div>
+                                        </td>
+                                        <td>
+                                                
+                                            <span style="margin-left: 200px;"><img src="https://img.icons8.com/color/48/000000/mastercard.png" width="40" /></span>
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <span class="text-success">You order has been confirmed and will be shipped in next two days!</span>
+                    <div class="payment border-top mt-3 mb-3 border-bottom table-responsive">
+                        
+                    </div>
+                    <div class="product border-bottom table-responsive">
+                        <table class="table table-borderless">
+                            <tbody>
+                                {% for cart in neworder %}
+                                
+                                <tr>
+                                    <td width="20%"> <img src="{{cart.products.image.url}}" width="90"> </td>
+                                    <td width="60%"> <span class="font-weight-bold">{{cart.products.name}}</span>
+                                        <div class="product-qty"> <span class="d-block">Quantity:{{cart.quantity}}</span> <span>Order Date:{{cart.orderdate}}</span> </div>
+                                    </td>
+                                    <td width="20%">
+                                        <div class="text-right"> <span class="font-weight-bold">Rs.{{cart.products.price}}</span> </div>
+                                    </td>
+                                </tr>
+                                
+                                
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-md-5">
+                            <table class="table table-borderless">
+                                <tbody class="totals">
+                                    <tr>
+                                        <td>
+                                            <div class="text-left"> <span class="text-muted">Subtotal</span> </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-right"> <span>Rs.{{total}}</span> </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="text-left"> <span class="text-muted">Shipping Fee</span> </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-right text-success"> <span>Free</span> </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="border-top border-bottom">
+                                        <td>
+                                            <div class="text-left"> <span class="font-weight-bold">Total</span> </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-right"> <span class="font-weight-bold">Rs.{{total}}</span> </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                   </div>
+                    </div>
+                
+                    <p class="font-weight-bold mb-0">Thanks for shopping with us!</p> 
+                </div>
+                <div class="d-flex justify-content-between footer p-3"> <span>Need Help? visit our <a href="#"> help center</a></span> </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 
+<script>
+    history.pushState(null, null, location.href);
+    history.back();
+    history.forward();
+    window.onpopstate = function () { history.go(0); };
+</script> -->
+    
+{% endblock content  %}

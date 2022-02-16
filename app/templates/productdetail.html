@@ -92,7 +92,7 @@
 
 
 
-
+	{% if found %}
 
 
 	<div class="form-row  mt-4">
@@ -111,20 +111,33 @@
 			</div>
 		</div>  -->
 
-       <form action="add_to_cart" class="d-inline">
-		   <input type="hidden" name="prod_id" value="{{products.id}}" id="prod_id">
-		   <button type="submit" class="btn btn-primary shadow px-5 py-2">Add Cart</button>
-	   </form>
+     
+		{% if products.name in carts %}
+		<a href="/show_cart"><button class="btn btn-primary " value ="{{products.id}}"><i class="fa "> Show Cart </i> </button></a>
+		{% else %}
+		<button class="btn btn-primary addcart" id="add{{products.id}}" value ="{{products.id}}"><i class="fa "> Add to Cart </i> </button></a>
+		
+		<a href="/show_cart">	<button class="btn btn-primary " style="display: none;" id="show{{products.id}}" value ="{{products.id}}"><i class="fa "> Show Cart </i> </button></a>
+		{% endif %}
 
 		<div class="form-group col-md">
 			<!-- <a href="/cart?id={{products.id}}"  class="btn  btn-primary"> 
 				<i class="fas fa-shopping-cart"></i> <span class="text">Add to cart</span> 
 			</a> -->
-			<a href="#"  class="btn  btn-success"> 
+			
+			<a href="{% url 'buynow' %}?id={{i.id}}"  class="btn  btn-success"> 
 				<i class="fas fa-shopping-cart"></i> <span class="text">Buy Now</span> 
 			</a>
+			
 		</div> <!-- col.// -->
 	</div>
+	{% else %}
+	<div class="form-row  mt-4">
+	<a href="/login">	<button class="btn btn-primary addcart" id="" value ="">Add to Cart </button></a>
+		
+	<a href="/login">	<button class="btn btn-success "  > Buy Now </button></a>
+	</div>
+	{% endif %}
 
 </article> <!-- product-info-aside .// -->
 <!-- col.// -->
@@ -178,10 +191,10 @@
         display:none;
         background-repeat:no-repeat;
         width:900px;
-        height:650px;
+        height:950px;
         z-index: 1000;
         position: fixed;
-        right: 5%;
+        right:5%;
         top: 13%;
     }
 </style>
@@ -202,5 +215,25 @@
     $('.previewPane').mouseleave(function(){$('#zoomer').css('display','none');});
             });
 </script>
+<script>
+	$(document).on('click','.addcart',function(){
+	  var id = $(this).val()
+	  console.log(id)
+	  $.ajax({
+		url:"{% url 'add_to_cart' %}",
+		type : 'GET',
+		data : {
+		  id : id
+		},
+		dataType:'json',
+		success:function(res){
+		  if(res.f==0){
+		  $('#show'+id).show()
+		  $('#add'+id).hide()
+		  }
+		}
+	  })
+	})
+  </script>
 
 {% endblock %}

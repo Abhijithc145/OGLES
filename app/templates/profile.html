@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- section-header.// -->
+
+
+<!-- ========================= SECTION PAGETOP ========================= -->
+<section class="section-pagetop bg-gray">
+<div class="container">
+	<h2 class="title-page">My account</h2>
+</div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION PAGETOP END// ========================= -->
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+<div class="container">
+
+<div class="row">
+	<aside class="col-md-3">
+		<nav class="list-group">
+			
+			<a class="list-group-item" href="/personaddressview"> My Address </a>
+			<a class="list-group-item" href="/orderlist"> My Orders </a>
+			
+			
+		</nav>
+	</aside> <!-- col.// -->
+	<main class="col-md-9">
+
+	<div class="card">
+      <div class="card-body">
+        <div class="container mt-5">
+			<div class="row d-flex justify-content-center">
+			 <!-- {% if user  %}
+					<input type="hidden" value="{{user.id}}" name="id">
+						
+						<div class="text-center mt-3"> 
+							<h5 class="mt-2 mb-0"> {{user.user.first_name}} {{user.user.last_name}}</h5> <span>{{user.user.username}}</span>
+							<div class="px-4 mt-1">
+								<p class="fonts">{{user.locality}},{{user.city}}<br>{{user.state}}</p>
+								<p class="fonts">{{user.pincode}}<br>{{user.user.number}}</p>
+							</div>
+							
+							
+						</div>
+				{% endif %}	 -->
+				{% if user1  %}
+				<div  class="card-body">
+					<div class="row">
+					  <div class="col-sm-3">
+						<p class="mb-0">Full Name</p>
+					  </div>
+					  <div class="col-sm-9">
+						<p class="text-success mb-0">{{user1.first_name}} {{user1.last_name}}</p>
+					  </div>
+					</div>
+					<hr>
+					<div class="row">
+					  <div class="col-sm-3">
+						<p class="mb-0">User name</p>
+					  </div>
+					  <div class="col-sm-9">
+						<p class="text-success mb-0">{{user1.username}}</p>
+					  </div>
+					</div>
+					<hr>
+					<div class="row">
+					  <div class="col-sm-3">
+						<p class="mb-0">Phone</p>
+					  </div>
+					  <div class="col-sm-9">
+						  
+						<p class="text-success mb-0">+91 {{user1.number}}</p>
+					  </div>
+					</div>
+					<hr>
+					<div class="row">
+					  <div class="col-sm-3">
+						<p class="mb-0">State</p>
+					  </div>
+					  <div class="col-sm-9">
+						  {% if user  %}
+						<p class="text-success mb-0">{{user.state}}</p>
+						{% else %}
+						<p class="text-danger mb-0">None</p>
+						{% endif %}
+					  </div>
+					</div>
+					<hr>
+					<div class="row">
+					  <div class="col-sm-3">
+						<p class="mb-0">Pincode</p>
+					  </div>
+					  <div class="col-sm-9">
+						{% if user  %}
+						<p class="text-success mb-0">{{user.pincode}}</p>
+						{% else %}
+						<p class="text-danger mb-0">None</p>
+						{% endif %}
+					  </div>
+					</div>
+					<hr>
+					<div class="row">
+					  <div class="col-sm-3">
+						<p class="mb-0">Address</p>
+					  </div>
+					  <div class="col-sm-9">
+						{% if user  %}
+						<p class="text-success mb-0">{{user.locality}},{{user.city}},{{user.state}}</p>
+						{% else %}
+						<p class="text-danger mb-0">None</p>
+						{% endif %}
+					  </div>
+					  
+					</div>
+				  </div>
+				  {% endif %}
+				
+			</div>
+		</div>
+      </div> <!-- card-body.// -->
+    </div> <!-- card .// -->
+
+
+
+	</main> <!-- col.// -->
+</div>
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+
+{% endblock content  %}

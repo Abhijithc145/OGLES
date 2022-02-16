@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	
+<section class="section-pagetop bg-gray">
+    <div class="container">
+        <h2 class="title-page">Orders</h2>
+    </div> <!-- container //  -->
+    </section>
+    <!-- ========================= SECTION PAGETOP END// ========================= -->
+        
+    
+    <!-- ========================= SECTION CONTENT ========================= -->
+    <section class="section-content padding-y">
+    <div class="container">
+    
+    <div class="row">
+         <!-- col.// -->
+        
+         
+    
+         <main class="col-md-10">
+         <div class="table-responsive">
+            <table class="table table-hover">
+                {% if cart %}
+                <thead>
+                    
+                    <tr>
+                        <td>
+                            <p class="title mb-0">Image </p>
+                        </td>
+                        <td> 
+                            <p class="title mb-0">Name & <br> Brand </p>
+                            
+                        </td>
+                        <td>  Quantity </td>
+                        <td>  Price</td>
+                        <td>  Date</td>
+                        <!-- <td> <a href="#" class="btn btn-outline-primary">Track order</a>  -->
+                            
+                        <td> Status </td>
+                        
+                    </tr>
+    
+                </thead>
+                <tbody>
+                    
+                    {% for cart in cart %}
+                <tr>
+                    <td>
+                        <img src="{{cart.products.image.url}}" class="img-xs border">
+                    </td>
+                    <td> 
+                        <p class="title mb-0">{{cart.products.name}} </p>
+                        <var class="price text-muted">{{cart.products.brand}}</var>
+                    </td>
+                    <td>  {{cart.quantity}} </td>
+                    <td> Rs. {{cart.subtotal}} </td>
+                    <!-- <td> <a href="#" class="btn btn-outline-primary">Track order</a>  -->
+                        
+                    </td>
+                    <td>{{cart.orderdate}}</td>
+                    <td>{{cart.status}} 
+                      
+                      {% if cart.status == "Placed" or cart.status == "Packed" %} 
+                         <a style="margin-left: 100px;" href="{% url 'ordercancel' cart.id %}">
+                         <button type="button"  class="btn btn-success" data-toggle="modal" data-target="#exampleModal">cancel</button>
+                           </a>
+                     {% elif cart.status == 'Delivered' %}
+                     <a style="margin-left: 100px;" href="{% url 'orderreturn' cart.id %}">
+                      <button type="button"  class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Return</button>
+                        </a>
+                    
+                    {% endif %} </td>
+
+                    <td>
+                                  <!-- Button trigger modal -->
+                     
+    
+                      
+                    </td>
+                </tr>
+                {% endfor %}    
+            </tbody>
+            {% else %}
+             <h1 class="text-danger">No Oders</h1>
+            {% endif %}
+        </table>
+            </div>
+            </main>
+    
+    
+    
+    </div>
+    
+    </div> <!-- container .//  -->
+    </section>
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+    
+
+
+
+
+
+{% endblock content  %}

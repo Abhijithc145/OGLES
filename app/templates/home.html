@@ -2,6 +2,18 @@
 {% load static %}
 {% block content %}
 
+<!-- 
+{% if messages %}
+       {% for messages in messages %}
+       
+       <script>
+         alert('Success')
+       </script>
+
+       {% endfor %}
+       {% endif %} -->
+
+
 <!-- ========================= SECTION MAIN  ========================= -->
 <section class="section-intro padding-y">
     <div class="container">
@@ -11,24 +23,17 @@
         <li data-target="#carousel1_indicator" data-slide-to="0" class="active"></li>
         <li data-target="#carousel1_indicator" data-slide-to="1"></li>
       </ol>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          {% if image %}
-          {% for i in image %}
-          {% if i.homeimage %}
-          <img style="width: 100%; height: 350px ;" src="{{ i.homeimage.url }}" alt="First slide"> 
-          {% endif %}
-          {% endfor %}
-          {% endif %}
+      <div class="carousel-inner col-12 col-sm-12 col-12">
+        <div class="carousel-item active col-sm-12">
+          
+          <img style="width: 100%; height: 350px ;" src="{% static 'images/banners/h1.jpg' %}" alt="First slide"> 
+         
         </div>
         <div class="carousel-item">
-          {% if image %}
-          {% for i in image %}
-          {% if i.homeimage1 %}
-          <img style="width: 100%; height: 250px;" src="{{ i.homeimage1.url }}" alt="First slide"> 
-          {% endif %}
-          {% endfor %}
-          {% endif %}
+          
+          <img style="width: 100%; height: 350px;" src="{% static 'images/banners/h2.jpg' %}" alt="First slide"> 
+          
+          
         </div>
       </div>
       <a class="carousel-control-prev" href="#carousel1_indicator" role="button" data-slide="prev">
@@ -53,12 +58,67 @@
     <header class="section-heading mb-4">
         <h3 class="title-section">New Items</h3>
     </header>
+    <div class="card mb-3">
+      <div class="card-body">
+    
+    <hr>
+    <div class="row">
+      <div style="font-size: 20px;font-weight: 700;" class="col-md-2">Filter by</div> <!-- col.// -->
+      <div class="col-md-10"> 
+        <ul class="list-inline">
+          
+          <li class="list-inline-item mr-3 dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Brand</a>
+            <div class="dropdown-menu">
+              {% for i in brand %}
+              <!--  -->
+              <a href="{% url 'brand' %}?id={{i.id}}" class="dropdown-item">{{i.name}}</a>
+              {% endfor %}
+            </div>
+          </li>
+          <!-- <li class="list-inline-item mr-3 dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Feature</a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">Anti backterial</a>
+              <a href="#" class="dropdown-item">With buttons</a>
+              <a href="#" class="dropdown-item">Extra safety</a>
+            </div>
+          </li> -->
+
+
+
+          <li class="list-inline-item mr-3">
+          <form action="/pricesort"  method="post">
+            {% csrf_token %}
+          
+            <div class="form-inline">
+              <label class="mr-2">Price</label>
+            <input  class="form-control form-control-sm" name="minvalue" placeholder="Min" type="number" required>
+              <span class="px-2"> - </span>
+            <input  class="form-control form-control-sm" name="maxvalue" placeholder="Max" type="number" required>
+            <button type="submit" class="btn btn-sm btn-success ml-2">Ok</button>
+          </div>
+          </form>
+          </li>           
+        </form>
+        </ul>
+      </div> 
+    </div> 
+      </div> 
+    </div>
+    
     
     <div class="row">
-        <!-- col.// -->
+       
         {% for i in products %}
-        <div class="col-xl-3 col-lg-3 col-md-4 col-6">
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12">
             <div class="card card-product-grid" style="width: 100%; height: 500px;">
+               <div style="margin-left: 500px;">
+
+           
+
+            </div>
+           
                 <a href="{% url 'productdetail' %}?id={{i.id}}" class="img-wrap mt-5"> <img src="{{i.image.url}}"> </a>
                 <figcaption class="info-wrap">
                     
@@ -66,45 +126,71 @@
                     
                     <div class="rating-wrap my-3">
                       <ul class="rating-stars">
-                        <li style="width:80%" class="stars-active"> 
+                        <li style="width:80%" class="stars-active "> 
                           <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
                           <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
                           <i class="fa fa-star"></i> 
+                          
                         </li>
                         <li>
                           <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
                           <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
                           <i class="fa fa-star"></i> 
+                         
                         </li>
                       </ul>
-                    </div>  
-                    <div>
+                    </div>
+                      
+                    <div style="width: 1000px;height: 5px;">
                         <a href="/productdetail?id={{i.id}}" class="text-muted">{{i.name}}</a>
                         <a href="" class="title">{{i.brand}}</a>
                     </div>
-                    <div class="price h5 mt-2">{{i.price}}</div> <!-- price.// -->
+                    <div style="padding-top: 50px;" class="price h5 mt-2">Rs.{{i.price}}</div> 
+                   {% if found  %}
+                    
+                    {% if i.name in carts  %}
+                    <a href="/show_cart"> <button class="btn btn-primary " value ="{{i.id}}"><i class="fa "> Show Cart </i> </button></a>
+                    {% else %}
+                    <button class="btn btn-primary addcart" id="add{{i.id}}" value ="{{i.id}}"><i class="fa "> Add to Cart </i> </button>
+                    <a href="/show_cart">  <button class="btn btn-primary " style="display: none;" id="show{{i.id}}" value ="{{i.id}}"><i class="fa "> Show Cart </i> </button></a>
+                    {% endif %}
+                    
+                    <a href="{% url 'buynow' %}?id={{i.id}}" class="btn btn-success"> <i class="fa "></i> Buy Now  </a>
+                    {% else %}
+                    {% endif %}
+                
                 </figcaption>
             </div>
             
-        </div> <!-- col.// -->
-         <!-- col.// -->
-        <!-- col.// -->
-         <!-- row.// -->
-        <!-- col.// -->
+        </div> 
         {% endfor %}
     </div>
-  </div>
-    </section>
-    <!-- =============== SECTION 1 END =============== -->
-    
-    
+  
+
+
    
-        
-    <!-- =============== SECTION 2 =============== -->
-   
-    <!-- =============== SECTION 2 END =============== -->
-    
-    
-       <!-- container end.// -->
-    
+  
+    </section> 
+   </div>
+
+   <script>
+     $(document).on('click','.addcart',function(){
+       var id = $(this).val()
+       console.log(id)
+       $.ajax({
+         url:"{% url 'add_to_cart' %}",
+         type : 'GET',
+         data : {
+           id : id
+         },
+         dataType:'json',
+         success:function(res){
+           if(res.f==0){
+           $('#show'+id).show()
+           $('#add'+id).hide()
+           }
+         }
+       })
+     })
+   </script>
 {% endblock content  %}

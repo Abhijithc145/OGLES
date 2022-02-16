@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+<!-- ========================= SECTION MAIN  ========================= -->
+<section class="section-intro padding-y">
+    <div class="container">
+    <!-- ==============  COMPONENT SLIDER  BOOTSTRAP ============  -->
+   
+    <!-- ============ COMPONENT SLIDER BOOTSTRAP end.// ===========  .// -->	
+        
+    </div> <!-- container end.// -->
+    </section>
+    <!-- ========================= SECTION MAIN END// ========================= -->
+    
+    <div class="container">
+    
+    <!-- =============== SECTION 1 =============== -->
+    <section class="padding-bottom">
+    <header class="section-heading mb-4">
+        <h3 class="title-section">Search Result</h3>
+    </header>
+    
+    <div class="row">
+       
+        {% for i in search %}
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12">
+            <div class="card card-product-grid" style="width: 100%; height: 500px;">
+               <div style="margin-left: 500px;">
+
+           
+
+            </div>
+           
+                <a href="{% url 'productdetail' %}?id={{i.id}}" class="img-wrap mt-5"> <img src="{{i.image.url}}"> </a>
+                <figcaption class="info-wrap">
+                    
+                       
+                    
+                    <div class="rating-wrap my-3">
+                      <ul class="rating-stars">
+                        <li style="width:80%" class="stars-active"> 
+                          <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                          <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                          <i class="fa fa-star"></i> 
+                          
+                        </li>
+                        <li>
+                          <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                          <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                          <i class="fa fa-star"></i> 
+                         
+                        </li>
+                      </ul>
+                    </div>
+                      
+                    <div style="width: 1000px;height: 5px;">
+                        <a href="/productdetail?id={{i.id}}" class="text-muted">{{i.name}}</a>
+                        <a href="" class="title">{{i.brand}}</a>
+                    </div>
+                    <div style="padding-top: 50px;" class="price h5 mt-2">Rs.{{i.price}}</div> 
+                    <a href="#" class="btn btn-primary"> <i class="fa "></i> Add to Cart  </a>
+                    <a href="#" class="btn btn-success"> <i class="fa "></i> Buy Now  </a>
+                    
+                    
+                </figcaption>
+            </div>
+            
+        </div> 
+        {% endfor %}
+    </div>
+  
+
+   
+  
+    </section> 
+   </div>
+{% endblock content  %}

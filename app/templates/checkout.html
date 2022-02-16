@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="section-pagetop bg-gray">
+	<div class="container">
+		<h2 class="title-page">Checkout</h2>
+	</div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION PAGETOP END// ========================= -->
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+	<div class="container">
+
+		<div class="row">
+			<!-- col.// -->
+			<main class="col-md-9">
+
+				<article class="card mb-4">
+					<!-- <header class="card-header">
+			<a href="#" class="float-right"> <i class="fa fa-print"></i> Print</a>
+			<strong class="d-inline-block mr-3">Order ID: 6123456789</strong>
+			<span>Order Date: 16 December 2018</span>
+		</header> -->
+
+					<div class="card-body">
+
+						<div class="row">
+							<a href="/address" style="font-weight: 700;font-size: 10px;"
+								class="btn btn-outline-primary">Add Address</a>
+						</div>
+
+
+
+						<div class="row">
+							{% if details %}
+							{% for i in details %}
+							<div class="col-md-4">
+								<h6 class="text-muted">Delivery to</h6>
+								<p>{{i.user}} <br>
+
+									{{i.locality}},{{i.city}}, <br>
+									pincode:{{i.pincode}}<br>
+									+91 {{i.user.number}}
+
+								</p>
+
+								{% csrf_token %}
+								<div class="form-check mt-2 mb-5">
+									<input class="form-check-input" value="{{i.id}}" type="radio"
+										id="custadd{{forloop.counter}}" name="ccustid"onclick="clicked({{i.id}})">
+
+									<label style="margin-left: 6px;" for="" class="form-check-input">Address :
+										{{forloop.counter}}</label>
+								</div>
+
+							</div>
+							{% endfor %}
+							{% else %}
+							<div class="col-md-4">
+								<p class="text-danger " style="font-size: 20px; font-weight: 600;"> Please Enter your
+									address </p>
+							</div>
+							{% endif %}
+
+							<!-- <div class="col-md-4">
+					<h6 class="text-muted">Payment</h6>
+					<span class="text-success">
+						<i class="fab fa-lg fa-cc-visa"></i>
+					    Visa  
+					</span>
+					<p>Subtotal: {{total}} <br>
+					 Shipping: <u class="text-success"  > Free </u><br> 
+					 <span class="b">Total:RS.  {{alltotal}} </span>
+					</p>
+				</div> -->
+						</div> <!-- row.// -->
+					</div> <!-- card-body .// -->
+					<!-- table-responsive .end// -->
+				</article> <!-- card order-item .// -->
+
+
+
+
+
+			</main>
+
+			<!-- col.// -->
+			<main class="col-md-3">
+
+				<div class="card">
+					<div class="card-body">
+						<h3>The Total Price:</h3>
+						<dl class="dlist-align">
+							<dt>Total price:</dt>
+							<dd class="text-right" id="sumTotal">{{total}}</dd>
+						</dl>
+						<dl class="dlist-align">
+							<dt>Shipping:</dt>
+							<dd class="text-right text-success">Free</dd>
+						</dl>
+						<dl class="dlist-align">
+							<dt>Total:</dt>
+							<dd class="text-right  h5" id="grantTotal"><strong>{{alltotal}}</strong></dd>
+						</dl>
+						<hr>
+
+
+					</div> <!-- card-body.// -->
+					<form action="/order" method="get" id="pay">
+						{% if cart and details %}
+
+						<span id="payment_method" style="display: none;">
+							<input type="hidden" id="cashond" name="paypalnum" value="1"> 
+							<button type="submit" style=" margin-bottom: 10px;" class="btn btn-primary">cash on delivary 
+								  </button>
+									
+
+							<div  id="paypal-button-container"> </div>
+						</span>
+
+
+						{% else %}
+
+						{% endif %}
+
+						<input type="hidden" name="custid" id="custid" value="">
+					</form>
+				</div>
+			</main>
+
+
+
+			<main class="col-md-9">
+				<div class="table-responsive">
+					{% if details %}
+					<table class="table table-hover">
+						<thead>
+
+							<tr>
+								<td>
+									<p class="title mb-0">Image </p>
+								</td>
+								<td>
+									<p class="title mb-0">Name & <br> Brand </p>
+
+								</td>
+								<td> Quantity </td>
+								<td> Price</td>
+								<!-- <td> <a href="#" class="btn btn-outline-primary">Track order</a>  -->
+
+								</td>
+							</tr>
+
+						</thead>
+						<tbody>
+							{% for cart in cart %}
+							<tr>
+								<td>
+									<img src="{{cart.products.image.url}}" class="img-xs border">
+								</td>
+								<td>
+									<p class="title mb-0">{{cart.products.name}} </p>
+									<var class="price text-muted">{{cart.products.brand}}</var>
+								</td>
+								<td> {{cart.quantity}} </td>
+								<td> {{cart.products.price}} </td>
+								<!-- <td> <a href="#" class="btn btn-outline-primary">Track order</a>  -->
+
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					{% else %}
+					{% endif %}
+				</div>
+			</main>
+
+
+
+		</div>
+
+	</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+<script>
+	function clicked(id) {
+		document.getElementById('payment_method').style.display = "";
+		document.getElementById('custid').value = id
+		// alert(document.getElementById('custid').value0
+
+	}
+</script>
+
+<!-- Include the PayPal JavaScript SDK -->
+<script
+	src="https://www.paypal.com/sdk/js?client-id=AWxGn2AY2b8N6tIcHg2UXpowkHByWa2yMBehr_wJeKB4TxS5oJHbq6itecd45sbGY5LbLRQ94FSZxuNl&currency=USD"></script>
+
+<script>
+	// Render the PayPal button into #paypal-button-container
+	paypal.Buttons({
+
+		// Set up the transaction
+		createOrder: function (data, actions) {
+			return actions.order.create({
+				purchase_units: [{
+					amount: {
+						value: '{{alltotal}}'
+					}
+				}]
+			});
+		},
+
+		// Finalize the transaction
+		onApprove: function (data, actions) {
+			return actions.order.capture().then(function (orderData) {
+				// Successful capture! For demo purposes:
+				console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+				var transaction = orderData.purchase_units[0].payments.captures[0];
+				alert('Transaction ' + transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+				document.getElementById('cashond').value=0;
+				document.getElementById('pay').submit();
+				// Replace the above to show a success message within this page, e.g.
+				// const element = document.getElementById('paypal-button-container');
+				// element.innerHTML = '';
+				// element.innerHTML = '<h3>Thank you for your payment!</h3>';
+				// Or go to another URL:  actions.redirect('thank_you.html');
+			});
+		}
+
+
+	}).render('#paypal-button-container');
+</script>
+
+
+{% endblock content %}

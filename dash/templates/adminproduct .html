@@ -25,13 +25,14 @@
         {% for user in user %}
       <tr>
         <th scope="col">{{user.name}}</th>
-        <th scope="col">{{user.brand}}</th>
+        <th scope="col"> {{user.brand}}</th>
+        
         <th scope="col"> {{user.price}}</th>
         <th scope="col">{{user.stock}} </th>
         
        
-        <th scope="col"><button type="button" class="btn btn-success">
-            <a href="{% url 'edite' %}?id={{user.id}}">Edite</a></button> </th>
+        <th scope="col"><button type="button" class="btn btn-sussccess">
+            <a class=" text-sussccess" href="{% url 'edite' %}?id={{user.id}}">Edite</a></button> </th>
 
         <th scope="col">
           <!-- Button trigger modal -->
@@ -44,7 +45,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Are you Sureghjkl </h5>
+        <h5 class="modal-title" style="color: blue;" id="exampleModalLabel">Are you Sure </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

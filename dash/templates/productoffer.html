@@ -1,0 +1,49 @@
+{% extends 'adminbase.html' %}
+{% load static %}
+{% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Product Management</h1>
+    
+</div>
+
+
+<table class="table table-dark  col-lg-12 ">
+    <thead>
+      <tr>
+       
+        <th scope="col-lg-2">product-name</th>
+        <th scope="col-lg-2">Brand</th>
+        <th scope="col-lg-2">Price</th>
+        <th scope="col-lg-2">Stock</th>
+        <th scope="col-lg-2">Offer</th>
+        <th  scope="col-lg-2">Offer</th>
+        <th  scope="col-lg-2">Offer</th>
+        
+      </tr>
+    </thead>
+    <tbody >
+      {% for user in products  %}
+      <tr>
+        <th scope="col">{{user.name}}</th>
+        <th scope="col"> {{user.brand}}</th>
+        
+        <th scope="col"> {{user.price}}</th>
+        <th scope="col">{{user.stock}} </th>
+        <th scope="col">{{user.stock}} </th>
+        <th scope="col">{{user.product_offer}} </th>
+        <th scope="col-lg-2" style="width: 210px;">
+          
+           <form method="post" name="" action="">
+           {% csrf_token %}
+             <input type="number" style="width: 100px;"  >
+            
+            <input type="submit">
+          </form>
+          
+        </th> 
+      </tr>  
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock content  %}

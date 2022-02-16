@@ -10,10 +10,11 @@
 	<main class="col-md-9">
 <div class="card">
 
-<table class="table table-borderless table-shopping-cart">
+<table class="table table-borderless table-shopping-cart  ">
 <thead class="text-muted">
-<tr class="small text-uppercase">
+<tr class="small text-uppercase ">
   <th scope="col">Product</th>
+  <th scope="col" style=" text-align: center;" >Name</th>
   <th scope="col" width="120">Quantity</th>
   <th scope="col" width="120">Price</th>
   <th scope="col" class="text-right" width="200"> </th>
@@ -24,37 +25,77 @@
 <tr>
 	<td>
 		<figure class="itemside">
-			<div class="aside"><img src="{{cart.image.url}}" class="img-sm"></div>
+			<div class="aside"><img src="{{cart.products.image.url}}" class="img-sm"></div>
+		</figure>
+	</td>
+    <td>
+		<figure class="itemside">
+
 			<figcaption class="info">
-				<a href="#" class="title text-dark">{{cart.product.name}}</a>
-				<p class="text-muted small">Size: XL, Color: blue, <br> Brand: Gucci</p>
+				<a href="#" class="title text-dark" style="height: 10px; width: 300px;">{{cart.products.name}}</a>
+				<br><div id="error{{cart.products.id}}" style="display: none;height: 10px; width: 300px; color: red; "> Out off stock </div>
+				<!-- <p class="text-muted small">Size: XL, Color: blue, <br> Brand: Gucci</p> -->
 			</figcaption>
 		</figure>
 	</td>
+       
 	<td> 
-		<div class="form-row  mt-4">
+		
+		<div class="form-row  col-md-2 col-sm-3">
             <div class="form-group col-md flex-grow-0">
                 <div class="input-group mb-3 input-spinner">
-                    <div class="input-group-append">
-                        <button class="btn btn-light" type="button" id="button-minus"> &minus; </button>
+                    <!-- <div class="input-group-append">
+                        <i pid ="{{cart.products.id}}"><button class="btn btn-light" type="button" id="button-minus"> - </button></i>
                       </div>
-                  <input type="text" class="form-control" value="1">
+                  <spam type="text" class="form-control" >{{cart.quantity}}</spam>
                   <div class="input-group-prepend">
-                    <button class="btn btn-light" type="button" id="button-plus"> + </button>
-                  </div>
-                  
+                    <i data_product ="{{cart.products.id}}"></i><button class="btn btn-light plus" type="button" id="button-plus"> + </button></i>
+                  </div> -->
+
+				  <button class="minuscart" data-product="{{cart.products.id}}" data-action="/minuscart"><i class="fas fa-minus-square fa-lg"> </i></button> 
+                  <span style="font-size: 20px;font-weight: 900;" id="qty{{cart.products.id}}">{{cart.quantity}}</span>
+				    
+					<button class="pluscart" data-product="{{cart.products.id}}" data-action="/pluscart"><i class="fas fa-plus-square fa-lg"> </i></button> 
                 </div>
             </div>
 	</td>
+	
 	<td> 
 		<div class="price-wrap"> 
-			<var class="price">{{cart.price}}</var> 
-			<small class="text-muted"> $315.20 each </small> 
+			<var class="price" id="price{{cart.products.id}}">Rs.{{cart.products.price}}</var> 
+			<!-- <small class="text-muted"> $315.20 each </small>  -->
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right"> 
-	<a data-original-title="Save to Wishlist" title="" href="#" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a> 
-	<a href="#" class="btn btn-light"> Remove</a>
+	<!-- <a data-original-title="Save to Wishlist" title="" href="#" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a>  -->
+	<!-- <a href="#" class="btn btn-light"> Remove</a> -->
+
+
+	<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal{{cart.id}}">
+		Remove
+		</button>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal{{cart.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Are you Sure </h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+		  
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			 <a href="{% url 'remove_cart' %}?id={{cart.id}}"> <button type="button" class="btn btn-danger">Comfirm</button></a>
+			  
+			</div>
+		  </div>
+		</div>
+		</div>
+
+
 	</td>
 </tr>
 {% endfor %}
@@ -62,7 +103,7 @@
 </table>
 
 <div class="card-body border-top">
-	<a href="#" class="btn btn-primary float-md-right"> Make Purchase <i class="fa fa-chevron-right"></i> </a>
+	<a href="/checkout" class="btn btn-primary float-md-right"> Make Purchase <i class="fa fa-chevron-right"></i> </a>
 	<a href="/ " class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
 </div>	
 </div> <!-- card.// -->
@@ -73,38 +114,25 @@
 
 	</main> <!-- col.// -->
 	<aside class="col-md-3">
-		<div class="card mb-3">
-			<div class="card-body">
-			<form>
-				<div class="form-group">
-					<label>Have coupon?</label>
-					<div class="input-group">
-						<input type="text" class="form-control" name="" placeholder="Coupon code">
-						<span class="input-group-append"> 
-							<button class="btn btn-primary">Apply</button>
-						</span>
-					</div>
-				</div>
-			</form>
-			</div> <!-- card-body.// -->
-		</div>  <!-- card .// -->
+		 <!-- card .// -->
 		<div class="card">
 			<div class="card-body">
+				<h3>The Total Price:</h3>
 					<dl class="dlist-align">
 					  <dt>Total price:</dt>
-					  <dd class="text-right">USD 568</dd>
+					  <dd class="text-right" id="sumTotal">{{total}}</dd>
 					</dl>
 					<dl class="dlist-align">
-					  <dt>Discount:</dt>
-					  <dd class="text-right">USD 658</dd>
+					  <dt>Shipping:</dt>
+					  <dd class="text-right text-success">{{shipping}}</dd>
 					</dl>
 					<dl class="dlist-align">
 					  <dt>Total:</dt>
-					  <dd class="text-right  h5"><strong>$1,650</strong></dd>
+					  <dd class="text-right  h5" id="grantTotal"><strong>{{alltotal}}</strong></dd>
 					</dl>
 					<hr>
 					<p class="text-center mb-3">
-						<img src="images/misc/payments.png" height="26">
+						<img src="{% static 'images/misc/payments.png' %}" height="26">
 					</p>
 					
 			</div> <!-- card-body.// -->
@@ -115,4 +143,56 @@
 </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
+
+<script>
+	$('.pluscart').click(function(){
+		var id = $(this).data('product');
+		var path = $(this).data('action');
+		$.ajax({
+			type:"GET",
+			url: path,
+			data:{
+				id : id
+			},
+			success:function(response){
+				if(response.result == 'success'){
+					$('#qty'+id).html(response.quantity)
+					$('#price'+id).html(response.total)
+					$('#sumTotal').html(response.cartTotal)
+					$('#grantTotal').html(response.cartTotal)
+				}
+				else{
+					$('#error'+id).show()
+				}
+				
+			}
+		})
+	})
+
+	$('.minuscart').click(function(){
+		var id = $(this).data('product');
+		var path = $(this).data('action');
+		$.ajax({
+			type:"GET",
+			url: path,
+			data:{
+				id : id
+			},
+			success:function(response){
+				if(response.result == 'success'){
+					$('#qty'+id).html(response.quantity)
+					$('#price'+id).html(response.total)
+					$('#sumTotal').html(response.cartTotal)
+					$('#grantTotal').html(response.cartTotal)
+					$('#error'+id).hide()
+
+				}
+				
+			}
+		})	
+		
+	})
+</script>
+
+
 {% endblock content  %}

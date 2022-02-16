@@ -1,5 +1,6 @@
 from email.policy import default
 import numbers
+from random import choice
 from django.db import models
 from dash.models import *
 from django.contrib.auth.models import AbstractUser,BaseUserManager
@@ -42,8 +43,8 @@ class MyUserManager(BaseUserManager):
         return superuser
 
 class CustomUser(AbstractUser):
-    first_name = models.EmailField(max_length=100)
-    last_name = models.EmailField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     number = models.CharField(unique=True, max_length=15)
 
@@ -53,4 +54,49 @@ class cartproduct(models.Model):
     products = models.ForeignKey(product,on_delete=models.CASCADE)
     total = models.PositiveIntegerField(default=True)
     quantity = models.PositiveIntegerField(default=1)
+    guest = models.CharField(default='',max_length=300)
+
+
+# class  buynow(models.Model):
+
+    # user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    # products = models.ForeignKey(product,on_delete=models.CASCADE)
+    # total = models.PositiveIntegerField(default=True)
+    # quantity = models.PositiveIntegerField(default=1)    
     
+class user_details(models.Model):
+    user =models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    locality = models.CharField(max_length= 100)
+    city = models.CharField(max_length=100)
+    pincode = models.IntegerField()
+    state = models.CharField(max_length=100)
+    
+
+class order_place(models.Model):
+
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    products = models.ForeignKey(product,on_delete=models.CASCADE) 
+    address = models.ForeignKey(user_details,on_delete=models.CASCADE) 
+    quantity = models.PositiveIntegerField(default=1)
+    orderdate = models.DateTimeField(auto_now_add=True)
+    status = models.CharField( max_length=100,default='Placed')
+    paymentmode = models.CharField(max_length=100)
+    subtotal = models.BigIntegerField(null=True)
+
+
+class wishlist_data(models.Model):
+
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    products = models.ForeignKey(product,on_delete=models.CASCADE)
+    
+    
+class buyproduct(models.Model):
+
+    
+    products = models.ForeignKey(product,on_delete=models.CASCADE)
+    total = models.PositiveIntegerField(default=True)
+    quantity = models.PositiveIntegerField(default=1) 
+    value = models.PositiveIntegerField(default=0)    
+
+    
+

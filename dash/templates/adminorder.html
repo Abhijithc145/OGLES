@@ -1,0 +1,85 @@
+{% extends 'adminbase.html' %}
+{% load static %}
+{% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Order Management</h1>
+    
+</div>
+
+
+
+<table  class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Image</th>
+        <th scope="col">product-name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Total</th>
+        <th scope="col">Payment </th>
+        <th scope="col">status </th>
+        <th scope="col">Edite </th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in order_datas %}
+      <tr>
+        <th><img style="width: 100px;height: 100px;" src="{{i.products.image.url}}" alt="aaaa"></th>
+        <th scope="col">{{i.products.name}}</th>
+        <th scope="col"> {{i.user.username}}<br>{{i.address.locality}},{{i.address.city}},<br>{{i.address.pincode}},{{i.address.state}}</th>
+        
+        <th scope="col"> {{i.quantity}}</th>
+        <th scope="col">{{i.subtotal}} </th>
+        <th scope="col">{{i.paymentmode}} </th>
+        <th scope="col">{{i.status}} </th>
+        
+        <th scope="col">
+          <!-- Button trigger modal -->
+
+       <!-- Scrollable modal -->
+        <!-- Button trigger modal -->
+        {% if i.status == "Packed" or i.status == "Shipped" or i.status == "Placed" or i.status == ""  %}
+        <form method="post" name="" action="{% url 'editestatus' i.id %}">
+         {% csrf_token %}
+        
+          <select  id="" name="fff">
+            <option  value="Placed"></option>
+            <option  value="Packed">Packed</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option> 
+          </select>
+          <input type="submit">
+        </form>
+        {% endif %}
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-gray-400" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-gray-600">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+ -->
+
+         </th>   
+         
+         
+      </tr>
+      {% endfor %}
+      <!--  -->
+    </tbody>
+  </table>
+
+{% endblock content  %} 

@@ -2,8 +2,17 @@
 {% load static %}
 {% block content %}
 {% load crispy_forms_tags %}
-
-
+<style>
+#hint_id_username{
+  display: none;
+} 
+#hint_id_password1{
+  display: none;
+} 
+#hint_id_password2{
+  display: none;
+}
+</style> 
 
 {% if messages %}
        {% for messages in messages %}
@@ -14,6 +23,7 @@
 
        {% endfor %}
        {% endif %}
+   
 
 
 
@@ -42,9 +52,10 @@
                         <label class="custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input" checked=""> <div class="custom-control-label"> I am agree with <a href="#">terms and contitions</a>  </div> </label>
                     </div> form-group end.//            -->
       </form>
+      
     </article><!-- card-body.// -->
   </div> <!-- card .// -->
-  <p class="text-center mt-4"><a href="">Log In</a></p>
+  <p class="text-center mt-4"><a href="login">Log In</a></p>
   <br><br>
   <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
 

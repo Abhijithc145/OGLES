@@ -2,9 +2,15 @@
 {% load static %}
 {% block content %}
 
+{% if messages %}
+       {% for messages in messages %}
+       
+       <script>
+         alert('Invalid')
+       </script>
 
-
-
+       {% endfor %}
+       {% endif %}
 
 
 

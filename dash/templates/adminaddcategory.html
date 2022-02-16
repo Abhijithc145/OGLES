@@ -21,7 +21,7 @@
              
               <h1>Add Category</h1>
              
-              <form action="/dash/adminaddcategory"  enctype="multipart/form-data" method="POST">
+              <form action="/dash/adminaddcategory"  enctype="multipart/form-data" method="POST" novalidate >
                     {% csrf_token %}
                     {{form|crispy}}
                     <div class="form-group">

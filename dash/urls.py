@@ -11,11 +11,24 @@ urlpatterns = [
     path('delete',views.delete,name='delete'),
     path('edite',views.edite,name='edite'),
     path('admincategory',views.admincategory,name='admincategory'),
+
+    path('adminbrand',views.adminbrand,name='adminbrand'),
+    path('adminaddbrand',views.adminaddbrand,name='adminaddbrand'),
+    path('admindeletebrand',views.admindeletebrand,name='admindeletebrand'),
+    path('admineditebrand',views.admineditebrand,name='admineditebrand'),
+    
     path('adminaddcategory',views.adminaddcategory,name='adminaddcategory'),
     path('admindeletecategory',views.admindeletecategory,name='admindeletecategory'),
     path('admineditecategory',views.admineditecategory,name='admineditecategory'),
     path('adminads',views.adminads,name='adminads'),
-    path('adminadsedit',views.adminadsedite,name='adminadsedite'),
-    # path('adminadsadd',views.adminadsadd,name='adminadsadd'),
+    path('adminadsedite',views.adminadsedite,name='adminadsedite'),
+    path('adminadsadd',views.adminadsadd,name='adminadsadd'),
+    path('adminlogout',views.adminlogout,name='adminlogout'),
+    path('adminorder',views.adminorder,name='adminorder'),
+    path('editestatus/<int:id>',views.editestatus,name='editestatus'),
+    path('productoffer',views.productoffer,name='productoffer'),
+    path('categoryoffer',views.categoryoffer,name='categoryoffer'),
+    path('categoryofferedite/<int:id>',views.categoryofferedite,name='categoryofferedite'),
+    
   
 ]

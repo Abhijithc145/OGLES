@@ -24,7 +24,16 @@
              
               <form action="/dash/adminads"  enctype="multipart/form-data" method="POST">
                     {% csrf_token %}
-                    {{form.homeimage1}}
+                    {{form}}
+
+                    <div class="col-md-5">
+                      <div class="form-group">
+                          <div id="image-box" class="image-container"></div>
+                          <button class="btn btn-outline-info" id="crop-btn"
+                              style=" margin-top: 10px; display: none;" type="button">Crop</button>
+                      </div>
+                  </div>
+
                     <div class="form-group">
                       <button type="submit" name="" class="btn btn-success btn-block"> submit  </button>
                   </div>

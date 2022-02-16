@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="section-pagetop bg-gray">
+	<div class="container">
+		<h2 class="title-page">Checkout</h2>
+	</div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION PAGETOP END// ========================= -->
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+	<div class="container">
+
+		<div class="row">
+			<!-- col.// -->
+			<main class="col-md-9">
+
+				<article class="card mb-4">
+					<!-- <header class="card-header">
+			<a href="#" class="float-right"> <i class="fa fa-print"></i> Print</a>
+			<strong class="d-inline-block mr-3">Order ID: 6123456789</strong>
+			<span>Order Date: 16 December 2018</span>
+		</header> -->
+
+					<div class="card-body">
+
+						<div style="margin-bottom: 40px;" class="row">
+							<a href="/personaddressadd" style="font-weight: 700;font-size: 10px;"
+								class="btn btn-outline-primary">Add Address</a>
+						</div>
+
+
+
+						<div class="row">
+							{% if person %}
+							{% for i in person %}
+							<div class="col-md-4">
+								<h6 class="text-muted">Address - {{forloop.counter}} </h6>
+								<p>{{i.user}} <br>
+
+									{{i.locality}},{{i.city}}, <br>
+									pincode:{{i.pincode}}<br>
+									+91 {{i.user.number}}
+
+								</p>
+
+								{% csrf_token %}
+								<div class="form-check mt-2 mb-5">
+									
+
+									
+								</div>
+
+							</div>
+							{% endfor %}
+							{% else %}
+							<div class="col-md-4">
+								<p class="text-danger " style="font-size: 20px; font-weight: 600;"> Please Enter your
+									address </p>
+							</div>
+							{% endif %}
+
+							<!-- <div class="col-md-4">
+					<h6 class="text-muted">Payment</h6>
+					<span class="text-success">
+						<i class="fab fa-lg fa-cc-visa"></i>
+					    Visa  
+					</span>
+					<p>Subtotal: {{total}} <br>
+					 Shipping: <u class="text-success"  > Free </u><br> 
+					 <span class="b">Total:RS.  {{alltotal}} </span>
+					</p>
+				</div> -->
+						</div> <!-- row.// -->
+					</div> <!-- card-body .// -->
+					<!-- table-responsive .end// -->
+				</article> <!-- card order-item .// -->
+
+
+
+
+
+			</main>
+
+
+
+
+
+		</div>
+
+	</div> <!-- container .//  -->
+</section>
+
+
+{% endblock content %}

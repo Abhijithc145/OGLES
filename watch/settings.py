@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'watch.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'watch',  
+        'NAME': 'WATCHS',  
         'USER': 'root',  
         'PASSWORD': 'Abhijith@123',  
         'HOST': '127.0.0.1',  

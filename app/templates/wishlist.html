@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+<div class="container">
+
+<div class="row">
+	<main class="col-md-9">
+<div class="card">
+
+<table class="table table-borderless table-shopping-cart  ">
+<thead class="text-muted">
+<tr class="small text-uppercase ">
+  <th scope="col">Product</th>
+  <th scope="col" style=" text-align: center;" >Name</th>
+  <th scope="col" width="120">Quantity</th>
+  <th scope="col" width="120">Price</th>
+  <th scope="col" class="text-right" width="200"> </th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+	<td>
+		<figure class="itemside">
+			<div class="aside"><img src="" class="img-sm"></div>
+		</figure>
+	</td>
+    <td>
+		<figure class="itemside">
+
+			<figcaption class="info">
+				<a href="#" class="title text-dark" style="height: 10px; width: 300px;"></a>
+				<br><div id="error{{cart.id}}" style="display: none;height: 10px; width: 300px; color: red; "> Out off stock </div>
+				<!-- <p class="text-muted small">Size: XL, Color: blue, <br> Brand: Gucci</p> -->
+			</figcaption>
+		</figure>
+	</td>
+       
+	<td> 
+		
+		<div class="form-row  col-md-2 col-sm-3">
+            <div class="form-group col-md flex-grow-0">
+                <div class="input-group mb-3 input-spinner">
+                    <!-- <div class="input-group-append">
+                        <i pid ="{{cart.id}}"><button class="btn btn-light" type="button" id="button-minus"> - </button></i>
+                      </div>
+                  <spam type="text" class="form-control" >{{cart.quantity}}</spam>
+                  <div class="input-group-prepend">
+                    <i data_product ="{{cart.id}}"></i><button class="btn btn-light plus" type="button" id="button-plus"> + </button></i>
+                  </div> -->
+
+				  <button class="minuscart" data-product="{{cart.id}}" data-action="/minuscart"><i class="fas fa-minus-square fa-lg"> </i></button> 
+                  <span style="font-size: 20px;font-weight: 900;" id="qty{{cart.id}}"></span>				    
+					<button class="pluscart" data-product="{{cart.id}}" data-action="/pluscart"><i class="fas fa-plus-square fa-lg"> </i></button> 
+                </div>
+            </div>
+	</td>
+	
+	<td> 
+		<div class="price-wrap"> 
+			<var class="price" id="price{{cart.id}}"></var> 
+			<!-- <small class="text-muted"> $315.20 each </small>  -->
+		</div> <!-- price-wrap .// -->
+	</td>
+	<td class="text-right"> 
+	<!-- <a data-original-title="Save to Wishlist" title="" href="#" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a>  -->
+	<!-- <a href="#" class="btn btn-light"> Remove</a> -->
+
+
+	<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+		Remove
+		</button>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal{{cart.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Are you Sure </h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+		  
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			 <a href=""> <button type="button" class="btn btn-danger">Comfirm</button></a>
+			  
+			</div>
+		  </div>
+		</div>
+		</div>
+
+
+	</td>
+</tr>
+
+
+</tbody>
+</table>
+
+
+</div> <!-- card.// -->
+
+
+
+</main> 
+	
+</div>
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+
+{% endblock content  %}

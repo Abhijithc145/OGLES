@@ -31,6 +31,9 @@ class adslist(forms.ModelForm):
         model = ads
         fields='__all__'   
 
+
+
+
        
 
 

@@ -61,7 +61,8 @@
 </div> <!-- rating-wrap.// -->
 
 <div class="mb-3"> 
-	<var class="price h4">Rs : {{products.price}}</var> 
+	<var class="price h4">Rs : {{products.discount_price}}</var> 
+	 <del style="color:red;padding-top: 60px; margin-left: 10px;" href="" class="title">Rs.{{products.price}}</del>
 	<span class="text-muted"></span> 
 </div> <!-- price-detail-wrap .// -->
 
@@ -88,7 +89,12 @@
 	<!-- row.// -->
 
 
+	{% if products.stock < 1 %}
+	<h4> <a href="" style="margin-left: 20px; color:orangered;" class="title">Out off stock</a></h4>
+	 {% else %}
 
+	 
+	 <br>
 
 
 
@@ -110,6 +116,8 @@
 			  </div>
 			</div>
 		</div>  -->
+         <br>
+		
 
      
 		{% if products.name in carts %}
@@ -138,7 +146,7 @@
 	<a href="/login">	<button class="btn btn-success "  > Buy Now </button></a>
 	</div>
 	{% endif %}
-
+	{% endif %}
 </article> <!-- product-info-aside .// -->
 <!-- col.// -->
 	</div> <!-- row.// -->

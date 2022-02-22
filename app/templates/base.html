@@ -11,6 +11,8 @@
   <meta http-equiv="refresh" content="120">
 
   <title>Alistyle</title>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'http://bootstrap-ecommerce.com' %}">
 
@@ -116,6 +118,8 @@
                 <!-- <li class="nav-item"><a href="#" class="nav-link"> <i class="fa fa-heart"></i> Wishlist </a></li> -->
                 <li class="nav-item"><a href="/show_cart" class="nav-link"> <i class="fa fa-shopping-cart"></i> My Cart <span
                       class="badge badge-pill badge-danger">{{count}}</span> </a></li>
+                <!-- <li class="nav-item"><a href="/show_wishlist" class="nav-link"> <i class="fa fa-solid fa-heart"></i> wishlist  </a></li>      
+                -->
                 <li class="nav-item"><a href="/logout"  class="nav-link"> Logout </a>
                 </li>   <!-- <div class="input-group">
                   <button class="btn btn-warning" >

@@ -24,8 +24,9 @@ urlpatterns = [
     path('address',views.address,name='address'),
     path('order',views.order,name='order'),
     path('buynow',views.buynow,name='buynow'),
+    path('showcheckout',views.showcheckout,name='showcheckout'),
    
-    # path('invoice',views.invoice,name='invoice'),
+    # path('cartoutofstock',views.cartoutofstock,name='invoice'),
     
     path('search',views.search,name='search'),
 
@@ -38,12 +39,36 @@ urlpatterns = [
     path('orderlist',views.orderlist,name='orderlist'),
     path('pricesort',views.pricesort,name='pricesort'),
     
+    
 
     path('profile',views.profile,name='profile'),
     path('personaddressview',views.personaddressview,name='personaddressview'),
     path('personaddressadd',views.personaddressadd,name='personaddressadd'),
 
-
+    path('addressedite',views.addressedite,name='addressedite'),
+    path('addressedite1',views.addressedite1,name='addressedite1'),
+  
     path('orderbuynow',views.orderbuynow,name='orderbuynow'),
+    path('checkcoupen',views.CheckCoupen,name='checkcoupen'),
+    # path('checkcoupen1',views.CheckCoupen1,name='checkcoupen1'),
+    
 
+
+    path('menbrand',views.menbrand,name='menbrand'),
+    path('womenbrand',views.womenbrand,name='womenbrand'),
+    path('menpricesort',views.menpricesort,name='menpricesort'),
+    path('womenpricesort',views.womenpricesort,name='womenpricesort'),
+
+
+    path('sportsbrand',views.sportsbrand,name='sportsbrand'),
+    path('sportspricesort',views.sportspricesort,name='sportspricesort'),
+
+    path('Editeprofile',views.Editeprofile,name='Editeprofile'),
+    path('Deleteaccount',views.Deleteaccount,name='Deleteaccount'),
+    path('checkoutaddressdelete',views.checkoutaddressdelete,name='checkoutaddressdelete'),
+    path('checkoutaddressdelete1',views.checkoutaddressdelete1,name='checkoutaddressdelete1'),
+    path('resendotp',views.resendotp,name='resendotp'),
+    
+
+    
 ]

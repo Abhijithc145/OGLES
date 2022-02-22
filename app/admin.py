@@ -9,3 +9,6 @@ from django.contrib.auth.admin import UserAdmin
 #     add_form = CustomUserCreationForm
 admin.site.register(CustomUser)
 admin.site.register(cartproduct)
+admin.site.register(Coupon)
+admin.site.register(user_details)
+admin.site.register(order_place)

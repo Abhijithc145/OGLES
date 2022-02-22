@@ -1,0 +1,68 @@
+{% extends 'adminbase.html' %}
+ {% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<!-- <div class="row">
+    <div class="col-md-8">
+        <a href="" > Export Excel</a>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div> -->
+<div class="row">
+    <div class="d-flex ">
+             <a href="{% url 'exportexcel' %}" class="btn btn-info">Export Excel</a>
+          
+     
+            <button type="submit" id="pdf"  class="btn btn-danger" >
+              Download  PDF  
+          </button>
+
+        </div>
+    </div>
+
+
+
+<table class="table" name="exanpletable1" id="exanpletable">
+    <thead>
+        <tr>
+            <th>product</th>
+            <th>Orderdate</th>
+            <th>Quantity</th>
+            <th>subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in order %}
+        <tr>
+            <td>{{i.products.name}}</td>
+            <td>{{i.orderdate}}</td>
+            <td>{{i.quantity}}</td>
+            <td>{{i.subtotal}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script src="{% static 'js/html2pdf.bundle.min.js' %}"></script>
+<script type="text/javascript">
+    document.getElementById('pdf').onclick = function() {
+        var element = document.getElementById('exanpletable');
+
+
+        var opt ={
+            margin : 1,
+            filename: 'myfile.pdf',
+            image:  {type: 'jpeg ', quantity :0.98},
+            html2canvas : {scale : 2},
+            jsPDF : {unit :'in',format:'letter',orientation:'portrait'},
+        };
+        html2pdf(element,opt);
+    }
+
+
+</script>
+
+{% endblock content  %}

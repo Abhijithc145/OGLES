@@ -1,3 +1,4 @@
+
 import os
 from unittest import result
 from django.contrib import messages
@@ -20,7 +21,39 @@ import razorpay
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
+client = razorpay.Client(auth=("rzp_test_xFSWIL714S4Ayy", "qpHgGRQLtFruIlax45rLXP0M"))
 
+
+key ={'0':'paypal','1':'cash_on_delivery', '3': 'razorpay'}
+
+def moveguest(request):
+    
+    guest = request.session.session_key
+    if cartproduct.objects.filter(guest = guest).exists():
+        guestvalue = cartproduct.objects.filter(guest = guest)
+        users = CustomUser.objects.get(username = request.session["user"])
+        for i in guestvalue:
+            print("ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg")
+             
+            if cartproduct.objects.filter(products = i.products,user__username = request.session["user"]).exists():
+                
+                guests = cartproduct.objects.get(products = i.products,user__username = request.session["user"]) 
+                print(guests)
+                var =  i.quantity + guests.quantity
+                guests.quantity = var
+                guests.user = users
+                guests.guest = ''
+                guests.save()
+                i.delete()
+                
+                
+
+            else:
+                # guests = cartproduct.objects.filter(products = i.products,user__username = request.session["user"]) 
+                cartproduct.objects.filter(id=i.id).update(user = users,guest = "")
+
+
+    
 
 
 def found(request):
@@ -41,6 +74,9 @@ def login(request):
             if user is not None:
                 request.session['user'] = request.POST['username']
                 print(user)
+
+                
+                moveguest(request)
                 return redirect('home')
             else:
                 form = loginform()
@@ -49,7 +85,7 @@ def login(request):
     return render(request,'login.html',{'form':form})
     
 
-def signup(request):
+def signup(request): 
     # print("lknsdkfjn")
     # if request.method == 'POST':
     #     form = CustomUserCreationForm(request.POST)
@@ -81,15 +117,17 @@ def signup(request):
             print(num)
             
             try:
-                form.save()
+                
                 print("1234 ")
                 account_sid = os.environ['TWILIO_ACCOUNT_SID'] = 'AC0cd89e6a2967043b31b326bf43c970e6'
                 auth_token = os.environ['TWILIO_AUTH_TOKEN'] = 'a272df0f0165a7911100ea7d372940d0'
                 client = Client(account_sid, auth_token)
+                form.save()
                 verification = client.verify \
                                 .services('VAa2d5b75d4f3752b5f4cdb33425b40f65') \
                                 .verifications \
                                 .create(to="+91"+num, channel='sms')
+                                
             except:
                 print("qwertyuio")
                 messages.success(request,"Please try again")
@@ -106,7 +144,7 @@ def signup(request):
                         
                         
     # 
-    #     phone = request.POST['number']
+    #     phone = request.127.0.0.1:8000POST['number']
     #     print(phone)
     #     
     #             try:
@@ -226,12 +264,30 @@ def otp(request):
         name = u.username
         print(name)
         request.session['user'] = name
+        moveguest(request)
         
         return redirect('/')
     else:
         messages.success(request,"Please try again")
         return render(request, 'otp.html', {'userNum': num, 'url': '/otp'})
 
+def resendotp(request):
+    
+    print(request.GET['num'])
+    try:
+        var =request.GET['num']
+        print(var)
+    
+        account_sid = os.environ['TWILIO_ACCOUNT_SID'] = 'AC0cd89e6a2967043b31b326bf43c970e6'
+        auth_token = os.environ['TWILIO_AUTH_TOKEN'] = 'a272df0f0165a7911100ea7d372940d0'
+        client = Client(account_sid, auth_token)
+        verification = client.verify \
+                        .services('VAa2d5b75d4f3752b5f4cdb33425b40f65') \
+                        .verifications \
+                        .create(to="+91"+var, channel='sms')
+    except:
+        pass
+    return JsonResponse({'status': True,})
 
 
     
@@ -276,45 +332,52 @@ def home(request):
         user1 =CustomUser.objects.get(username=user)
         cart = []
         cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
+        
+        
+        count = 0
+        for i in cart_product:
+            count = count+1
+            cart.append(i.products.name)
+        products = product.objects.all()
+    
+    
+        u = found(request)
+    
+
+        return render(request,'home.html',{'products':products,'brand':brand, 'found': u,'carts':cart,'count':count}) 
+    else:
+        if not request.session.session_key:
+            request.session.create()
+        guestuser = request.session.session_key
+        cart = []
+        cart_product = [p for p  in cartproduct.objects.all() if  p.guest==guestuser]
         print("///////////////////////////////////")
         
         count = 0
         for i in cart_product:
             count = count+1
             cart.append(i.products.name)
-        print(",,,,,,,,,,,,,,")
-        print(count)
-        print("MMMMMMMMMMMMMMMM")
-        print(",,,,,,,,,,,,,,")
-        image = ads.objects.all()
-        for i in image:
-             print(i.homeimage)
+
+        # if 'user' in request.session:
+        
         products = product.objects.all()
-    
+        
         u = found(request)
     
 
-        return render(request,'home.html',{'products':products,'brand':brand, 'found': u,'carts':cart, 'image':image,'count':count}) 
-    
-    # if 'user' in request.session:
-    image = ads.objects.all()
-    for i in image:
-        print(i.homeimage)
-    products = product.objects.all()
-    
-    u = found(request)
-    
-
-    return render(request,'home.html',{'products':products,'found': u,'brand':brand,'image':image })
+        return render(request,'home.html',{'products':products,'found': u,'carts':cart,'brand':brand})
 
 def men(request):
+    id = request.GET.get('id')
+    brand1 = [i.brand for i in  product.objects.filter(category_id = 1)]
+    brand=list(set(brand1))
+    menproduct = product.objects.filter(category_id = 1)
     if request.session.has_key('user'):
         user = request.session['user']
         user1 =CustomUser.objects.get(username=user)
         
         cart = []
         cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
-        print("///////////////////////////////////")
         
         count = 0
         for i in cart_product:
@@ -332,18 +395,33 @@ def men(request):
         u = found(request)
         menproduct = product.objects.filter(category_id = 1)
 
-        return render(request,'men.html',{'menproduct':menproduct,'carts':cart,'found': u,'image':image,'count':count})
+        return render(request,'men.html',{'menproduct':menproduct,'carts':cart,'brand':brand ,'found': u,'image':image,'count':count})
+    else:
+        if not request.session.session_key:
+            request.session.create()
+        guestuser = request.session.session_key
+        brand1 = [i.brand for i in  product.objects.filter(category_id = 1)]
+        brand=list(set(brand1))
+        cart = []
+        cart_product = [p for p  in cartproduct.objects.all() if  p.guest==guestuser]
+        print("///////////////////////////////////")
+        
+        count = 0
+        for i in cart_product:
+            count = count+1
+            cart.append(i.products.name)
+   
+   
+       
+        u = found(request)
+   
 
-    id = request.GET.get('id')
-    image = ads.objects.all()
-    for i in image:
-        print(i.homeimage)
-    u = found(request)
-    menproduct = product.objects.filter(category_id = 1)
-
-    return render(request,'men.html',{'menproduct':menproduct,'found': u,'image':image})
+        return render(request,'men.html',{'menproduct':menproduct,'found': u,'brand':brand, 'carts':cart})
 
 def women(request):
+    id = request.GET.get('id')
+    brand1 = [i.brand for i in  product.objects.filter(category_id = 2)]
+    brand=list(set(brand1))
     womenproduct = product.objects.filter(category_id = 2)
     if request.session.has_key('user'):
         user = request.session['user']
@@ -361,21 +439,34 @@ def women(request):
         u = found(request)
         
 
-        return render(request,'women.html',{'womenproduct':womenproduct,'found': u,'carts':cart,'count':count})
-
-    id = request.GET.get('id')
+        return render(request,'women.html',{'womenproduct':womenproduct,'brand':brand, 'found': u,'carts':cart,'count':count})
     
-    u = found(request)
+    else:
+        if not request.session.session_key:
+            request.session.create()
+        guestuser = request.session.session_key
+        cart = []
+        cart_product = [p for p  in cartproduct.objects.all() if  p.guest==guestuser]
+        print("///////////////////////////////////")
+        brand1 = [i.brand for i in  product.objects.filter(category_id = 2)]
+        brand=list(set(brand1))
+        count = 0
+        for i in cart_product:
+            count = count+1
+            cart.append(i.products.name)
+
+    
+        u = found(request)
    
 
-    return render(request,'women.html',{'womenproduct':womenproduct,'found': u})
+        return render(request,'women.html',{'womenproduct':womenproduct,'brand':brand, 'carts':cart,'found': u})
 
 
     
 
 def sports(request):
-   
-
+    
+    id = request.GET.get('id')
     sportsproduct = product.objects.filter(category_id = 3)
     if request.session.has_key('user'):
         user = request.session['user']
@@ -387,17 +478,33 @@ def sports(request):
         for i in cart_product:
             count = count+1
             cart.append(i.products.name)
+        brand1 = [i.brand for i in  product.objects.filter(category_id = 3)]
+        brand=list(set(brand1))
 
         
         id = request.GET.get('id')
         u = found(request)
-        return render(request,'sports.html',{'sportsproduct':sportsproduct,'carts':cart,'found': u,'count':count})
-
+        return render(request,'sports.html',{'sportsproduct':sportsproduct,'carts':cart,'brand':brand ,'found': u,'count':count})
+    else:
+        if not request.session.session_key:
+            request.session.create()
+        guestuser = request.session.session_key
+        brand1 = [i.brand for i in  product.objects.filter(category_id = 3)]
+        brand=list(set(brand1))
+        cart = []
+        cart_product = [p for p  in cartproduct.objects.all() if  p.guest==guestuser]
+        print("///////////////////////////////////")
         
-    id = request.GET.get('id')
-    u = found(request)
+        count = 0
+        for i in cart_product:
+            count = count+1
+            cart.append(i.products.name)
+         
+        
     
-    return render(request,'sports.html',{'sportsproduct':sportsproduct,'found': u})        
+        u = found(request)
+    
+        return render(request,'sports.html',{'sportsproduct':sportsproduct,'brand':brand, 'carts':cart, 'found': u})        
 
 
 
@@ -411,7 +518,6 @@ def productdetail(request):
         user1 =CustomUser.objects.get(username=user)
         cart = cartproduct.objects.filter(user = user1)
         cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
-        print("///////////////////////////////////")
         cart = []
         count = 0
         for i in cart_product:
@@ -470,6 +576,81 @@ def brand(request):
 
     return render(request,'brand.html',{'found': u,'brand':brand,'prod':prod})
 
+
+def womenbrand(request):
+    brand1 = [i.brand for i in  product.objects.filter(category_id = 2)]
+    brand=list(set(brand1))
+    id = request.GET.get('id')
+    print(id)
+    newbrand = Brand.objects.get(id = id)
+    print(newbrand)
+    u = found(request)
+    prod = product.objects.filter(brand=newbrand)
+
+    if request.session.has_key('user'):
+        user = request.session['user']
+        user1 =CustomUser.objects.get(username=user)
+        cart = []
+        cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
+        count = 0
+        for i in cart_product:
+            count = count+1
+            cart.append(i.products.name)
+        return render(request,'womwnbrand.html',{'found': u,'brand':brand,'count':count, 'prod':prod})    
+
+    return render(request,'womwnbrand.html',{'found': u,'brand':brand,'prod':prod})
+
+
+def menbrand(request):
+    brand1 = [i.brand for i in  product.objects.filter(category_id = 1)]
+    brand=list(set(brand1))
+    id = request.GET.get('id')
+    print(id)
+    newbrand = Brand.objects.get(id = id)
+    print(newbrand)
+    u = found(request)
+    prod = product.objects.filter(brand=newbrand)
+
+    if request.session.has_key('user'):
+        user = request.session['user']
+        user1 =CustomUser.objects.get(username=user)
+        cart = []
+        cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
+        count = 0
+        for i in cart_product:
+            count = count+1
+            cart.append(i.products.name)
+        return render(request,'menbrand.html',{'found': u,'brand':brand,'count':count, 'prod':prod})    
+
+    return render(request,'menbrand.html',{'found': u,'brand':brand,'prod':prod})    
+
+
+def sportsbrand(request):
+    brand1 = [i.brand for i in  product.objects.filter(category_id = 3)]
+    brand=list(set(brand1))
+    id = request.GET.get('id')
+    print(id)
+    newbrand = Brand.objects.get(id = id)
+    print(newbrand)
+    u = found(request)
+    prod = product.objects.filter(brand=newbrand)
+
+    if request.session.has_key('user'):
+        user = request.session['user']
+        user1 =CustomUser.objects.get(username=user)
+        cart = []
+        cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
+        count = 0
+        for i in cart_product:
+            count = count+1
+            cart.append(i.products.name)
+        return render(request,'sportsbrand.html',{'found': u,'brand':brand,'count':count, 'prod':prod})    
+
+    return render(request,'sportsbrand.html',{'found': u,'brand':brand,'prod':prod})    
+
+
+
+
 @never_cache
 def logout(request):
     if request.session.has_key('user'):
@@ -505,29 +686,39 @@ def logout(request):
 #     return render(request,'cart.html')
 
 
-def add_to_cart(request):
 
+
+
+    
+
+
+
+def add_to_cart(request):
+    id = request.GET['id']
+    products = product.objects.get(id = id)
     if request.session.has_key('user'):
         user = request.session['user']
-        id = request.GET['id']
+        
         user1 = CustomUser.objects.get(username = user) 
         # product_id = request.GET.get('prod_id')
-        products = product.objects.get(id = id)
+        
         
         cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
         count = 0
         for i in cart_product:
             count = count+1
-
+       
         cartproduct(user = user1,products=products).save()
         
-        return JsonResponse({'f':0}) 
+       
     else:
-        if not session.session.has_key:
-            
+        if not request.session.session_key:
+            request.session.create()
+        guestuser = request.session.session_key
 
-
-        return JsonResponse({'f':1}) 
+        cartproduct(guest = guestuser,products=products).save()
+        
+    return JsonResponse({'f':0})      
     
 
 
@@ -543,19 +734,16 @@ def show_cart(request):
         user1 =CustomUser.objects.get(username=user)
         cart = cartproduct.objects.filter(user = user1)
         cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
-        print("///////////////////////////////////")
-        
+      
         count = 0
         for i in cart_product:
             count = count+1
-        print(",,,,,,,,,,,,,,")
-        print(count)
-        print("SHOW CART---------------")
-        print(",,,,,,,,,,,,,,")
+      
+        
         if cart_product:
             for p in cart_product:
-
-                tot = (p.quantity * p.products.price)+tot
+            
+                tot = (p.quantity * p.products.discount_price)+tot
                 p.total=tot
                 p.save()
                 
@@ -578,9 +766,38 @@ def show_cart(request):
         
 
 
-        return render(request,'cart.html',{'carts':cart,'found': u, 'total':tot, 'alltotal':alltotal,'shipping':shipping,'count':count})   
+        return render(request,'cart.html',{'cart':cart,'found': u, 'total':tot, 'alltotal':alltotal,'shipping':shipping,'count':count})   
     else:
-        return redirect('login') 
+
+        if not request.session.session_key:
+            request.session.create()
+        guestuser = request.session.session_key
+
+        cart = cartproduct.objects.filter(guest = guestuser)
+        cart_product = [p for p  in cartproduct.objects.all() if  p.guest==guestuser]
+        tot=0
+        if cart_product:
+            for p in cart_product:
+            
+                tot = (p.quantity * p.products.discount_price)+tot
+                p.total=tot
+                p.save()
+                
+        
+        if cart_product:
+            if tot > 500:
+                alltotal = tot
+                shipping = "Free"
+            else:
+                alltotal = tot+40
+                shipping = 40    
+            
+        else:
+            alltotal = tot
+            shipping = 00
+
+
+        return render(request,'cart.html',{'cart':cart,'found': u, 'total':tot, 'alltotal':alltotal,'shipping':shipping}) 
 
 
 
@@ -597,25 +814,33 @@ def remove_cart(request):
 
 def pluscart(request):
     if request.method == 'GET':
-        pid = request.GET.get('id')
-        username = request.session['user']
-        user = CustomUser.objects.get(username=username)
-        user = user.id
-        cart = cartproduct.objects.get(user_id = user, products_id = pid)
-        prod = product.objects.get(id=pid)
-        price = prod.price
-        
-        if prod.stock-cart.quantity > 1:
+        pid = int(request.GET.get('id'))
+        cart = cartproduct.objects.get(id = pid)
+        price = cart.products.discount_price
+        print(price)
+         
+        if cart.products.stock-cart.quantity > 1:
            
 
             newQty = cart.quantity + 1
             newTotal = cart.total + price
             cart.total = newTotal
             cart.quantity = newQty
-            print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+           
             cart.save()
-            cartTotal = cartproduct.objects.filter(user_id = user).aggregate(Sum('total'))
-            cartTotal = cartTotal.get('total__sum')
+            try:
+                user = request.session['user']
+
+                cartTotal = cartproduct.objects.filter(user = CustomUser.objects.get(username=user)).aggregate(Sum('total'))
+                print(cartTotal)
+           
+            except:
+                guest = request.session.session_key
+                cartTotal = cartproduct.objects.filter(guest = guest).aggregate(Sum('total'))
+                print(cartTotal)
+           
+            cartTotal = cartTotal['total__sum']
+            print(cartTotal)
             
             return JsonResponse({'result': 'success', 'quantity':newQty, 'total':newTotal, 'cartTotal': cartTotal})
         else:
@@ -625,30 +850,31 @@ def pluscart(request):
 def minuscart(request): 
     if request.method == 'GET': 
         pid = request.GET.get('id')
-        username = request.session['user']
-        user = CustomUser.objects.get(username=username)
-        user = user.id
-        cart = cartproduct.objects.get(user_id = user, products_id = pid)
-        prod = product.objects.get(id=pid)
-        price = prod.price 
+        cart = cartproduct.objects.get(id = pid)
+        price = cart.products.discount_price
        
         
            
         if cart.quantity > 1   : 
-            print("sssssssssssssssssssssssssssssssssssssssssssssssssssssss")
-            
+                     
             newQty = cart.quantity - 1
-            print(newQty)
             newTotal = cart.total - price  
             cart.total = newTotal
             cart.quantity = newQty
             
             cart.save()  
-            cartTotal = cartproduct.objects.filter(user_id = user).aggregate(Sum('total'))
-            cartTotal = cartTotal.get('total__sum') 
-            
+            try:
+                user = request.session['user']
+                cartTotal = cartproduct.objects.filter(user = CustomUser.objects.get(username=user)).aggregate(Sum('total'))
+            # cartTotal = cartTotal.get('total__sum') 
+            except:
+                guest = request.session.session_key
+                cartTotal = cartproduct.objects.filter(guest = guest).aggregate(Sum('total'))
+           
+            cartTotal = cartTotal['total__sum']
             return JsonResponse({'result': 'success', 'quantity':newQty, 'total':newTotal, 'cartTotal': cartTotal})
         else:
+           
             return JsonResponse({'result':'fail'})
 
 
@@ -672,8 +898,10 @@ def checkout(request):
         if cart_product:
             for p in cart_product:
 
-                tot = (p.quantity * p.products.price)+tot
+                tot = (p.quantity * p.products.discount_price)+tot
                 p.total=tot
+                
+        request.session['checkoutamt'] = tot
                 
                 
         
@@ -688,8 +916,28 @@ def checkout(request):
         else:
             alltotal = tot
             shipping = 00
+        
 
-        return render(request,'checkout.html',{'found': u,'cart':cart_product,'alltotal':alltotal, 'total':tot,'count':count,'details':details})
+     
+
+        DATA = {
+                 "amount": alltotal * 100,
+                 "currency": "INR",
+                 "receipt": "receipt#1",
+                 "notes": {
+                "key1": "value3",
+                "key2": "value2"
+                      }
+            }
+        var = client.order.create(data=DATA)
+        var1 = var["id"]
+        
+       
+
+
+        print(alltotal)
+        print("??????????????????????????????????????????????")
+        return render(request,'checkout.html',{'found': u,'cart':cart_product,'alltotal':alltotal, 'total':tot,'count':count,'var1':var1, 'details':details})
         
 
     return render(request,'checkout.html',{'found': u}) 
@@ -731,35 +979,71 @@ def address(request):
             
                 return render(request,'address.html',{'form':form}) 
 
-        return render(request,'addnovalidateress.html',{'found': u,'count':count,'form':form}) 
+        return render(request,'address.html',{'found': u,'count':count,'form':form}) 
 
     return render(request,'address.html',{'found': u})       
+
+
+def addressedite(request):
+    u = found(request)
+    id = int(request.GET.get('id'))
+    print(id)
+    userdetail = user_details.objects.get(id=id)
+    form = addressform(request.POST or None,instance=userdetail)
+    if request.session.has_key('user'):
+        user = request.session['user']
+        user1 =CustomUser.objects.get(username=user)
+        cart = cartproduct.objects.filter(user = user1)
+        cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
+        
+        
+        count = 0
+        for i in cart_product:
+            count = count+1
+        u = found(request)
+        print(userdetail)
+        print("lllll")
+
+        if request.method=='POST':
+            if form.is_valid():
+                form.save()
+                return redirect('checkout')
+            else:
+                return render(request,'addressedite.html',{'form':form,'id':id,'userdetail':userdetail})
+        else:
+            return render(request,'addressedite.html',{'found': u,'count':count,'form':form,'id':id,})  
+
+    return render(request,'addressedite.html',{'found': u})
+
 
 @never_cache
 def order(request):
     u = found(request)
     total=0
+    coupen = request.GET.get('coupenId')
+    print(coupen)
+
     if request.session.has_key('user'):
         user = request.session['user']
         user1 =CustomUser.objects.get(username=user)
     
-        # id = request.GET.get('id')
-        # addres = user_details.objects.all().last()
-        id = int(request.GET.get('custid'))
+        
+        id = request.GET.get('custid')
+        print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+        print(coupen)
+        print("lllllllllllllllllllllllllllllllllllllllllllllllllllll")
         print(id)
-        # addres = user_details.objects.get(id=id)
+       
         orderdat = order_place.objects.all()
-        # custid=request.GET.get('custid')
-        # print("j")
-        # print(custid)
+       
         addres = user_details.objects.get(id=id)
         # stockless = product.objects.filter(id = i.id)
         i = cartproduct.objects.filter(user = user1)
         neworder=[]
-        total=i.total
+
         
 
-        key ={'0':'paypal','1':'cash_on_delivery'}
+        key ={'0':'paypal','1':'cash_on_delivery', '3': 'razorpay'}
         value = request.GET.get('paypalnum')
         print(value)
         
@@ -769,28 +1053,51 @@ def order(request):
             id = request.GET.get('custid')
             addres = user_details.objects.get(id=id)
             qunt = i.quantity
-            total = i.total
+            total += i.total
             stockless = product.objects.filter(id = i.id)
             orderdata = order_place()
+            
+    
+            
+            if coupen:
+                print("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+                c = Coupon.objects.get(id=coupen)
+                total = total - (total * c.coupon_offer) / 100
+                print(total)
+                orderdata.coupons = c
+                
+
+            print(total)
             orderdata.user=user1
             orderdata.products=prod
             orderdata.address=addres
             orderdata.quantity=qunt
             orderdata.subtotal=total
+    
+            
+
             orderdata.paymentmode=key[value]
+            
+
+                
 
             orderdata.save()
             i.delete()
             p = i.products.stock
             c = i.products.stock - qunt
+            print(c, '---------------------------------')
             stockless = product.objects.filter(stock = p).update(stock = c)
             print(p)
             neworder.append(orderdata)
             total = orderdata.subtotal
 
+        if 'coupen_id' in request.session:
+            del request.session['coupen_id']
+         
+
         return render(request,'invoice.html',{'neworder':neworder,'found': u,'user':user1,'dat':id, 'addres':addres,'total':total})
         
-    return redirect('checkout')
+    return redirect('/')
 
 
 
@@ -922,6 +1229,85 @@ def pricesort(request):
 
 
 
+def womenpricesort(request):
+    if request.method == 'POST':
+        min =int(request.POST.get('minvalue'))
+        max = int(request.POST.get('maxvalue'))
+        value = product.objects.filter(price__range=[min,max],category_id = 2).order_by('price')
+
+    brand1 = [i.brand for i in  product.objects.filter(category_id = 2)]
+    brand=list(set(brand1))
+    u = found(request)
+   
+    if request.session.has_key('user'):
+        user = request.session['user']
+        user1 =CustomUser.objects.get(username=user)
+        
+        cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
+        count = 0
+        for i in cart_product:
+            count = count+1
+            
+        return render(request,'womwnbrand.html',{'prod':value,'found': u,'count':count,'brand':brand}) 
+
+
+    return render(request,'womwnbrand.html',{'prod':value,'found': u,'brand':brand})
+
+def menpricesort(request):
+    if request.method == 'POST':
+        min =int(request.POST.get('minvalue'))
+        max = int(request.POST.get('maxvalue'))
+        value = product.objects.filter(price__range=[min,max],category_id = 1).order_by('price')
+    cart = []
+    brand1 = [i.brand for i in  product.objects.filter(category_id = 1)]
+    brand=list(set(brand1))
+    u = found(request)
+   
+    if request.session.has_key('user'):
+        user = request.session['user']
+        user1 =CustomUser.objects.get(username=user)
+        
+        cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
+        count = 0
+        for i in cart_product:
+            count = count+1
+            cart.append(i.products.name)
+            
+        return render(request,'menbrand.html',{'prod':value,'found': u,'count':count,'cart':cart, 'brand':brand}) 
+
+
+    return render(request,'menbrand.html',{'prod':value,'found': u,'brand':brand})
+
+
+def sportspricesort(request):
+    if request.method == 'POST':
+        min =int(request.POST.get('minvalue'))
+        max = int(request.POST.get('maxvalue'))
+        value = product.objects.filter(price__range=[min,max],category_id = 3).order_by('price')
+
+    brand1 = [i.brand for i in  product.objects.filter(category_id = 3)]
+    brand=list(set(brand1))
+    u = found(request)
+    cart = []
+    if request.session.has_key('user'):
+        user = request.session['user']
+        user1 =CustomUser.objects.get(username=user)
+        
+        cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
+        count = 0
+        for i in cart_product:
+            count = count+1
+            cart.append(i.products.name)
+            
+        return render(request,'sportsbrand.html',{'prod':value,'cart':cart, 'found': u,'count':count,'brand':brand}) 
+
+
+    return render(request,'sportsbrand.html',{'prod':value,'found': u,'brand':brand})
+
+
+
+
+
 
 def profile(request):
     u = found(request)
@@ -1004,6 +1390,7 @@ def buynow(request):
     
     u = found(request)
     if request.session.has_key('user'):
+
         user = request.session['user']
         user1 =CustomUser.objects.get(username=user)
         details  = [p for p  in user_details.objects.all() if  p.user==user1]
@@ -1017,18 +1404,54 @@ def buynow(request):
         order =  buyproduct()
         order.id = 1
         order.products = buynow
-        order.total=buynow.price
+        order.total=buynow.discount_price
+        request.session['checkoutamt'] = order.total
         order.quantity = 1
         order.value = 0
 
         order.save()
         valu = buyproduct.objects.get(value = 0)
         print(valu.value)
-        
-        
-        return render(request,'checkout1.html',{'found': u,'buynow': order,'id':id,'valu':valu, 'count':count,'details':details})    
 
-    return render(request,'checkout1.html',{'found': u,'buynow':buynow, 'count':count,'details':details})    
+        return redirect('showcheckout')
+        
+        
+    #     return render(request,'checkout1.html',{'found': u,'buynow': order,'id':id,'valu':valu, 'count':count,'details':details})    
+
+    # return render(request,'checkout1.html',{'found': u,'buynow':buynow, 'count':count,'details':details})    
+
+def showcheckout(request):
+    u = found(request)
+    if request.session.has_key('user'):
+        user = request.session['user']
+        user1 =CustomUser.objects.get(username=user)
+        details  = [p for p  in user_details.objects.all() if  p.user==user1]
+        cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
+        count = 0
+        for i in cart_product:
+             count = count+1
+        buynow = buyproduct.objects.get(id = 1)
+        
+
+        DATA = {
+                 "amount": buynow.total * 100,
+                 "currency": "INR",
+                 "receipt": "receipt#1",
+                 "notes": {
+                "key1": "value3",
+                "key2": "value2"
+                      }
+            }
+
+        var = client.order.create(data=DATA)
+        var1 = var["id"]
+
+
+
+
+    return render(request,'checkout1.html',{'found': u,'buynow':buynow,'var1':var1,  'count':count,'details':details})
+
+
 
 
 
@@ -1053,7 +1476,7 @@ def address1(request):
                 pincode = request.POST['pincode']
                 state = request.POST['state']
                 user_details(user=user1,locality=location,city=city,pincode=pincode,state=state).save()
-                return redirect('buynow')
+                return redirect('showcheckout')
             else:
             
                 return render(request,'address1.html',{'form':form}) 
@@ -1070,8 +1493,9 @@ def address1(request):
 @never_cache
 def orderbuynow(request):
     u = found(request)
-    key ={'0':'paypal','1':'cash_on_delivery'}
     value = request.GET.get('paypalnum')
+    coupen = request.GET.get('coupenId' or 0)
+
     if request.session.has_key('user'):
         user = request.session['user']
         user1 =CustomUser.objects.get(username=user)
@@ -1081,16 +1505,22 @@ def orderbuynow(request):
         prod_id = request.GET.get('custid')
         addres = user_details.objects.get(id=prod_id)
         print(addres)
-        
+        orderdat = order_place.objects.all()
+        print(coupen)
+        print("llllllllllllllllllllllll")
         if  buyproduct.objects.all():
 
-        
             prod_details = buyproduct.objects.get()
             cart = buyproduct.objects.get()
-   
-            # cart = order_place.objects.last()
-            print("LLLLLLLLLLLLLLLLLLL")
             print(cart)
+            total = prod_details.total
+
+            if coupen:
+                c = Coupon.objects.get(id=coupen)
+                total = total - (total * c.coupon_offer / 100)
+                orderdat.coupons = c
+                
+
 
             orderdata = order_place()
             orderdata.user=user1
@@ -1099,9 +1529,146 @@ def orderbuynow(request):
             orderdata.quantity=1
             orderdata.subtotal=prod_details.total
             orderdata.paymentmode=key[value]
+
+            
             prod_details.value = 1
             prod_details.save()
             orderdata.save()
-            buyproduct.objects.all().delete()
-            return render(request,'buynowinvoice.html',{'found': u,'cart':cart, 'user':user1,'dat':prod_id,'addres':addres,})        
+            
+            if 'coupen_id' in request.session:
+                 del request.session['coupen_id']
+                 
+            
+            return render(request,'buynowinvoice.html',{'found': u,'cart':cart, 'user':user1,'dat':prod_id,'total':total, 'addres':addres,})        
         return redirect('orderlist')    
+
+
+
+def addressedite1(request):
+    u = found(request)
+    id = int(request.GET.get('id'))
+    print(id)
+    userdetail = user_details.objects.get(id=id)
+    form = addressform(request.POST or None,instance=userdetail)
+    if request.session.has_key('user'):
+        user = request.session['user']
+        user1 =CustomUser.objects.get(username=user)
+        cart = cartproduct.objects.filter(user = user1)
+        cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
+        
+        
+        count = 0
+        for i in cart_product:  
+            count = count+1
+        u = found(request)
+        print(userdetail)
+        print("lllll")
+
+        if request.method=='POST':
+            if form.is_valid():
+                form.save()
+                return redirect('showcheckout')
+                
+            else:
+                return render(request,'addressedite1.html',{'form':form,'id':id,'userdetail':userdetail})
+        else:
+            return render(request,'addressedite1.html',{'found': u,'count':count,'form':form,'id':id,})  
+
+    return render(request,'addressedite1.html',{'found': u})
+
+        
+def CheckCoupen(request):
+    code = request.GET['code']
+    print(code)
+    if Coupon.objects.filter(coupon_id=code).exists():
+        c = Coupon.objects.get(coupon_id=code)
+        print(c)
+        print(request.session['user'])
+        if not order_place.objects.filter(coupons=c, user__username=request.session['user']).exists():
+            print(request.session['checkoutamt'])
+            amt = request.session['checkoutamt']
+            print(amt)
+            coupen = Coupon.objects.get(coupon_id=code)
+            final = (amt) - (amt *  coupen.coupon_offer / 100)
+            # request.session['finalamt'] = final
+            # print(final)
+            # request.session['coupen_id'] = coupen.id
+
+            print(c.id, '------------------------------------------')
+
+            return JsonResponse({'result': 'success','final_amt': final, 'coupen_id': c.id})
+    return JsonResponse({'result': 'fail',})
+
+
+
+# def CheckCoupen1(request):
+#     code = request.GET['code']
+#     print(code)
+#     if Coupon.objects.filter(coupon_id=code).exists():
+#         c = Coupon.objects.get(coupon_id=code)
+#         print(c)
+#         print(request.session['user'])
+#         if not order_place.objects.filter(coupons=c, user__username=request.session['user']).exists():
+#             print(request.session['checkoutamt'])
+#             amt = request.session['checkoutamt']
+#             print(amt)
+#             coupen = Coupon.objects.get(coupon_id=code)
+#             final = (amt) - (amt *  coupen.coupon_offer / 100)
+#             request.session['finalamt'] = final
+#             print(final)
+#             request.session['coupen_id'] = coupen.id
+
+#             return JsonResponse({'result': 'success','final_amt': final})
+#     return JsonResponse({'result': 'fail',})
+
+
+
+def Editeprofile(request):
+    form = editeprofileform(request.POST or None)
+    if request.session.has_key('user'):
+        user = request.session['user']
+        user1 =CustomUser.objects.get(username=user)
+        if request.method=='POST':
+            form= editeprofileform(request.POST,instance=user1)
+            if form.is_valid():
+                form.save()
+            
+            return redirect('profile')
+            
+        
+        u = found(request)
+        cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
+        
+        
+        count = 0
+        for i in cart_product:  
+            count = count+1
+
+        form = editeprofileform(instance=user1) 
+
+       
+        return render(request,'Editeprodile.html', {'form': form,'found': u,'count':count})
+
+
+
+def checkoutaddressdelete(request):
+    id = request.GET.get('id')
+    user = user_details.objects.filter(id=id)
+    user.delete()
+
+    return redirect('checkout')
+
+def checkoutaddressdelete1(request):
+    id = request.GET.get('id')
+    user = user_details.objects.filter(id=id)
+    user.delete()
+
+    return redirect('showcheckout')    
+
+
+def Deleteaccount(request):
+
+    return redirect('profile')
+
+
+

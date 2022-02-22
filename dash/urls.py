@@ -29,6 +29,19 @@ urlpatterns = [
     path('productoffer',views.productoffer,name='productoffer'),
     path('categoryoffer',views.categoryoffer,name='categoryoffer'),
     path('categoryofferedite/<int:id>',views.categoryofferedite,name='categoryofferedite'),
-    
-  
+    path('productofferedite/<int:id>',views.productofferedite,name='productofferedite'),
+
+    path('coupon',views.coupon,name='coupon'),
+    path('coupondelete',views.coupondelete,name='coupondelete'),
+    path('addcoupon',views.addcoupon,name='addcoupon'),
+
+
+    path('adminsails',views.adminsails,name='adminsails'),
+
+    path('exportexcel',views.exportexcel,name='exportexcel'),
+
+
+
+
+
 ]

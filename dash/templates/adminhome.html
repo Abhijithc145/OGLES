@@ -1,28 +1,35 @@
 {% extends 'adminbase.html' %}
 {% load static %}
 {% block content %}
-<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div>
-    <canvas id="myChart"></canvas>
-  </div>
-  <script>
-    var ctx = document.getElementById('myChart1').getContext('2d');
-    var myChart1 = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: [],
-    datasets: [{
-        label: 'Number of Products',
-        data: [],
-        backgroundColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-        ],
+<div  class="row">
+    <div class="col-lg-7">
+    
+        <canvas id="myCharts" ></canvas>
+    </div>
+    <div class="col-lg-4">
+        <canvas  style="height: 100px; width: 100px;" id="myChart"></canvas>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctxs = document.getElementById('myCharts').getContext('2d');
+const myCharts = new Chart(ctxs, {
+    type: 'bar',
+    data: { 
+        labels: ['orderplace','ordershiped','orderdelivered'],
+        datasets: [{
+            label: '# of Votes' ,
+            data: [{{orderplace}},{{ordershiped}},{{orderdelivered}}],
+            backgroundColor: [
+                'rgb(255,127,80)',
+                'rgb(220,20,60)',
+                'rgb(165,42,42)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
                 'rgba(54, 162, 235, 1)',
@@ -31,20 +38,65 @@
                 'rgba(153, 102, 255, 1)',
                 'rgba(255, 159, 64, 1)'
             ],
-                borderWidth: 1
-    }]
-        },
+            borderWidth: 1
+        }]
+    },
     options: {
         scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
+            y: {
+                beginAtZero: true
+            }
         }
     }
-    });
+});
 </script>
-  </script> -->
   
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['ordercashondelivery', 'orderpaypal', 'orderrazorpay'],
+            datasets: [{
+                label: '# of Votes',
+                data: [{{ordercashondelivery}},{{orderpaypal}},{{orderrazorpay}}],
+                backgroundColor: [
+                    'rgb(34,139,34)',
+                    'rgb(173,255,47)',
+                    'rgb(75,0,130)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(85,107,47)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script>
+     
 {% endblock content  %}

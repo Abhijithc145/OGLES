@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
@@ -87,7 +92,7 @@ color: #db1818
                                             <div class="text-right"> <span class="font-weight-bold">{{addres.state}}</span> </div>
                                         </td>
                                     </tr>
-                                    <tr >
+                                    <!-- <tr >
                                         <td>
                                             <div class="text-left"> <span class="font-weight-bold">Payment</span> </div>
                                         </td>
@@ -95,7 +100,7 @@ color: #db1818
                                                 
                                             <span style="margin-left: 200px;"><img src="https://img.icons8.com/color/48/000000/mastercard.png" width="40" /></span>
                                         </td>
-                                    </tr>
+                                    </tr> -->
 
 
                                 </tbody>
@@ -169,12 +174,6 @@ color: #db1818
     </div>
 </div>
 
-<!-- 
-<script>
-    history.pushState(null, null, location.href);
-    history.back();
-    history.forward();
-    window.onpopstate = function () { history.go(0); };
-</script> -->
+
     
 {% endblock content  %}

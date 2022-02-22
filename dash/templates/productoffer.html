@@ -15,8 +15,7 @@
         <th scope="col-lg-2">Brand</th>
         <th scope="col-lg-2">Price</th>
         <th scope="col-lg-2">Stock</th>
-        <th scope="col-lg-2">Offer</th>
-        <th  scope="col-lg-2">Offer</th>
+       
         <th  scope="col-lg-2">Offer</th>
         
       </tr>
@@ -29,16 +28,16 @@
         
         <th scope="col"> {{user.price}}</th>
         <th scope="col">{{user.stock}} </th>
-        <th scope="col">{{user.stock}} </th>
+      
         <th scope="col">{{user.product_offer}} </th>
         <th scope="col-lg-2" style="width: 210px;">
           
-           <form method="post" name="" action="">
-           {% csrf_token %}
-             <input type="number" style="width: 100px;"  >
-            
-            <input type="submit">
-          </form>
+          <form method="post" name=""  action="{% url 'productofferedite' user.id %}">
+            {% csrf_token %}
+              <input type="number" name="number" min="0"  max="90" style="width: 100px;" required >
+             
+             <input type="submit">
+           </form>
           
         </th> 
       </tr>  

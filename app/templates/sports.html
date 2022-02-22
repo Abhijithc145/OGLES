@@ -38,13 +38,63 @@
     </section>
     <!-- ========================= SECTION MAIN END// ========================= -->
     
+   
     <div class="container">
     
-    <!-- =============== SECTION 1 =============== -->
-    <section class="padding-bottom">
-    <header class="section-heading mb-4">
-        <h3 class="title-section">Sports Styles</h3>
-    </header>
+      <!-- =============== SECTION 1 =============== -->
+      <section class="padding-bottom">
+      <header class="section-heading mb-4">
+          <h3 class="title-section">Sports Items</h3>
+      </header>
+      <div class="card mb-3">
+        <div class="card-body">
+      
+      <hr>
+      <div class="row">
+        <div style="font-size: 20px;font-weight: 700;" class="col-md-2">Filter by</div> <!-- col.// -->
+        <div class="col-md-10"> 
+          <ul class="list-inline">
+            
+            <li class="list-inline-item mr-3 dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Brand</a>
+              <div class="dropdown-menu">
+                {% for i in brand %}
+                <!--  -->
+                <a href="{% url 'sportsbrand' %}?id={{i.id}}" class="dropdown-item">{{i.name}}</a>
+                {% endfor %}
+              </div>
+            </li>
+            <!-- <li class="list-inline-item mr-3 dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Feature</a>
+              <div class="dropdown-menu">
+                <a href="#" class="dropdown-item">Anti backterial</a>
+                <a href="#" class="dropdown-item">With buttons</a>
+                <a href="#" class="dropdown-item">Extra safety</a>
+              </div>
+            </li> -->
+  
+  
+  
+            <li class="list-inline-item mr-3">
+            <form action="/sportspricesort"  method="post">
+              {% csrf_token %}
+            
+              <div class="form-inline">
+                <label class="mr-2">Price</label>
+              <input  class="form-control form-control-sm" name="minvalue" placeholder="Min" type="number" required>
+                <span class="px-2"> - </span>
+              <input  class="form-control form-control-sm" name="maxvalue" placeholder="Max" type="number" required>
+              <button type="submit" class="btn btn-sm btn-success ml-2">Ok</button>
+            </div>
+            </form>
+            </li>           
+          </form>
+          </ul>
+        </div> 
+      </div> 
+        </div> 
+      </div>
+      
     
     
     <div class="row">
@@ -82,24 +132,49 @@
                     </div>
                       
                     <div style="width: 1000px;height: 5px;">
+                        <!-- <div style="width: 1000px;height: 5px;">
                         <a href="/productdetail?id={{i.id}}" class="text-muted">{{i.name}}</a>
+                       
+                    </div> -->
+                      <div class="d-flex">
+                        <br>
+                        <a href="/productdetail?id={{i.id}}" class="text-muted">{{i.name}}</a><br>
+                        <!-- <a href="" class="title">{{i.brand}}</a> -->
+                        {% if i.stock < 1 %}
                         <a href="" class="title">{{i.brand}}</a>
+                        <h4> <a href="" style="margin-left: 20px; color:orangered;" class="title">Out off stock</a></h4>
+                         {% else %}
+                         <a href="" class="title">{{i.brand}}</a>
+ 
+                         {% endif %}
+                        </div>   
+                        <div class="d-flex">
+                          <div  class="price h5 mt-2">Rs.{{i.discount_price}}  </div> <del style="color:red;padding-top: 10px; margin-left: 10px;" href="" class="title">Rs.{{i.price}}</del>
+                          </div>
                     </div>
-                    <div style="padding-top: 50px;" class="price h5 mt-2">Rs.{{i.price}}</div> 
+                    <div style="padding-top: 50px;" class="price h5 mt-2"></div> 
                    
-                    {% if found  %}
+                    {% if i.stock < 1 %}
+                     <a > <button class="btn btn-primary " value =""><i class="fa "> Add Cart </i> </button></a>
+                           
+                      <a  class="btn btn-success"> <i class="fa "></i> Buy Now  </a>
 
-                    {% if i.name in carts %}
-                    <a href="/show_cart"><button class="btn btn-primary " value ="{{i.id}}"><i class="fa "> Show Cart </i> </button></a>
                     {% else %}
-                    <button class="btn btn-primary addcart" id="add{{i.id}}" value ="{{i.id}}"><i class="fa "> Add to Cart </i> </button>
-                    <a href="/show_cart"><button class="btn btn-primary " style="display: none;" id="show{{i.id}}" value ="{{i.id}}"><i class="fa "> Show Cart </i> </button></a>
-                    {% endif %}
-                    
-                    <a href="{% url 'buynow' %}?id={{i.id}}" class="btn btn-success"> <i class="fa "></i> Buy Now  </a>
-                    {% else %}
-                    {% endif %}
-                
+
+                            {% if i.name in carts %}
+                            <a href="/show_cart"><button class="btn btn-primary " value ="{{i.id}}"><i class="fa "> Show Cart </i> </button></a>
+                            {% else %}
+                            <button class="btn btn-primary addcart" id="add{{i.id}}" value ="{{i.id}}"><i class="fa "> Add to Cart </i> </button>
+                            <a href="/show_cart"><button class="btn btn-primary " style="display: none;" id="show{{i.id}}" value ="{{i.id}}"><i class="fa "> Show Cart </i> </button></a>
+                            {% endif %}
+                            {% if found %}
+                              <a href="{% url 'buynow' %}?id={{i.id}}" class="btn btn-success"> <i class="fa "></i> Buy Now  </a>
+                              {% else %}
+                              <a href="" class="btn btn-success"> <i class="fa "></i> Buy Now  </a>
+                              {% endif %}
+
+
+                    {% endif %}          
                 </figcaption>
             </div>
             

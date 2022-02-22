@@ -50,11 +50,12 @@ class CustomUser(AbstractUser):
 
 class cartproduct(models.Model):
 
-    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     products = models.ForeignKey(product,on_delete=models.CASCADE)
     total = models.PositiveIntegerField(default=True)
+    alltotal = models.PositiveIntegerField(default=True)
     quantity = models.PositiveIntegerField(default=1)
-    guest = models.CharField(default='',max_length=300)
+    guest = models.CharField(max_length=300,null=True)
 
 
 # class  buynow(models.Model):
@@ -70,7 +71,11 @@ class user_details(models.Model):
     city = models.CharField(max_length=100)
     pincode = models.IntegerField()
     state = models.CharField(max_length=100)
-    
+
+
+class Coupon(models.Model):
+    coupon_id=models.CharField(unique=True, max_length=6,null=True) 
+    coupon_offer = models.IntegerField(default=0) 
 
 class order_place(models.Model):
 
@@ -82,12 +87,13 @@ class order_place(models.Model):
     status = models.CharField( max_length=100,default='Placed')
     paymentmode = models.CharField(max_length=100)
     subtotal = models.BigIntegerField(null=True)
-
+    coupons = models.ForeignKey(Coupon,on_delete=models.SET_NULL,null=True)
 
 class wishlist_data(models.Model):
 
-    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     products = models.ForeignKey(product,on_delete=models.CASCADE)
+    guest = models.CharField(max_length=300,null=True)
     
     
 class buyproduct(models.Model):
@@ -97,6 +103,12 @@ class buyproduct(models.Model):
     total = models.PositiveIntegerField(default=True)
     quantity = models.PositiveIntegerField(default=1) 
     value = models.PositiveIntegerField(default=0)    
+
+
+
+
+
+
 
     
 

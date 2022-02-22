@@ -50,9 +50,14 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="/dash/adminhome">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/dash/adminsails">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Sails Reports</span></a>
             </li>
 
             <!-- Divider -->
@@ -89,7 +94,39 @@
                                                     
             
             <hr class="sidebar-divider">
+
             <div class="sidebar-heading">
+                Addons
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Offers</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Offer Screens:</h6>
+                        <a class="collapse-item" href="/dash/productoffer">Product Offer</a>
+                        <a class="collapse-item" href="/dash/categoryoffer">Category Offer</a>
+                        <a class="collapse-item" href="/dash/coupon">Coupon Offer</a>
+                        
+                    </div>
+                </div>
+                <!-- <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Offer Screens:</h6>
+                        <a class="collapse-item" href="/dash/categoryoffer">Category Offer</a>
+                        
+                    </div>
+                </div> -->
+            </li>
+
+
+
+            <!-- <div class="sidebar-heading">
                 Offers
             </div>
             <i class="fa-solid fa-person-dolly">
@@ -105,19 +142,23 @@
                         <i class="fas fa-fw fa-solid fa-atom"></i>
                         <span>Category Offer</span></a>
                 </li>
+               
                 
-            </i>
+            </i> -->
+            
            
-          
+            <i class="fa-solid "></i>
             <hr class="sidebar-divider">
+            <li class="nav-item">
+                <a class="nav-link" href="/dash/adminlogout">
+                    <i class="fas fa-fw fa-solid fa-cards"></i>
+                    <span>Log Out</span></a>
+            </li>
 
             <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div>
-
+            
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -132,7 +173,7 @@
                 </div>
             </li>
 
-          
+           -->
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -159,13 +200,13 @@
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                            <!-- <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                                 aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
-                            </div>
+                            </div> -->
                         </div>
                     </form>
 
@@ -181,7 +222,7 @@
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                 aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
+                                <!-- <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
                                         <input type="text" class="form-control bg-light border-0 small"
                                             placeholder="Search for..." aria-label="Search"
@@ -192,7 +233,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                </form>
+                                </form> -->
                             </div>
                         </li>
 
@@ -205,7 +246,7 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            <a class="nav-link dropdown-toggle" href="" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                                 <img class="img-profile rounded-circle"

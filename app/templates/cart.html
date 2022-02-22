@@ -21,7 +21,7 @@
 </tr>
 </thead>
 <tbody>
-{% for cart in carts%}
+{% for cart in cart%}
 <tr>
 	<td>
 		<figure class="itemside">
@@ -33,7 +33,7 @@
 
 			<figcaption class="info">
 				<a href="#" class="title text-dark" style="height: 10px; width: 300px;">{{cart.products.name}}</a>
-				<br><div id="error{{cart.products.id}}" style="display: none;height: 10px; width: 300px; color: red; "> Out off stock </div>
+				<br><div id="error{{cart.id}}" style="display: none;height: 10px; width: 300px; color: red; "> Out off stock </div>
 				<!-- <p class="text-muted small">Size: XL, Color: blue, <br> Brand: Gucci</p> -->
 			</figcaption>
 		</figure>
@@ -45,24 +45,23 @@
             <div class="form-group col-md flex-grow-0">
                 <div class="input-group mb-3 input-spinner">
                     <!-- <div class="input-group-append">
-                        <i pid ="{{cart.products.id}}"><button class="btn btn-light" type="button" id="button-minus"> - </button></i>
+                        <i pid ="{{cart.id}}"><button class="btn btn-light" type="button" id="button-minus"> - </button></i>
                       </div>
                   <spam type="text" class="form-control" >{{cart.quantity}}</spam>
                   <div class="input-group-prepend">
-                    <i data_product ="{{cart.products.id}}"></i><button class="btn btn-light plus" type="button" id="button-plus"> + </button></i>
+                    <i data_product ="{{cart.id}}"></i><button class="btn btn-light plus" type="button" id="button-plus"> + </button></i>
                   </div> -->
 
-				  <button class="minuscart" data-product="{{cart.products.id}}" data-action="/minuscart"><i class="fas fa-minus-square fa-lg"> </i></button> 
-                  <span style="font-size: 20px;font-weight: 900;" id="qty{{cart.products.id}}">{{cart.quantity}}</span>
-				    
-					<button class="pluscart" data-product="{{cart.products.id}}" data-action="/pluscart"><i class="fas fa-plus-square fa-lg"> </i></button> 
+				  <button class="minuscart" data-product="{{cart.id}}" data-action="/minuscart"><i class="fas fa-minus-square fa-lg"> </i></button> 
+                  <span style="font-size: 20px;font-weight: 900;" id="qty{{cart.id}}">{{cart.quantity}}</span>				    
+					<button class="pluscart" data-product="{{cart.id}}" data-action="/pluscart"><i class="fas fa-plus-square fa-lg"> </i></button> 
                 </div>
             </div>
 	</td>
 	
 	<td> 
 		<div class="price-wrap"> 
-			<var class="price" id="price{{cart.products.id}}">Rs.{{cart.products.price}}</var> 
+			<var class="price" id="price{{cart.id}}">Rs.{{cart.products.discount_price}}</var> 
 			<!-- <small class="text-muted"> $315.20 each </small>  -->
 		</div> <!-- price-wrap .// -->
 	</td>
@@ -103,8 +102,13 @@
 </table>
 
 <div class="card-body border-top">
+	{% if found %}
 	<a href="/checkout" class="btn btn-primary float-md-right"> Make Purchase <i class="fa fa-chevron-right"></i> </a>
 	<a href="/ " class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
+	{% else %}
+	<a href="/login" class="btn btn-primary float-md-right"> Make Purchase <i class="fa fa-chevron-right"></i> </a>
+	<a href="/ " class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
+     {% endif %}
 </div>	
 </div> <!-- card.// -->
 
@@ -148,6 +152,7 @@
 	$('.pluscart').click(function(){
 		var id = $(this).data('product');
 		var path = $(this).data('action');
+		console.log(id)
 		$.ajax({
 			type:"GET",
 			url: path,
@@ -158,8 +163,8 @@
 				if(response.result == 'success'){
 					$('#qty'+id).html(response.quantity)
 					$('#price'+id).html(response.total)
-					$('#sumTotal').html(response.cartTotal)
-					$('#grantTotal').html(response.cartTotal)
+					$('#sumTotal').text(response.cartTotal)
+					$('#grantTotal').text(response.cartTotal)
 				}
 				else{
 					$('#error'+id).show()
@@ -182,8 +187,8 @@
 				if(response.result == 'success'){
 					$('#qty'+id).html(response.quantity)
 					$('#price'+id).html(response.total)
-					$('#sumTotal').html(response.cartTotal)
-					$('#grantTotal').html(response.cartTotal)
+					$('#sumTotal').text(response.cartTotal)
+					$('#grantTotal').text(response.cartTotal)
 					$('#error'+id).hide()
 
 				}

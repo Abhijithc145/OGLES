@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <section class="section-pagetop bg-gray">
 	<div class="container">
 		<h2 class="title-page">Checkout</h2>
@@ -17,7 +24,7 @@
 			<!-- col.// -->
 			<main class="col-md-9">
 
-				<article class="card mb-4">
+				<article class="card mb-4 bg-gray">
 					<!-- <header class="card-header">
 			<a href="#" class="float-right"> <i class="fa fa-print"></i> Print</a>
 			<strong class="d-inline-block mr-3">Order ID: 6123456789</strong>
@@ -36,25 +43,54 @@
 						<div class="row">
 							{% if details %}
 							{% for i in details %}
-							<div class="col-md-4">
-								<h6 class="text-muted">Delivery to</h6>
+							<div class="col-md-4 mt-4">
+								<h6 class="text-muted">Delivery to</h6> 
 								<p>{{i.user}} <br>
 
-									{{i.locality}},{{i.city}}, <br>
+									{{i.locality}},{{i.city}},<br>
 									pincode:{{i.pincode}}<br>
-									+91 {{i.user.number}}
+									+91 {{i.user.number}} <br>
+									<div class="d-flex" style="margin-right: 10px;">
+									<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger " data-toggle="modal" data-target="#exampleModalCenter">
+	Delete
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body h2 font-weight-bold ">
+		   Are you sure delete
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  <a href="{% url 'checkoutaddressdelete' %}?id={{i.id}}" type="button" class="btn btn-primary">Delete</a>
+		</div>
+	  </div>
+	</div>
+  </div>
+								
+									<a href="addressedite?id={{i.id}}"  ><button style="font-size: 8px; " class="btn btn-outline-success">Edite</button> </a>
+								
 
-								</p>
-
+								</div>
+                               
 								{% csrf_token %}
 								<div class="form-check mt-2 mb-5">
 									<input class="form-check-input" value="{{i.id}}" type="radio"
 										id="custadd{{forloop.counter}}" name="ccustid"onclick="clicked({{i.id}})">
-
+                        
 									<label style="margin-left: 6px;" for="" class="form-check-input">Address :
 										{{forloop.counter}}</label>
-								</div>
-
+								
+									</div>
 							</div>
 							{% endfor %}
 							{% else %}
@@ -85,9 +121,20 @@
 
 
 			</main>
-
-			<!-- col.// -->
-			<main class="col-md-3">
+			<main class="col-md-3 bg-gray">
+				<div class="card-body">
+					<form>
+						<div class="form-group">
+							<label>Have coupon?</label>
+							<div class="input-group">
+								<input type="text" class="form-control" name="" placeholder="Coupon code" id="coupen">
+								    <span class="input-group-append"> 
+									<button class="btn btn-primary" type="button" id="apply">Apply</button>
+								</span>
+							</div>
+						</div>
+					</form>
+				</div> 
 
 				<div class="card">
 					<div class="card-body">
@@ -111,14 +158,26 @@
 					<form action="/order" method="get" id="pay">
 						{% if cart and details %}
 
+						<input type="hidden" id="coupen-id" name="coupenId">
+
 						<span id="payment_method" style="display: none;">
 							<input type="hidden" id="cashond" name="paypalnum" value="1"> 
-							<button type="submit" style=" margin-bottom: 10px;" class="btn btn-primary">cash on delivary 
+							<button type="submit"  style=" margin-bottom: 10px;" class="btn btn-primary">cash on delivary 
 								  </button>
 									
 
 							<div  id="paypal-button-container"> </div>
+							
+
+
+							<input type="hidden" value="3" name="paypalnum" >
+					
+						<input type="hidden" custom="Hidden Element" name="hidden">
 						</span>
+
+
+
+
 
 
 						{% else %}
@@ -127,9 +186,36 @@
 
 						<input type="hidden" name="custid" id="custid" value="">
 					</form>
+						{% if cart and details %}
+					
+					<form action="/order" method="GET">
+						<input type="hidden" value="3" name="paypalnum" >
+						<input type="hidden" name="custid" id="custid1">
+						<input type="hidden" id="coupen-id1" name="coupenId">
+						<script
+							src="https://checkout.razorpay.com/v1/checkout.js"
+							data-key="rzp_test_xFSWIL714S4Ayy" // Enter the Test API Key ID generated from Dashboard → Settings → API Keys
+							data-amount="29935" // Amount is in currency subunits. Hence, 29935 refers to 29935 paise or ₹299.35.
+							data-currency="INR"// You can accept international payments by changing the currency code. Contact our Support Team to enable International for your account
+							data-order_id="{{var1}}"// Replace with the order_id generated by you in the backend.
+							data-buttontext="Pay with Razorpay"
+							data-name="Acme Corp"
+							data-description="A Wild Sheep Chase is the third novel by Japanese author Haruki Murakami"
+							data-image="https://example.com/your_logo.jpg"
+							data-prefill.name="Gaurav Kumar"
+							data-prefill.email="gaurav.kumar@example.com"
+							data-theme.color="#F37254"
+						></script>
+						{% else %}
+
+						{% endif %}
+						<input type="hidden" custom="Hidden Element" name="hidden">
+						</form>
+						
+		
 				</div>
 			</main>
-
+			
 
 
 			<main class="col-md-9">
@@ -165,7 +251,7 @@
 									<var class="price text-muted">{{cart.products.brand}}</var>
 								</td>
 								<td> {{cart.quantity}} </td>
-								<td> {{cart.products.price}} </td>
+								<td> {{cart.products.discount_price}} </td>
 								<!-- <td> <a href="#" class="btn btn-outline-primary">Track order</a>  -->
 
 								</td>
@@ -186,10 +272,14 @@
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
+
+
 <script>
 	function clicked(id) {
 		document.getElementById('payment_method').style.display = "";
 		document.getElementById('custid').value = id
+		document.getElementById('custid1').value = id
+		
 		// alert(document.getElementById('custid').value0
 
 	}
@@ -234,6 +324,34 @@
 
 	}).render('#paypal-button-container');
 </script>
+
+<script>
+	$('#apply').click(function(){
+		var data = {
+			'code': document.getElementById('coupen').value
+		}
+		alert(data['code'])
+		$.ajax({
+			type:"GET",
+			url: "/checkcoupen",
+			data:data, 
+			success:function(response){
+				if(response.result == 'success'){
+					alert(response.final_amt)
+					alert('--------------------------------------')
+					document.getElementById("grantTotal").innerHTML = response.final_amt
+					document.getElementById("coupen-id").value = response.coupen_id
+					document.getElementById("coupen-id1").value = response.coupen_id
+                    alert(response.coupen_id)
+				}
+				else{
+					alert('helo')
+				}
+				
+			}
+		})
+	})
+</script>	
 
 
 {% endblock content %}

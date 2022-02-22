@@ -30,6 +30,14 @@
                     <button type="submit" name="" class="btn btn-primary btn-block"> Submit </button>
                 </div> <!-- form-group// -->
             </form>
+            <form class="mt-2">
+                {% csrf_token %}
+                <div class=" d-flex justify-content-end ">
+                     <button type="button" class="btn bg-light text-dark w-100 text-light" id="customise-resend">resend otp
+                          in  &nbsp;<span id="timer"></span> </button>
+                     <button value="{{userNum}}" type="button" class="btn bg-primary text-light w-100 " id="resend">resend otp</button>
+                </div>
+           </form>
             <br>
 
 
@@ -41,7 +49,59 @@
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
+<script>
+    $("#resend").hide()
+    var min = 0
+    var sec = 30
+    function refresh() {
 
+         $("#current-count").val(sec)
+
+         if (sec == 0 && min >= 1) {
+              min = min - 1
+              sec = 59
+         }
+         if (sec != 0) {
+              setTimeout(refresh, 1000)
+              sec -= 1
+              $("#timer").html('   0' + min + ' : ' + sec)
+         } else {
+              $("#customise-resend").hide()
+              $("#resend").show()
+         }
+    }
+    refresh()
+
+
+    $("#resend").click(() => {
+
+
+
+         var data = {
+              num: $("#resend").val(),
+         };
+         $.ajax({
+              url: "/resendotp",
+              method: "GET",
+              data: data,
+              dataType: "json",
+              success: function (data) {
+                   if (data.status) {
+
+                        $("#customise-resend").show()
+                        $("#resend").hide()
+                        sec = 30
+                        refresh()
+
+                   } else {
+                        alert("failed");
+                   }
+              },
+         });
+
+    })
+
+</script>
 
 
 {% endblock %}

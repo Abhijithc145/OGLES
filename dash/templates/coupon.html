@@ -1,0 +1,124 @@
+{% extends 'adminbase.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+
+<div class="container">
+
+<table class="table table-dark col-lg-8">
+    <thead>
+      <tr>
+       
+        <th scope="col">Category-idr</th>
+        <th scope="col">Offer</th>
+        <th scope="col" style="color: black;">
+          <form method="post" name=""  action="{% url 'coupon' %}">
+            {% csrf_token %}
+
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Add Coupon
+               </button>
+
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        {{form|crispy}} <button type="submit" name="" class="btn btn-success btn-block"> submit  </button>
+
+                      </div>
+                     
+                    </div>
+                  </div>
+                </div>
+                </form>
+
+
+
+
+
+
+
+
+
+
+
+        </th>
+        
+       
+      </tr>
+
+<!--       
+      <div class="form-group">
+        <button type="submit" name="" class="btn btn-success btn-block"> submit  </button>
+    </div> -->
+
+
+
+
+
+    </thead>
+    <tbody>
+      {% for data in data %}  
+      <tr>
+
+        <th scope="col">{{data.coupon_id}}</th>
+        <th scope="col">{{data.coupon_offer}}</th>
+<!-- 
+        <th scope="col-lg-2" style="width: 210px;">
+          
+            <form method="post" name=""  action="{% url 'categoryofferedite' data.id %}">
+            {% csrf_token %}
+              <input type="number" name="number" min="0"  max="90" style="width: 100px;" required >
+             
+             <input type="submit">
+           </form>
+           
+           
+         </th>  -->
+         <th scope="col">
+                   <!-- Button trigger modal -->
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{user.id}}">
+  Delete
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal{{user.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="color: rgb(15, 15, 17);" id="exampleModalLabel">Are you Sure </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       <a href="{% url 'coupondelete' %}?id={{data.id}}"> <button type="button" class="btn btn-danger">confirme</button></a>
+        
+      </div>
+    </div>
+  </div>
+</div> 
+         </th>
+    
+        
+       
+      </tr>
+
+      
+    </tbody>
+    {% endfor  %}
+  </table>
+</div>
+{% endblock content  %}
+
+
+{{form|crispy}}

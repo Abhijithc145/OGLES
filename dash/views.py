@@ -1,11 +1,15 @@
+import datetime
 import os
 from unicodedata import category
+from urllib import response
+from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate
 from app.forms import *
 from app.models import *
 from .form import *
 from .models import *
+import xlwt
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -37,22 +41,37 @@ def adminlogin(request):
             return render(request,'adminlogin.html',{'form':form,'error':'Invalid'})
     return render(request,'adminlogin.html',{'form':form})
 
-
+@never_cache
 @login_required(login_url='/dash')
 def adminhome(request):
-    orders = order_place.objects.all()
-    products  = product.objects.all()
+    orderplace = order_place.objects.filter(status='Placed').count()
+    ordershiped = order_place.objects.filter(status='Shipped').count()
+    orderdelivered = order_place.objects.filter(status='Delivered').count()
+
+
+    ordercashondelivery = order_place.objects.filter(paymentmode='cash_on_delivery').count()
+    orderpaypal = order_place.objects.filter(paymentmode='paypal').count()
+    orderrazorpay = order_place.objects.filter(paymentmode='razorpay').count()
+
+
+    # products  = product.objects.all()
+
     
 
 
 
-    return render(request,'adminhome.html',{'orders':orders,'products':products})
+    return render(request,'adminhome.html', {'orderplace':orderplace,'orderpaypal':orderpaypal,'orderrazorpay':orderrazorpay, 'ordercashondelivery':ordercashondelivery, 'ordershiped':ordershiped,'orderdelivered':orderdelivered})
 
+
+
+@never_cache
 @login_required(login_url='/dash')
 def adminuser(request):
     user = CustomUser.objects.filter(is_superuser = False)
     return render(request,'adminuser.html',{'user':user})
 
+
+@never_cache
 @login_required(login_url='/dash/')
 def block(request):
     id = request.GET.get('id')
@@ -61,7 +80,7 @@ def block(request):
     unblock.save()
     return redirect('adminuser')
 
-
+@never_cache
 @login_required(login_url='/dash/')
 def adminproduct(request):
     user = product.objects.all()
@@ -69,7 +88,7 @@ def adminproduct(request):
     return render(request,'adminproduct .html',{'user':user})
 
 
-    
+@never_cache    
 @login_required(login_url='/dash/')
 def adminaddproduct(request):
     form = prodectdetai(request.POST or None )
@@ -89,7 +108,7 @@ def adminaddproduct(request):
 
     
 
-
+@never_cache
 @login_required(login_url='/dash/')
 def delete(request):
     id = request.GET.get('id')
@@ -99,6 +118,7 @@ def delete(request):
 
     return redirect('adminproduct')  
 
+@never_cache
 @login_required(login_url='/dash/')
 def edite(request):
     
@@ -109,7 +129,6 @@ def edite(request):
     form= prodectdetai(request.POST,request.FILES,instance=productid)
     
     if request.method=='POST':
-        print("llllllllllllllllllllllllllll")
         form= prodectdetai(request.POST,request.FILES,instance=productid)
         # form = os.remove(your_image_field.path)
         if form.is_valid():
@@ -124,13 +143,15 @@ def edite(request):
 
     return render(request,'admineditproduct.html',{'form':form,'id':id,'productid':productid})
 
+
+@never_cache
 @login_required(login_url='/dash/')
 def adminbrand(request):
     data = Brand.objects.all()
 
     return render(request,'adminbrand.html',{'data':data}) 
 
-
+@never_cache
 @login_required(login_url='/dash/')
 def adminaddbrand(request):
     form = brandform(request.POST or None)
@@ -145,7 +166,7 @@ def adminaddbrand(request):
     return render(request,'adminaddbrand.html',{'form':form})   
 
 
-
+@never_cache
 @login_required(login_url='/dash/')
 def admindeletebrand(request):
     id = request.GET.get('id')
@@ -153,6 +174,8 @@ def admindeletebrand(request):
     user.delete()
     return redirect('adminbrand') 
 
+
+@never_cache
 @login_required(login_url='/dash/')
 def admineditebrand(request):
     id = request.GET.get('id')
@@ -171,13 +194,16 @@ def admineditebrand(request):
     return render(request,'admineditebrand.html',{'form':form ,'id':id})    
 
 
-
+@never_cache
 @login_required(login_url='/dash/')
 def admincategory(request):
     data = Category.objects.all()
 
     return render(request,'admincategory.html',{'data':data})        
 
+
+
+@never_cache
 @login_required(login_url='/dash/')
 def adminaddcategory(request):
     form = categoryform(request.POST or None)
@@ -192,6 +218,8 @@ def adminaddcategory(request):
     return render(request,'adminaddcategory.html',{'form':form})
 
 
+
+@never_cache
 @login_required(login_url='/dash/')
 def admindeletecategory(request):
     id = request.GET.get('id')
@@ -199,6 +227,8 @@ def admindeletecategory(request):
     user.delete()
     return redirect('admincategory')
 
+
+@never_cache
 @login_required(login_url='/dash/')
 def adminads(request):
     image = ads.objects.all()
@@ -209,7 +239,7 @@ def adminads(request):
     return render(request,'adminads.html',{'image':image})     
 
 
-
+@never_cache
 
 @login_required(login_url='/dash/')
 def admineditecategory(request):
@@ -228,6 +258,8 @@ def admineditecategory(request):
 
     return render(request,'admineditecategory.html',{'form':form ,'id':id})
 
+
+@never_cache
 @login_required(login_url='/dash/')
 def adminadsedite(request):
     
@@ -251,6 +283,10 @@ def adminadsedite(request):
 
     return render(request,'adminadsedite.html',{'form':form,'id':id})  
 
+
+
+@never_cache
+
 @login_required(login_url='/dash/')
 def adminadsadd(request):
     form = adslist(request.POST or None, request.FILES or None)
@@ -265,12 +301,14 @@ def adminadsadd(request):
     return render(request,'adminadsadd.html',{'form':form})  
 
 
+@never_cache
 @login_required(login_url='/dash/')
 def adminlogout(request):
     logout(request)
     return redirect('adminlogin')
 
 
+@never_cache
 @login_required(login_url='/dash/')
 def adminorder(request):
     order_datas = order_place.objects.all().order_by('-orderdate')
@@ -278,6 +316,7 @@ def adminorder(request):
     return render(request,'adminorder.html',{'order_datas':order_datas})   
 
 
+@never_cache
 @login_required(login_url='/dash/')
 def editestatus(request,id):
     if request.method=='POST':
@@ -286,29 +325,131 @@ def editestatus(request,id):
         order_place.objects.filter(id = id).update(status=value)
     return redirect('adminorder')   
      
+@never_cache
 @login_required(login_url='/dash/')
 def productoffer(request):
     products = product.objects.all()
 
     return render(request,'productoffer.html',{'products':products})
 
-
+@never_cache
 @login_required(login_url='/dash/')
 def categoryoffer(request):
     datas = Category.objects.all()
-    
+   
 
     return render(request,'category.html',{'datas':datas})    
 
 
 
-
+@never_cache
 @login_required(login_url='/dash/')
 def categoryofferedite(request,id):
+    
     if request.method == 'POST':
         value = request.POST['number']
-        status = Category.objects.get(id = id)
-        Category.objects.filter(id = id).update(status=value)
+        data = Category.objects.get(id = id)
+        Category.objects.filter(id = id).update(category_offer=value)
+        prod = product.objects.filter(category = data) 
+        for i in prod:
+            if i.category.category_offer >= i.product_offer:
+                i.discount_price = (i.price) - ((i.price)*(i.category.category_offer) /100)
+            else:
 
+                i.discount_price = (i.price) - ((i.price)*(i.product_offer) /100)
+            i.save()
+
+        return redirect('categoryoffer') 
+
+
+
+@never_cache     
+@login_required(login_url='/dash/')
+def productofferedite(request,id): 
+    if request.method == 'POST':
+        print("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
+        value =int(request.POST['number'])
         
-    return redirect('categoryoffer') 
+        product.objects.filter(id = id).update(product_offer=value)
+        data = product.objects.get(id = id)
+        if data.category.category_offer >= data.product_offer:
+            data.discount_price = (data.price) - ((data.price)*(data.category.category_offer) /100)
+        else:
+
+            data.discount_price = (data.price) - ((data.price)*(data.product_offer) /100)
+        data.save()
+    
+        return redirect('productoffer') 
+
+@never_cache
+@login_required(login_url='/dash/')
+def coupon(request):
+    data = Coupon.objects.all()
+    form = couponform(request.POST or None)
+    if request.method=='POST':  
+        if form.is_valid():
+            print("jjjjjjjjjjjjjjjjjjj")
+            form.save()
+            data = Coupon.objects.all() 
+            return render(request,'coupon.html',{'data':data,'form':form})
+    return render(request,'coupon.html',{'data':data,'form':form})
+
+
+
+@never_cache
+@login_required(login_url='/dash/')
+def addcoupon(request):
+    form = couponform(request.POST or None)
+    
+    return redirect('coupon')    
+
+@never_cache
+@login_required(login_url='/dash/')
+def coupondelete(request):
+    id = request.GET.get('id')
+    user = Coupon.objects.filter(id=id)
+    user.delete()
+    return redirect('coupon')  
+
+
+
+@never_cache
+@login_required(login_url='/dash/')
+def adminsails(request):
+    order = order_place.objects.filter(status = 'Delivered')
+    return render(request,'adminsails.html',{'order':order})
+
+
+def exportexcel(request):
+
+
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment;filename=SalesReport' +\
+        str(datetime.datetime.now())+'.xls'
+    wb = xlwt.Workbook(encoding='utf-8')
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    ws = wb.add_sheet('SalesReport')
+    row_num = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+    print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+    columns = ['Products', 'quantity', 'date', 'total']
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+    font_style = xlwt.XFStyle()
+    print("ccccccccccccccccccccccccccccccccccccccccc")
+    rows = order_place.objects.filter(status = 'Delivered').values_list(
+        'products', 'quantity', 'orderdate__date', 'subtotal')
+    for row in rows:
+        print("dddddddddddddddddddddddddddddddddddddddddddd")
+        row_num += 1
+        for col_num in range(len(row)):
+            if col_num==0:
+                print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+                pro=product.objects.get(id=row[col_num])
+                ws.write(row_num, col_num, str(pro.name), font_style)
+            else:
+                print("ffffffffffffffffffffffffffffffffffffffffffffffffff")
+                ws.write(row_num, col_num, str(row[col_num]), font_style)
+    wb.save(response)
+    return response

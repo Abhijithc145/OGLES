@@ -20,13 +20,13 @@
       <tr>
 
         <th scope="col">{{data.name}}</th>
-        <th scope="col">{{datas.category_offer}}</th>
+        <th scope="col">{{data.category_offer}}</th>
 
         <th scope="col-lg-2" style="width: 210px;">
           
-            <form method="post" name=""  action="/dash/categoryofferedite">
+            <form method="post" name=""  action="{% url 'categoryofferedite' data.id %}">
             {% csrf_token %}
-              <input type="number" name="number"  maxlength="2" style="width: 100px;"  >
+              <input type="number" name="number" min="0"  max="90" style="width: 100px;" required >
              
              <input type="submit">
            </form>

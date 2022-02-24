@@ -39,6 +39,9 @@ urlpatterns = [
     path('adminsails',views.adminsails,name='adminsails'),
 
     path('exportexcel',views.exportexcel,name='exportexcel'),
+    # path('month',views.month,name='month'),
+    path('year',views.year,name='year'),
+    path('date',views.date,name='date'),
 
 
 

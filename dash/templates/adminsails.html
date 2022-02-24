@@ -11,7 +11,35 @@
 
     </div>
 </div> -->
-<div class="row">
+
+
+
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script>
+    
+$(document).ready(function(){
+$('#exanpletable').DataTable();
+});
+</script>
+<style>
+
+
+</style>
+
+
+
+<div class="d-sm-flex text-center  justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-center text-gray-800">Sails Report</h1>
+   
+</div>
+
+
+
+
+
+<div  class="row ">
     <div class="d-flex ">
              <a href="{% url 'exportexcel' %}" class="btn btn-info">Export Excel</a>
           
@@ -19,10 +47,33 @@
             <button type="submit" id="pdf"  class="btn btn-danger" >
               Download  PDF  
           </button>
+          
+
 
         </div>
+     <div class="d-flex">
+         <!-- <h1></h1>
+        <form class="d-flex" action="">
+            <label >From</label>
+            <input type="date"> <p>  - <label >To</label> </p>  <input type="date">
+         </form>
+         
+          <div class="container align-center">
+              <h1>Month</h1>
+               
+        </div> -->
+         
+     </div>
     </div>
-
+    <!-- <div class="row">
+        <h1>Year</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" name="year"  placeholder="Year">
+        <button type="submit" class="btn btn-primary"> Submit</button>
+    </form>
+</div>
+ -->
 
 
 <table class="table" name="exanpletable1" id="exanpletable">
@@ -64,5 +115,71 @@
 
 
 </script>
+
+<script src="{% static 'js3/html2pdf.bundle.min.js' %}"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+
+    document.getElementById('d1-pdf').onclick = function () {
+        var element = document.getElementById('example-table');
+
+        var opt = {
+            margin: 1,
+            filename: 'report.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf(element, opt);
+    };
+
+    function fromclick() {
+        var to = document.getElementById('dayto').value
+        var from = document.getElementById('dayfrom')
+        if (to == "") {
+            var nowDate = new Date();
+            var date = nowDate.getFullYear() + '-'
+            if ((nowDate.getMonth() + 1) < 10) {
+                date += '0' + (nowDate.getMonth() + 1) + '-'
+            }
+            else {
+                date += (nowDate.getMonth() + 1) + '-'
+            }
+            if (nowDate.getDate() < 10) {
+                date += '0' + nowDate.getDate()
+            }
+            else {
+                date += nowDate.getDate()
+            } from.setAttribute("max", date);
+        }
+        else {
+            from.setAttribute("max", to);
+        }
+    } 
+    function toclick() {
+        var to = document.getElementById('dayto')
+        var from = document.getElementById('dayfrom').value
+        var nowDate = new Date();
+        var date = nowDate.getFullYear() + '-'
+        if ((nowDate.getMonth() + 1) < 10) {
+            date += '0' + (nowDate.getMonth() + 1) + '-'
+        }
+        else {
+            date += (nowDate.getMonth() + 1) + '-'
+        }
+        if (nowDate.getDate() < 10) {
+            date += '0' + nowDate.getDate()
+        } else {
+            date += nowDate.getDate()
+        }
+        to.setAttribute("max", date);
+        if (from != "") {
+            to.setAttribute("min", from);
+        }
+    }
+
+</script>
+
+
 
 {% endblock content  %}

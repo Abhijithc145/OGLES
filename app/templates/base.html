@@ -10,7 +10,7 @@
   <meta name="author" content="Bootstrap-ecommerce by Vosidiy M.">
   <meta http-equiv="refresh" content="120">
 
-  <title>Alistyle</title>
+  <title>oGLE</title>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
@@ -63,19 +63,20 @@
       </div> <!-- container //  -->
     </section> <!-- header-top .// -->
 
-    <section class="border-bottom">
+    <section class="border-bottom   d-none d-md-none d-lg-block d-sm-none d-xs-none ">
       <nav class="navbar navbar-main  navbar-expand-lg navbar-light">
         <div class="container">
-          <a class="navbar-brand" href="/"><img src="{% static 'images/logo3661.png' %}" class="logo"></a>
+          <!-- <a class="navbar-brand" style="background-color:rgb(240, 72, 11);" href="/"><img src="{% static 'images/a.png' %}" class="logo"></a> -->
+         <a href="/"> <h1  style="color: #F46D0A ;" >oGLE</h1></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav2"
             aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <div class="collapse navbar-collapse" id="main_nav2">
+          <div class="collapse navbar-collapse" style="font-size: 10px;" id="main_nav2">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link" href="/">HOME </a>
+                <a class="nav-link" href="/">HOME </a> 
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/men">MEN</a>
@@ -113,7 +114,7 @@
                 <br>
                 <br>
               </form>  -->
-              <ul class="nav ">
+              <ul class="nav     ">
                 <li class="nav-item"><a href="/profile" class="nav-link"> <i class="fa fa-user-circle"></i> My Account </a></li>
                 <!-- <li class="nav-item"><a href="#" class="nav-link"> <i class="fa fa-heart"></i> Wishlist </a></li> -->
                 <li class="nav-item"><a href="/show_cart" class="nav-link"> <i class="fa fa-shopping-cart"></i> My Cart <span
@@ -162,6 +163,120 @@
         </div> <!-- container .// -->
       </nav>
     </section> <!-- header-main .// -->
+
+
+
+
+
+
+
+   
+
+
+    <section   class="border-bottom    d-blocl d-md-block d-lg-none d-sm-block d-xs-block ">
+      <nav  class="navbar navbar-main  navbar-expand-lg navbar-light">
+        <div class="container bg-dark">
+          <!-- <a class="navbar-brand" style="background-color:rgb(240, 72, 11);" href="/"><img src="{% static 'images/a.png' %}" class="logo"></a> -->
+          
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav2"
+            aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" style="font-size: 10px;" id="main_nav2">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/">HOME </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/men">MEN</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/women">WOMEN</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/sports">SPORTS</a>
+              </li>
+
+
+            </ul>
+           
+          </div>
+         
+        
+
+            <form class="form-inline my-2 my-lg-0" method="POST" action="" >
+                {% csrf_token %}
+              <div class="input-group">
+                {% if found %}
+                <!-- <form class="form-inline my-2 my-lg-0" method="POST" action="/search" ></form>
+                <input type="text" class="form-control" name="Search" placeholder="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-warning" type="submit">
+                    <i class="fa fa-search"></i>      
+                  </button>
+                </div>
+                <br>
+                <br>
+              </form>  -->
+              <ul class="nav     ">
+                <li class="nav-item"><a href="/profile" class="nav-link"> <i class="fa fa-user-circle"></i>  </a></li>
+                <!-- <li class="nav-item"><a href="#" class="nav-link"> <i class="fa fa-heart"></i> Wishlist </a></li> -->
+                <li class="nav-item"><a href="/show_cart" class="nav-link"> <i class="fa fa-shopping-cart"></i>  <span
+                      class="badge badge-pill badge-danger">{{count}}</span> </a></li>
+                <!-- <li class="nav-item"><a href="/show_wishlist" class="nav-link"> <i class="fa fa-solid fa-heart"></i> wishlist  </a></li>      
+                -->
+                <li class="nav-item"><a href="/logout"  class="nav-link fa-angle-double-right">  </a>
+                </li>   <!-- <div class="input-group">
+                  <button class="btn btn-warning" >
+                    <a href="/logout"> logout</a>
+                  </buttton> -->
+      
+              </ul>
+             
+
+             
+
+
+
+
+
+
+
+
+
+
+
+
+                {% else %}
+
+
+
+
+                <div  class="input-group">
+                  <button style="font-size: 7px;" class="btn btn-primary">
+                    <a href="/login"> login/Registration</a>
+                  </button>
+                </div>
+
+
+                {% endif %}
+              </div>
+            </form>
+          </div>
+           <!-- collapse .// -->
+        <!-- container .// -->
+      </nav>
+      <h1 style="color: #F46D0A ;" class="text-center" >oGLE</h1>
+    </section>
+
+
+
+
+
+
+
+
   </header> <!-- section-header.// -->
 
 

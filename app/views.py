@@ -84,49 +84,28 @@ def login(request):
 
     return render(request,'login.html',{'form':form})
     
-
+@never_cache
 def signup(request): 
-    # print("lknsdkfjn")
-    # if request.method == 'POST':
-    #     form = CustomUserCreationForm(request.POST)
-    #     print('k')
-    #     print(form) 
-    #     if form.is_valid():
-    #         print('validdddddddddd')
-    #         form.save()
-    #         messages.success(request,"Account was created")
-    #         return redirect('login')
-    #     else:    
-    #         form = CustomUserCreationForm()
-    #         messages.success(request,"Please try again")
-    #         return render(request,'signup.html',{'form':form})    
-    # else:    
-    #     form = CustomUserCreationForm()
-    #     return render(request,'signup.html',{'form':form})
-
-    # return render(request,'signup.html',{'form':form})
+  
 
     form = CustomUserCreationForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
             num = request.POST.get("number")
             
-            # unblock =  CustomUser.objects.get(number = num)
-            # unblock.is_active = not(unblock.is_active)
-            # unblock.save()
-            print(num)
-            
+
             try:
-                
                 print("1234 ")
                 account_sid = os.environ['TWILIO_ACCOUNT_SID'] = 'AC0cd89e6a2967043b31b326bf43c970e6'
                 auth_token = os.environ['TWILIO_AUTH_TOKEN'] = 'a272df0f0165a7911100ea7d372940d0'
                 client = Client(account_sid, auth_token)
-                form.save()
+                
                 verification = client.verify \
                                 .services('VAa2d5b75d4f3752b5f4cdb33425b40f65') \
                                 .verifications \
                                 .create(to="+91"+num, channel='sms')
+                form.save()     
+                return render(request, 'regotp.html', {'userNum': num, 'url': '/regotp','form': form})           
                                 
             except:
                 print("qwertyuio")
@@ -134,7 +113,7 @@ def signup(request):
                 return render(request, 'signup.html',{'err': "number doesn't exist",'form': form})
 
 
-            return render(request, 'regotp.html', {'userNum': num, 'url': '/regotp','form': form})
+        return render(request, 'signup.html',{'err': "number doesn't exist",'form': form})
 
 
         
@@ -169,7 +148,7 @@ def signup(request):
 
 
 
-
+@never_cache
 def regotp(request):
 
     num = request.POST['number']
@@ -209,19 +188,17 @@ def regotp(request):
 
 
 # AC0cd89e6a2967043b31b326bf43c970e6
-
+@never_cache
 def phone(request):
     # global num,username
     print('-----------------------')
     if request.method =='POST':
         phone = request.POST['number']
-        print(phone)
 
         if CustomUser.objects.filter(number=phone).exists():
             user = CustomUser.objects.get(number=phone)
             # username = user.username    
             num = phone
-            print('nummmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
 
             try:
                 print("1234 ")
@@ -232,6 +209,7 @@ def phone(request):
                                 .services('VAa2d5b75d4f3752b5f4cdb33425b40f65') \
                                 .verifications \
                                 .create(to="+91"+num, channel='sms')
+
             except:
                 print("qwertyuio")
                 messages.success(request,"Please try again")
@@ -240,7 +218,7 @@ def phone(request):
         print('nottttttttttttttttttttttttt')
         messages.success(request,"Please try again")
     return render(request,'phone.html')
-
+@never_cache
 def otp(request):
     num = request.POST['number']
     otp = request.POST['otp']
@@ -493,7 +471,6 @@ def sports(request):
         brand=list(set(brand1))
         cart = []
         cart_product = [p for p  in cartproduct.objects.all() if  p.guest==guestuser]
-        print("///////////////////////////////////")
         
         count = 0
         for i in cart_product:
@@ -540,18 +517,26 @@ def productdetail(request):
 
         return render(request,'productdetail.html',{'products':products,'found': u,'carts':cart,'count':count})
     
+    else:
+        if not request.session.session_key:
+            request.session.create()
+        guestuser = request.session.session_key
+        cart_product = [p for p  in cartproduct.objects.all() if  p.guest==guestuser]
+
+        id = request.GET.get('id')
+        products = product.objects.get(id=id)
+        products.save()
+            
+        u = found(request)
+        cart = []
+        count = 0
+        for i in cart_product:
+            count = count+1
+            cart.append(i.products.name)
    
 
-    id = request.GET.get('id')
-    products = product.objects.get(id=id)
-    products.save()
-    
-    u = found(request)
-    cart = False
-   
 
-
-    return render(request,'productdetail.html',{'products':products,'found': u,'cart':cart})
+        return render(request,'productdetail.html',{'products':products,'found': u,'cart':cart})
 
 
 
@@ -573,7 +558,8 @@ def brand(request):
             count = count+1
             cart.append(i.products.name)
         return render(request,'brand.html',{'found': u,'brand':brand,'count':count, 'prod':prod})    
-
+    
+    
     return render(request,'brand.html',{'found': u,'brand':brand,'prod':prod})
 
 
@@ -877,7 +863,7 @@ def minuscart(request):
            
             return JsonResponse({'result':'fail'})
 
-
+@never_cache
 def checkout(request):
     u = found(request)
     if request.session.has_key('user'):
@@ -1029,10 +1015,7 @@ def order(request):
     
         
         id = request.GET.get('custid')
-        print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
-        print(coupen)
-        print("lllllllllllllllllllllllllllllllllllllllllllllllllllll")
-        print(id)
+        
        
         orderdat = order_place.objects.all()
        
@@ -1093,6 +1076,7 @@ def order(request):
 
         if 'coupen_id' in request.session:
             del request.session['coupen_id']
+         
          
 
         return render(request,'invoice.html',{'neworder':neworder,'found': u,'user':user1,'dat':id, 'addres':addres,'total':total})
@@ -1209,7 +1193,7 @@ def pricesort(request):
     if request.method == 'POST':
         min =int(request.POST.get('minvalue'))
         max = int(request.POST.get('maxvalue'))
-        value = product.objects.filter(price__range=[min,max]).order_by('price')
+        value = product.objects.filter(discount_price__range=[min,max]).order_by('price')
     brand = Brand.objects.all()
     u = found(request)
    
@@ -1233,7 +1217,7 @@ def womenpricesort(request):
     if request.method == 'POST':
         min =int(request.POST.get('minvalue'))
         max = int(request.POST.get('maxvalue'))
-        value = product.objects.filter(price__range=[min,max],category_id = 2).order_by('price')
+        value = product.objects.filter(discount_price__range=[min,max],category_id = 2).order_by('price')
 
     brand1 = [i.brand for i in  product.objects.filter(category_id = 2)]
     brand=list(set(brand1))
@@ -1257,7 +1241,7 @@ def menpricesort(request):
     if request.method == 'POST':
         min =int(request.POST.get('minvalue'))
         max = int(request.POST.get('maxvalue'))
-        value = product.objects.filter(price__range=[min,max],category_id = 1).order_by('price')
+        value = product.objects.filter(discount_price__range=[min,max],category_id = 1).order_by('price')
     cart = []
     brand1 = [i.brand for i in  product.objects.filter(category_id = 1)]
     brand=list(set(brand1))
@@ -1283,7 +1267,7 @@ def sportspricesort(request):
     if request.method == 'POST':
         min =int(request.POST.get('minvalue'))
         max = int(request.POST.get('maxvalue'))
-        value = product.objects.filter(price__range=[min,max],category_id = 3).order_by('price')
+        value = product.objects.filter(discount_price__range=[min,max],category_id = 3).order_by('price')
 
     brand1 = [i.brand for i in  product.objects.filter(category_id = 3)]
     brand=list(set(brand1))
@@ -1385,7 +1369,7 @@ def personaddressadd(request):
 
 
 
-
+@never_cache    
 def buynow(request):
     
     u = found(request)
@@ -1419,7 +1403,7 @@ def buynow(request):
     #     return render(request,'checkout1.html',{'found': u,'buynow': order,'id':id,'valu':valu, 'count':count,'details':details})    
 
     # return render(request,'checkout1.html',{'found': u,'buynow':buynow, 'count':count,'details':details})    
-
+@never_cache
 def showcheckout(request):
     u = found(request)
     if request.session.has_key('user'):
@@ -1494,7 +1478,7 @@ def address1(request):
 def orderbuynow(request):
     u = found(request)
     value = request.GET.get('paypalnum')
-    coupen = request.GET.get('coupenId' or 0)
+    coupen = request.GET.get('coupenId')
 
     if request.session.has_key('user'):
         user = request.session['user']
@@ -1514,15 +1498,16 @@ def orderbuynow(request):
             cart = buyproduct.objects.get()
             print(cart)
             total = prod_details.total
+            orderdata = order_place()
 
             if coupen:
                 c = Coupon.objects.get(id=coupen)
                 total = total - (total * c.coupon_offer / 100)
-                orderdat.coupons = c
+                orderdata.coupons = c
                 
 
 
-            orderdata = order_place()
+            
             orderdata.user=user1
             orderdata.products=prod_details.products
             orderdata.address=addres

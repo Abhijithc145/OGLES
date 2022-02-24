@@ -1,6 +1,14 @@
 {% extends 'adminbase.html' %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function(){
+$('#example').DataTable();
+});
+</script>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Product Management</h1>
     <a href="/dash/adminaddproduct" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
@@ -9,7 +17,7 @@
 
 
 
-<table class="table table-dark">
+<table id="example" class="table table-dark">
     <thead>
       <tr>
        

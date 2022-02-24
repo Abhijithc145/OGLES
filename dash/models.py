@@ -29,7 +29,7 @@ class product(models.Model):
     category =  models.ForeignKey('Category',on_delete=models.CASCADE,null=True)
     price = models.PositiveIntegerField()
     stock = models.PositiveIntegerField()
-    discount_price = models.IntegerField(null=True,blank=True)
+    discount_price  = models.IntegerField(null=True,blank=True)
     product_offer = models.PositiveIntegerField(default=0,null=True,blank=True)
     image = models.ImageField(blank=False,upload_to="media/")
     image1 = models.ImageField(blank=False,upload_to="media/")

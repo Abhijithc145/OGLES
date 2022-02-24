@@ -95,7 +95,22 @@ def adminaddproduct(request):
     if request.method=='POST':
         form = prodectdetai(request.POST or None ,request.FILES)
         if form.is_valid():
-            form.save()
+            forms =form.save(commit=False)
+            print(request.POST['category'])
+            print(".................................................")
+            catrgory = Category.objects.get(id = request.POST['category'])
+            
+
+            var = int(request.POST['price'])
+            if catrgory.category_offer > 0:
+                
+                forms.discount_price = var - ((var*int(catrgory.category_offer))/100)
+            else:
+                forms.discount_price  = var 
+            forms.save()     
+
+
+
             return redirect('adminproduct')
         else:
             print(form.errors)
@@ -421,8 +436,6 @@ def adminsails(request):
 
 
 def exportexcel(request):
-
-
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment;filename=SalesReport' +\
         str(datetime.datetime.now())+'.xls'
@@ -453,3 +466,39 @@ def exportexcel(request):
                 ws.write(row_num, col_num, str(row[col_num]), font_style)
     wb.save(response)
     return response
+
+
+def date(request):
+
+
+    return redirect('adminsails')
+
+
+# def month(request):
+#     if request.method == "POST":
+#         month_report = request.POST['month']
+#         if month_report!='':
+#             monthr = month_report.split('-')
+            
+#             report = order_place.objects.filter(orderdate__month = str(monthr[1]),orderdate__year = str(monthr[0])).order_by('-orderdate')
+#             print(report)
+#         else:
+#             report = order_place.objects.all().order_by('-orderdate')
+#         return render(request, 'adminsails.html',{'order':report})
+    
+
+#     return redirect('adminsails')
+
+
+def year(request):
+    if request.method == "POST":
+        year = int(request.POST['year'])
+        if year!='':
+            report =order_place.objects.filter(orderdate__year = year,status = 'Delivered').order_by('-orderdate')
+        else:
+            report = order_place.objects.all().order_by('-orderdate')
+
+
+        return render(request, 'adminsails.html',{'order':report})
+    
+    return redirect('adminsails') 

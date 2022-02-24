@@ -23,8 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5tlint6r*^!htbhf01(vmwfrcy&ccac@z^puj0jxdp*f$k0r93'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 
@@ -81,10 +80,10 @@ WSGI_APPLICATION = 'watch.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'WATCHS',  
-        'USER': 'root',  
-        'PASSWORD': 'Abhijith@123',  
-        'HOST': '127.0.0.1',  
+        'NAME': 'watch',  
+        'USER': 'admin',  
+        'PASSWORD': 'abhijith123',  
+        'HOST': 'database-1.ckoe9hdsspw5.us-east-1.rds.amazonaws.com',  
         'PORT': '3306', 
     }
 }

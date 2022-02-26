@@ -1,7 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <style>
+    <!-- <style>
 
 :root {
   --blue: #4e73df;
@@ -4153,6 +4153,7 @@ input[type="button"].btn-block {
   flex-basis: 100%;
   flex-grow: 1;
   align-items: center;
+
 }
 
 .navbar-toggler {
@@ -11271,7 +11272,7 @@ body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
 
-    </style>
+    </style> -->
 
 <head>
 
@@ -11300,26 +11301,31 @@ body.sidebar-toggled footer.sticky-footer {
 
 </head>
 
-<body id="page-top">
+<body>
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<!--   
+    <div id="wrapper" style=" display: flex;flex: 1 0 auto;  background-color: #f8f9fc;
+                                                                width: 100%;
+                                                             overflow-x: hidden;">
 
-            <!-- Sidebar - Brand -->
+        
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion " style=" display: flex; margin-top: 0;
+        margin-bottom: 1rem;
+        flex-direction: column;padding-left: 0;margin-bottom: 0;list-style: none;" id="accordionSidebar">
+
+            
             <a class="sidebar-brand d-flex align-items-center justify-content-center" >
-                <div class="sidebar-brand-icon rotate-n-15">
+                <div class="sidebar-brand-icon rotate-n-15" style="font-size: 2rem;">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3"> Admin <sup>2</sup></div>
             </a>
 
-            <!-- Divider -->
+            
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
+            
             <li class="nav-item active">
                 <a class="nav-link" href="/dash/adminhome">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -11331,15 +11337,15 @@ body.sidebar-toggled footer.sticky-footer {
                     <span>Sails Reports</span></a>
             </li>
 
-            <!-- Divider -->
+            
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
+            
             <div class="sidebar-heading">
                 Interface
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            
             <li class="nav-item">
                 <a class="nav-link" href="/dash/adminproduct">
                     <i class="fas fa-fw fa-table"></i>
@@ -11370,7 +11376,7 @@ body.sidebar-toggled footer.sticky-footer {
                 Addons
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
@@ -11379,44 +11385,24 @@ body.sidebar-toggled footer.sticky-footer {
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Offer Screens:</h6>
+                        <h6 class="collapse-header" style=" margin: 0;
+                        white-space: nowrap;
+                        padding: .5rem 1.5rem;
+                        text-transform: uppercase;
+                        font-weight: 800;
+                        font-size: 0.65rem;
+                        color: #b7b9cc;">Offer Screens:</h6>
                         <a class="collapse-item" href="/dash/productoffer">Product Offer</a>
                         <a class="collapse-item" href="/dash/categoryoffer">Category Offer</a>
                         <a class="collapse-item" href="/dash/coupon">Coupon Offer</a>
                         
                     </div>
                 </div>
-                <!-- <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Offer Screens:</h6>
-                        <a class="collapse-item" href="/dash/categoryoffer">Category Offer</a>
-                        
-                    </div>
-                </div> -->
+              
             </li>
 
 
 
-            <!-- <div class="sidebar-heading">
-                Offers
-            </div>
-            <i class="fa-solid fa-person-dolly">
-                <li class="nav-item">
-                    <a class="nav-link" href="/dash/productoffer">
-                        <i class="fas fa-fw fa-solid fa-certificate"></i>
-                        <span>Product Offer</span></a>
-                </li>
-                
-          
-                <li class="nav-item">
-                    <a class="nav-link" href="/dash/categoryoffer">
-                        <i class="fas fa-fw fa-solid fa-atom"></i>
-                        <span>Category Offer</span></a>
-                </li>
-               
-                
-            </i> -->
-            
            
             <i class="fa-solid "></i>
             <hr class="sidebar-divider">
@@ -11426,131 +11412,63 @@ body.sidebar-toggled footer.sticky-footer {
                     <span>Log Out</span></a>
             </li>
 
-            <!-- Heading -->
             
-            <!-- Nav Item - Pages Collapse Menu -->
-            <!-- <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="/dash/adminlogout">Logout</a>
-                        
-                    </div>
-                </div>
-            </li>
-
-           -->
-            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
+          
             
         </ul>
-        <!-- End of Sidebar -->
+      
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            <div id="content">
+        <div id="content-wrapper" style="background-color: #f8f9fc;
+                                                   width: 100%;
+                                  overflow-x: hidden;flex: 1 0 auto;" class="d-flex flex-column">
 
-                <!-- Topbar -->
+            
+            <div id="content" style="flex: 1 0 auto;">
+
+                
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                    <!-- Sidebar Toggle (Topbar) -->
+                  
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
+                    
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <!-- <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div> -->
+                          
                         </div>
                     </form>
 
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <!-- <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form> -->
-                            </div>
-                        </li>
-
-                        <!-- Nav Item - Alerts -->
-                       
-
-                        <!-- Nav Item - Messages -->
-                       
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                               
-                            <!-- Dropdown - User Information -->
-                            
-                        </li>
-
-                    </ul>
+                    
+                 
 
                 </nav>
-                <!-- End of Topbar -->
-                {% block content %}
-
-                {% endblock %}
-                <!-- Begin Page Content -->
+              
+                
+                
                 <div class="container-fluid">
 
                    
 
-                    <!-- Content Row -->
+                    
                     <div class="row">
 
-                        <!-- Earnings (Monthly) Card Example -->
+                        
                         <div class="col-xl-3 col-md-6 mb-4">
                             
                         </div>
 
-                        <!-- Earnings (Monthly) Card Example -->
+                        
                         <div class="col-xl-3 col-md-6 mb-4">
                           
                         </div>
 
-                        <!-- Earnings (Monthly) Card Example -->
+                        
                         <div class="col-xl-3 col-md-6 mb-4">
                             
                         </div>
@@ -11558,11 +11476,11 @@ body.sidebar-toggled footer.sticky-footer {
                        
                     </div>
 
-                    <!-- Content Row -->
+                    
 
                     <div class="row">
 
-                        <!-- Area Chart -->
+                        
                         <div class="col-xl-8 col-lg-7">
                             
                            
@@ -11571,19 +11489,19 @@ body.sidebar-toggled footer.sticky-footer {
                         <div class="col-lg-6 mb-4">
 
                            
-                            <!-- Approach -->
+                          
                            
 
                         </div>
                     </div>
 
                 </div>
-                <!-- /.container-fluid -->
+                
 
             </div>
-            <!-- End of Main Content -->
+          
 
-            <!-- Footer -->
+            
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -11591,18 +11509,16 @@ body.sidebar-toggled footer.sticky-footer {
                     </div>
                 </div>
             </footer>
-            <!-- End of Footer -->
+          
 
         </div>
-        <!-- End of Content Wrapper -->
+        
 
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
+  </div>
+  
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
-    </a>
+    </a> -->
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -11611,6 +11527,7 @@ body.sidebar-toggled footer.sticky-footer {
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
     <!-- Core plugin JavaScript-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
     <!-- Custom scripts for all pages-->
@@ -11620,6 +11537,95 @@ body.sidebar-toggled footer.sticky-footer {
     <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
 
     <!-- Page level custom scripts -->
+
+
+    <div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a href="" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">ADMIN</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item">
+                        <a href="/dash/adminhome" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="/dash/adminsails" class="nav-link align-middle px-0">
+                          <i class="fs-4 bi-person"></i> <span class="ms-1 d-none d-sm-inline">Sails Report</span>
+                      </a>
+                  </li>
+                    
+                    
+                    <li>
+                        <a href="/dash/adminproduct" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Product Management</span></a>
+                    </li> 
+                    <li>
+                      <a href="/dash/adminuser" class="nav-link px-0 align-middle">
+                        <i class="bi bi-people"></i> <span class="ms-1 d-none d-sm-inline">User Management</span></a>
+                   </li>
+                   
+                    <li>
+                        <a href="/dash/admincategory" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-list"></i> <span class="ms-1 d-none d-sm-inline">Category Management</span> </a>
+                    </li>
+
+                    <li>
+                      <a href="/dash/adminorder" class="nav-link px-0 align-middle">
+                          <i class="fs-4 bi-box"></i> <span class="ms-1 d-none d-sm-inline">Order Management</span></a>
+                   </li>
+
+
+                    <li>
+                        <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">OFFER</span> </a>
+                            <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="/dash/productoffer" class="nav-link px-0"> <span class="d-none d-sm-inline">Product Offer</span> 1</a>
+                            </li>
+                            <li>
+                                <a href="/dash/categoryoffer" class="nav-link px-0"> <span class="d-none d-sm-inline">Category Offer</span> 2</a>
+                            </li>
+                            <li>
+                                <a href="/dash/coupon" class="nav-link px-0"> <span class="d-none d-sm-inline">Coupon Offer</span> 3</a>
+                            </li>
+                            
+                        </ul>
+                    </li> 
+                  
+
+
+                </ul>
+                <hr>
+                <hr>
+                <div class="dropdown pb-4">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-1">loser</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col py-3">
+          {% block content %}
+
+          {% endblock %}
+        </div>
+    </div>
+</div>
+
     <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
     <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>

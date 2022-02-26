@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5tlint6r*^!htbhf01(vmwfrcy&ccac@z^puj0jxdp*f$k0r93'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'watch.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'watch',  
-        'USER': 'admin',  
-        'PASSWORD': 'abhijith123',  
-        'HOST': 'database-1.ckoe9hdsspw5.us-east-1.rds.amazonaws.com',  
+        'NAME': 'WATCHS',  
+        'USER': 'root',  
+        'PASSWORD': 'Abhijith@123',  
+        'HOST': 'localhost',  
         'PORT': '3306', 
     }
 }
@@ -126,14 +126,14 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATIC_ROOT =BASE_DIR/'static'
-# STATICFILE_DIRS = [
-#                     os.path.join(BASE_DIR,'static')
-#                     ]    
+STATICFILE_DIRS = [
+                    os.path.join(BASE_DIR,'static')
+                    ]    
 
-if DEBUG:
-  STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-else:
-  STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# if DEBUG:
+#   STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# else:
+#   STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 MEDIA_ROOT= os.path.join(BASE_DIR, 'media/')

@@ -51,38 +51,38 @@
 				{% if user1  %}
 				<div  class="card-body">
 					<div class="row">
-					  <div class="col-sm-3">
+					  <div class="col-sm-3 col-6">
 						<p class="mb-0">Full Name</p>
 					  </div>
-					  <div class="col-sm-9">
+					  <div class="col-sm-9 col-6">
 						<p class="text-success mb-0">{{user1.first_name}} {{user1.last_name}}</p>
 					  </div>
 					</div>
 					<hr>
 					<div class="row">
-					  <div class="col-sm-3">
+					  <div class="col-sm-3 col-6">
 						<p class="mb-0">User name</p>
 					  </div>
-					  <div class="col-sm-9">
+					  <div class="col-sm-9 col-6">
 						<p class="text-success mb-0">{{user1.username}}</p>
 					  </div>
 					</div>
 					<hr>
 					<div class="row">
-					  <div class="col-sm-3">
+					  <div class="col-sm-3 col-6">
 						<p class="mb-0">Phone</p>
 					  </div>
-					  <div class="col-sm-9">
+					  <div class="col-sm-9 col-6">
 						  
 						<p class="text-success mb-0">+91 {{user1.number}}</p>
 					  </div>
 					</div>
 					<hr>
 					<div class="row">
-					  <div class="col-sm-3">
+					  <div class="col-sm-3 col-6">
 						<p class="mb-0">State</p>
 					  </div>
-					  <div class="col-sm-9">
+					  <div class="col-sm-9 col-6">
 						  {% if user  %}
 						<p class="text-success mb-0">{{user.state}}</p>
 						{% else %}
@@ -92,10 +92,10 @@
 					</div>
 					<hr>
 					<div class="row">
-					  <div class="col-sm-3">
+					  <div class="col-sm-3 col-6">
 						<p class="mb-0">Pincode</p>
 					  </div>
-					  <div class="col-sm-9">
+					  <div class="col-sm-9 col-6">
 						{% if user  %}
 						<p class="text-success mb-0">{{user.pincode}}</p>
 						{% else %}
@@ -105,12 +105,12 @@
 					</div>
 					<hr>
 					<div class="row">
-					  <div class="col-sm-3">
+					  <div class="col-sm-3 col-6">
 						<p class="mb-0">Address</p>
 					  </div>
-					  <div class="col-sm-9">
+					  <div class="col-sm-9 col-6">
 						{% if user  %}
-						<p class="text-success mb-0">{{user.locality}},{{user.city}},{{user.state}}</p>
+						<p class="text-success mb-0 ">{{user.locality}},{{user.city}},{{user.state}}</p>
 						{% else %}
 						<p class="text-danger mb-0">None</p>
 						{% endif %}

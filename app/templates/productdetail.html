@@ -1,8 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<style>
+@media all and (min-width: 508px) {
+	.previewPane{
+				width:500px;
+        		height:400px;
+	}
+}
 
- 
+@media not all and (min-width: 508px) {
+    .previewPane{
+				width:310px;
+        		height:300px;
+	}
+	.product-info-aside{
+		position: center;
+	}
+}
+</style>
 
 <!-- ========================= SECTION CONTENT ========================= -->
 <section class="section-content bg-white padding-y">
@@ -15,7 +31,7 @@
 <article class=" img-big-wrap"> 
 
 
-	<div class="previewPane"></div><div id="zoomer"></div>
+	<div class="size previewPane"></div><div id="zoomer"></div>
 		<div class="thumbs-wrap">
 			<img class="imgkey" src="{{products.image.url}}">
 			<img class="imgkey" src="{{products.image2.url}}">
@@ -70,20 +86,20 @@
 
 
 <dl class="row">
-  <dt class="col-sm-3">Manufacturer</dt>
-  <dd class="col-sm-9"><a href="#">Great textile Ltd.</a></dd>
+  <dt class="col-sm-3 col-6">Manufacturer</dt>
+  <dd class="col-sm-9 col-6"><a href="#">Great textile Ltd.</a></dd>
 
-  <dt class="col-sm-3">Article number</dt>
-  <dd class="col-sm-9">596 065</dd>
+  <dt class="col-sm-3 col-6">Article number</dt>
+  <dd class="col-sm-9 col-6">596 065</dd>
 
-  <dt class="col-sm-3">Guarantee</dt>
-  <dd class="col-sm-9">2 year</dd>
+  <dt class="col-sm-3 col-6">Guarantee</dt>
+  <dd class="col-sm-9 col-6">2 year</dd>
 
-  <dt class="col-sm-3">Delivery time</dt>
-  <dd class="col-sm-9">3-4 days</dd>
+  <dt class="col-sm-3 col-6">Delivery time</dt>
+  <dd class="col-sm-9 col-6">3-4 days</dd>
 
-  <dt class="col-sm-3">Availabilty</dt>
-  <dd class="col-sm-9">{{products.stock}}</dd>
+  <dt class="col-sm-3 col-6">Availabilty</dt>
+  <dd class="col-sm-9 col-6">{{products.stock}}</dd>
 </dl>
 
 	<!-- row.// -->
@@ -101,23 +117,10 @@
 	
 
 
-	<div class="form-row  mt-4">
-		<!-- <div class="form-group col-md flex-grow-0">
-			<div class="input-group mb-3 input-spinner">
-			  <div class="input-group-pre00px;}
-    .previewPane{
-        /* display:inline-block; */
-        width:500px;pend">
-			    <button class="btn btn-light" type="button" id="button-plus"> + </button>
-			  </div>
-			  <input type="text" class="form-control" value="1">
-			  <div class="input-group-append">
-			    <button class="btn btn-light" type="button" id="button-minus"> &minus; </button>
-			  </div>
-			</div>
-		</div>  -->
-         <br>
+	<div class="form-row d-flex col-md-12  mt-4 ">
 		
+		
+        <div class="form-group col-md-3">
 
      
 		{% if products.name in carts %}
@@ -127,8 +130,9 @@
 		
 		<a href="/show_cart">	<button class="btn btn-primary " style="display: none;" id="show{{products.id}}" value ="{{products.id}}"><i class="fa "> Show Cart </i> </button></a>
 		{% endif %}
+	  </div>
 
-		<div class="form-group col-md">
+		<div class="form-group col-md-3">
 			<!-- <a href="/cart?id={{products.id}}"  class="btn  btn-primary"> 
 				<i class="fas fa-shopping-cart"></i> <span class="text">Add to cart</span> 
 			</a> -->
@@ -183,8 +187,7 @@
         height:100px;}
     .previewPane{
         /* display:inline-block; */
-        width:500px;
-        height:500px;
+       
         cursor:crosshair;
         margin-right: 20rem;
         background-size:100% 100%}

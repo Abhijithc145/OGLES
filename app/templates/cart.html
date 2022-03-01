@@ -1,6 +1,42 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<style>
+	 @media (max-width: 650px) { 
+    .fsize{
+      font-size: 7px;
+    }
+	.imgs1{
+		width: 10px;
+		height: 10px;
+	}
+	.fsize1{
+      font-size: 7px;
+    }
+}
+	@media (max-width: 450px) { 
+		.fsize2{
+      font-size: 7px;
+    }
+	.f0{
+		font-size: 6px;
+	}
+
+	.btnsize{
+		padding: 14px 28px;
+	}
+	.f1{
+		font-size: 6px;
+		size: 10px;
+	}
+   .imgsize{
+	   width: 10px;
+	   height: 10px;
+   }
+    
+	
+  }
+</style>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -12,17 +48,17 @@
 <div class="container">
 
 <div class="row">
-	<main class="col-md-9">
-<div class="card">
+	<main class="col-md-9 col-sm-6 col-12">
+<div class="card col-12	">
 
-<table class="table table-borderless table-shopping-cart  ">
+<table class="col-9 table table-borderless table-shopping-cart  ">
 <thead class="text-muted">
 <tr class="small text-uppercase ">
-  <th scope="col">Product</th>
-  <th scope="col" style=" text-align: center;" >Name</th>
-  <th scope="col" width="120">Quantity</th>
-  <th scope="col" width="120">Price</th>
-  <th scope="col" class="text-right" width="200"> </th>
+  <th class="fsize" >Product</th>
+  <th class="fsize"  style=" text-align: center;" >Name</th>
+  <th class="fsize"  width="120">Quantity</th>
+  <th class="fsize"  width="120">Price</th>
+  <th  class="text-right"> </th>
 </tr>
 </thead>
 <tbody>
@@ -30,15 +66,15 @@
 <tr>
 	<td>
 		<figure class="itemside">
-			<div class="aside"><img src="{{cart.products.image.url}}" class="img-sm"></div>
+			<div class="aside imgs1"><img src="{{cart.products.image.url}}" class="img-sm"></div>
 		</figure>
 	</td>
     <td>
 		<figure class="itemside">
 
 			<figcaption class="info">
-				<a href="#" class="title text-dark" style="height: 10px; width: 300px;">{{cart.products.name}}</a>
-				<br><div id="error{{cart.id}}" style="display: none;height: 10px; width: 300px; color: red; "> Out off stock </div>
+				<a href="#" class="title text-dark fsize1" >{{cart.products.name}}</a>
+				<br><div class="fsize1"  id="error{{cart.id}}" style="display: none; color: red; "> Out off stock </div>
 				<!-- <p class="text-muted small">Size: XL, Color: blue, <br> Brand: Gucci</p> -->
 			</figcaption>
 		</figure>
@@ -46,7 +82,7 @@
        
 	<td> 
 		
-		<div class="form-row  col-md-2 col-sm-3">
+		<div class="form-row  ">
             <div class="form-group col-md flex-grow-0">
                 <div class="input-group mb-3 input-spinner">
                     <!-- <div class="input-group-append">
@@ -57,25 +93,25 @@
                     <i data_product ="{{cart.id}}"></i><button class="btn btn-light plus" type="button" id="button-plus"> + </button></i>
                   </div> -->
 
-				  <button class="minuscart" data-product="{{cart.id}}" data-action="/minuscart"><i class="fas fa-minus-square fa-lg"> </i></button> 
-                  <span style="font-size: 20px;font-weight: 900;" id="qty{{cart.id}}">{{cart.quantity}}</span>				    
-					<button class="pluscart" data-product="{{cart.id}}" data-action="/pluscart"><i class="fas fa-plus-square fa-lg"> </i></button> 
+				  <button class="minuscart f1" data-product="{{cart.id}}" data-action="/minuscart"><i class="fas fa-minus-square fa-lg"> </i></button> 
+                  <span style="font-weight: 900;" class="f1"  id="qty{{cart.id}}">{{cart.quantity}}</span>				    
+					<button class="pluscart f1" data-product="{{cart.id}}" data-action="/pluscart"><i class="fas fa-plus-square fa-lg"> </i></button> 
                 </div>
             </div>
 	</td>
 	
 	<td> 
 		<div class="price-wrap"> 
-			<var class="price" id="price{{cart.id}}">Rs.{{cart.products.discount_price}}</var> 
+			<var class="price fsize2" id="price{{cart.id}}">Rs.{{cart.products.discount_price}}</var> 
 			<!-- <small class="text-muted"> $315.20 each </small>  -->
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right"> 
-	<!-- <a data-original-title="Save to Wishlist" title="" href="#" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a>  -->
+	<!-- <a data-original-title="Save to Wishlist" title="" href= class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a>  -->
 	<!-- <a href="#" class="btn btn-light"> Remove</a> -->
 
 
-	<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal{{cart.id}}">
+	<button type="button" class="btn btn-secondary btnsize f0" data-toggle="modal" data-target="#exampleModal{{cart.id}}">
 		Remove
 		</button>
 		

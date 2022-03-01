@@ -2,7 +2,13 @@
 {% load static %}
 {% block content %}
 
-
+<style>
+  @media (max-width: 12450px) { 
+    .size{
+      width: 60px;
+    }
+  }
+</style>
 
 
 
@@ -82,9 +88,9 @@
                  {% csrf_token %}
               <div class="form-inline">
                 <label class="mr-2">Price</label>
-              <input class="form-control form-control-sm" name="minvalue" placeholder="Min" type="number" required>
+              <input class="size form-control form-control-sm" name="minvalue" placeholder="Min" type="number" required>
                 <span class="px-2"> - </span>
-              <input class="form-control form-control-sm" name="maxvalue" placeholder="Max" type="number" required>
+              <input class="size form-control form-control-sm" name="maxvalue" placeholder="Max" type="number" required>
               <button type="submit" class="btn btn-sm btn-success ml-2">Ok</button>
             </div>
             </form>

@@ -904,19 +904,23 @@ def checkout(request):
             shipping = 00
         
 
-     
+        try:
 
-        DATA = {
-                 "amount": alltotal * 100,
-                 "currency": "INR",
-                 "receipt": "receipt#1",
-                 "notes": {
-                "key1": "value3",
-                "key2": "value2"
-                      }
-            }
-        var = client.order.create(data=DATA)
-        var1 = var["id"]
+            DATA = {
+                    "amount": alltotal * 100,
+                    "currency": "INR",
+                    "receipt": "receipt#1",
+                    "notes": {
+                    "key1": "value3",
+                    "key2": "value2"
+                    }
+                }
+            var = client.order.create(data=DATA)
+            var1 = var["id"]
+
+        except:
+
+            return redirect('/')        
         
        
 
@@ -1029,9 +1033,10 @@ def order(request):
         key ={'0':'paypal','1':'cash_on_delivery', '3': 'razorpay'}
         value = request.GET.get('paypalnum')
         print(value)
-        
+        count = 0
 
         for i in cartproduct.objects.filter(user = user1):
+            count += 1
             prod = i.products
             id = request.GET.get('custid')
             addres = user_details.objects.get(id=id)
@@ -1073,13 +1078,13 @@ def order(request):
             print(p)
             neworder.append(orderdata)
             total = orderdata.subtotal
-
+        print(count)
         if 'coupen_id' in request.session:
             del request.session['coupen_id']
          
-         
-
-        return render(request,'invoice.html',{'neworder':neworder,'found': u,'user':user1,'dat':id, 'addres':addres,'total':total})
+        request.session['value']=count 
+        return redirect('invoice')    
+        # return render(request,'invoice.html',{'neworder':neworder,'found': u,'user':user1,'dat':id, 'addres':addres,'total':total})
         
     return redirect('/')
 
@@ -1092,38 +1097,15 @@ def invoice(request):
     if request.session.has_key('user'):
         user = request.session['user']
         user1 =CustomUser.objects.get(username=user)
-        cart = order_place.objects.filter(user = user1)
-        cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
-        count=0
-        addres = user_details.objects.get(id=cart)
-        tot = 0
-        if cart_product:
-            for p in cart_product:
-
-                tot = (p.quantity * p.products.price)+tot
-                p.total=tot
-                
-                
+        value = request.session['value']
+        data = order_place.objects.order_by("-id")[:value]
+        data1= data[0]
+        price = order_place.objects.last()
         
-        if cart_product:
-            if tot > 500:
-                alltotal = tot
-                shipping = "Free"
-            else:
-                alltotal = tot+40
-                shipping = 40    
-            
-        else:
-            alltotal = tot
-            shipping = 00
+        
+        
 
-        for i in cart_product:
-            count = count+1
-            print("-----------------------------")
-            print(count)
-            print("::::::::::::::::::::::;;;;;")
-
-        return render(request,'invoice.html',{'cart':cart,'found': u,'addres':addres,'count':count,'alltotal':alltotal,'user':user1, 'total':tot})
+        return render(request,'invoice.html',{'found': u,'user':user1,'data':data,'data1':data1,'price':price})
     
     return render(request,'invoice.html')        
 

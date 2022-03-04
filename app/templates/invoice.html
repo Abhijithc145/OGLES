@@ -73,7 +73,7 @@ color: #db1818
                                             <div class="text-left"> <span class="text-muted">Address</span> </div>
                                         </td>
                                         <td>
-                                            <div class="text-right"> <span class="font-weight-bold">{{addres.locality}}<br>{{addres.city}}</span> </div>
+                                            <div class="text-right"> <span class="font-weight-bold">{{data1.address.locality}}<br>{{data1.address.city}}</span> </div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -81,7 +81,7 @@ color: #db1818
                                             <div class="text-left"> <span class="text-muted">Pincode</span> </div>
                                         </td>
                                         <td>
-                                            <div class="text-right"> <span class="font-weight-bold">{{addres.pincode}}</span> </div>
+                                            <div class="text-right"> <span class="font-weight-bold">{{data1.address.pincode}}</span> </div>
                                         </td>
                                     </tr>
                                     <tr >
@@ -89,7 +89,7 @@ color: #db1818
                                             <div class="text-left"> <span class="font-weight-bold">State</span> </div>
                                         </td>
                                         <td>
-                                            <div class="text-right"> <span class="font-weight-bold">{{addres.state}}</span> </div>
+                                            <div class="text-right"> <span class="font-weight-bold">{{data1.address.state}}</span> </div>
                                         </td>
                                     </tr>
                                     <!-- <tr >
@@ -114,7 +114,7 @@ color: #db1818
                     <div class="product border-bottom table-responsive">
                         <table class="table table-borderless">
                             <tbody>
-                                {% for cart in neworder %}
+                                {% for cart in data %}
                                 
                                 <tr>
                                     <td width="20%"> <img src="{{cart.products.image.url}}" width="90"> </td>
@@ -141,7 +141,7 @@ color: #db1818
                                             <div class="text-left"> <span class="text-muted">Subtotal</span> </div>
                                         </td>
                                         <td>
-                                            <div class="text-right"> <span>Rs.{{total}}</span> </div>
+                                            <div class="text-right"> <span>Rs.{{price.subtotal}}</span> </div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -158,7 +158,7 @@ color: #db1818
                                             <div class="text-left"> <span class="font-weight-bold">Total</span> </div>
                                         </td>
                                         <td>
-                                            <div class="text-right"> <span class="font-weight-bold">Rs.{{total}}</span> </div>
+                                            <div class="text-right"> <span class="font-weight-bold">Rs.{{price.subtotal}}</span> </div>
                                         </td>
                                     </tr>
                                 </tbody>

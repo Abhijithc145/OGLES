@@ -26,7 +26,7 @@ urlpatterns = [
     path('buynow',views.buynow,name='buynow'),
     path('showcheckout',views.showcheckout,name='showcheckout'),
    
-    # path('cartoutofstock',views.cartoutofstock,name='invoice'),
+    path('invoice',views.invoice,name='invoice'),
     
     path('search',views.search,name='search'),
 

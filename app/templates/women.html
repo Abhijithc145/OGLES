@@ -3,15 +3,18 @@
 {% block content %}
 
 <style>
-  @media (max-width: 12450px) { 
-    .size{
-      width: 60px;
-    }
-  }
+  @media (min-width: 850px) { 
+ .lala{
+   width: 90%;
+   padding-left: 90px;
+   
+ }
+}
+
 </style>
 
 <!-- ========================= SECTION MAIN  ========================= -->
-<section class="section-intro padding-y">
+<section class="section-intro padding-y lala">
     <div class="container">
     <!-- ==============  COMPONENT SLIDER  BOOTSTRAP ============  -->
     <div id="carousel1_indicator" class="slider-home-banner carousel slide" data-ride="carousel">
@@ -47,7 +50,7 @@
     <!-- ========================= SECTION MAIN END// ========================= -->
     
     
-    <div class="container">
+    <div class="container lala">
     
       <!-- =============== SECTION 1 =============== -->
       <section class="padding-bottom">
@@ -198,7 +201,7 @@
                                     {% if found %}
                                     <a href="{% url 'buynow' %}?id={{i.id}}" class="btn btn-success"> <i class="fa "></i> Buy Now  </a>
                                     {% else %}
-                                    <a href="" class="btn btn-success"> <i class="fa "></i> Buy Now  </a>
+                                    <a href="{% url 'buynow' %}?id={{i.id}}" class="btn btn-success"> <i class="fa "></i> Buy Now  </a>
                                     {% endif %}
 
                   {% endif %}   

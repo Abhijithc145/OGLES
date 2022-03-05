@@ -25,7 +25,7 @@ $('#example').DataTable();
         <th scope="col">Brand</th>
         <th scope="col">Price</th>
         <th scope="col">Stock</th>
-        <th scope="col">Edite </th>
+        <th scope="col">Edit </th>
         <th scope="col">Delete </th>
       </tr>
     </thead>
@@ -40,7 +40,7 @@ $('#example').DataTable();
         
        
         <th scope="col"><button type="button" class="btn btn-sussccess">
-            <a class=" text-sussccess" href="{% url 'edite' %}?id={{user.id}}">Edite</a></button> </th>
+            <a class=" text-sussccess" href="{% url 'edite' %}?id={{user.id}}">Edit</a></button> </th>
 
         <th scope="col">
           <!-- Button trigger modal -->
@@ -53,7 +53,7 @@ $('#example').DataTable();
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" style="color: blue;" id="exampleModalLabel">Are you Sure </h5>
+        <h5 class="modal-title" style="color: blue;" id="exampleModalLabel">Are you Sure to delete </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -61,7 +61,7 @@ $('#example').DataTable();
      
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-       <a href="{% url 'delete' %}?id={{user.id}}"> <button type="button" class="btn btn-danger">confirme</button></a>
+       <a href="{% url 'delete' %}?id={{user.id}}"> <button type="button" class="btn btn-danger">Confirm </button></a>
         
       </div>
     </div>

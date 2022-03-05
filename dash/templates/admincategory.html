@@ -15,7 +15,7 @@
        
         <th scope="col">Category-name</th>
         
-        <th scope="col">Edite </th>
+        <th scope="col">Edit </th>
         <th scope="col">Delete </th>
       </tr>
     </thead>
@@ -28,7 +28,7 @@
         
        
         <th scope="col"><button type="button" class="btn btn-success">
-            <a href="{% url 'admineditecategory' %}?id={{data.id}}">Edite</a></button> </th>
+            <a href="{% url 'admineditecategory' %}?id={{data.id}}">Edit</a></button> </th>
         <!-- <th scope="col"><button type="button" class="btn btn-danger">
             <a href="{% url 'admindeletecategory' %}?id={{data.id}}">Delete</a></button> </th>    -->
         
@@ -44,7 +44,7 @@ Delete
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" style="color: rgb(15, 15, 17);" id="exampleModalLabel">Are you Sure </h5>
+      <h5 class="modal-title" style="color: rgb(15, 15, 17);" id="exampleModalLabel">Are you Sure to delete</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -52,7 +52,7 @@ Delete
   
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-     <a href="{% url 'admindeletecategory' %}?id={{data.id}}"> <button type="button" class="btn btn-danger">Comfirm</button></a>
+     <a href="{% url 'admindeletecategory' %}?id={{data.id}}"> <button type="button" class="btn btn-danger">Confirm</button></a>
       
     </div>
   </div>

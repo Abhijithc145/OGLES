@@ -2,6 +2,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 
+
 <!-- Mirrored from bootstrap-ecommerce.com/templates/alistyle-html/_HTML-Components/_header-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jan 2022 14:07:57 GMT -->
 
 <head>
@@ -47,7 +48,7 @@
 
 </head>
 
-<body>
+<body >
 
   <header class="section-header">
     <section class="navbar-light border-bottom">
@@ -149,9 +150,15 @@
 
 
                 <div class="input-group">
-                  <button class="btn btn-primary">
-                    <a style="color: black;" href="/login"> login/Registration</a>
-                  </button>
+                  <!-- <a style="color: black;" href="{% url 'login' %}"> -->
+                     <!-- <button style="color: #F46D0A;" class="btn ">
+                      login/Registration
+                      </button>
+                </a> -->
+                <a href="/show_cart" class="nav-link"> <i class="fa fa-shopping-cart">cart</i>  
+                  <!-- <span class="badge badge-pill badge-danger">{{count}}</span> </a> -->
+              
+                <a class="btn " style="color: #F46D0A;" href="{% url 'login' %}"> login/Registration</a>
                 </div>
 
 
@@ -254,6 +261,15 @@
 
 
                 <div  class="input-group">
+                  <!-- <p class="nav-item"><a href="/show_cart" class="nav-link"> <i class="fa fa-shopping-cart"></i> My Cart 
+                    <span
+                    class="badge badge-pill badge-danger">{{count}}</span> 
+                  </a></p> -->
+                  <button style="font-size: 7px;" class="btn btn-primary">
+                    <a href="/show_cart"> <i class="fa fa-shopping-cart"></i> </a>
+                  </button>
+                
+
                   <button style="font-size: 7px;" class="btn btn-primary">
                     <a href="/login"> login/Registration</a>
                   </button>

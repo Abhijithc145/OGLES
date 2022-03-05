@@ -18,7 +18,7 @@ class prodectdetai(forms.ModelForm):
 class categoryform(forms.ModelForm):
     class Meta:
         model = Category
-        fields='__all__'
+        fields=['name']
 
 
 class brandform(forms.ModelForm):

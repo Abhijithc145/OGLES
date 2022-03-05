@@ -10,6 +10,7 @@ from app.models import *
 from .form import *
 from .models import *
 import xlwt
+from django.db.models import Sum
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -44,6 +45,28 @@ def adminlogin(request):
 @never_cache
 @login_required(login_url='/dash')
 def adminhome(request):
+    user = CustomUser.objects.filter(is_superuser = False)
+    order_datas = order_place.objects.all().order_by('-orderdate')
+    deliv = order_place.objects.filter(status = 'Delivered')
+    de = order_place.objects.filter(status = 'Shipped')
+
+    
+
+    count= 0
+    ord = 0
+    ship =0
+    sss =0
+    for i in user:
+        count += 1
+    for i in de:
+        sss += 1    
+   
+    for i in order_datas:
+        ord += 1
+    for i in deliv:
+        ship += 1  
+      
+      
     orderplace = order_place.objects.filter(status='Placed').count()
     ordershiped = order_place.objects.filter(status='Shipped').count()
     orderdelivered = order_place.objects.filter(status='Delivered').count()
@@ -54,13 +77,21 @@ def adminhome(request):
     orderrazorpay = order_place.objects.filter(paymentmode='razorpay').count()
 
 
+
+
+        # daily sales
+    dialy_sales = order_place.objects.values('orderdate__day', 'orderdate__month', 'orderdate__year').filter(status="Delivered").annotate(Sum('subtotal')).order_by('-orderdate__date')[:7]
+
+   
+    monthly_sales = order_place.objects.values('orderdate__month').filter(status="Delivered").annotate(Sum('subtotal'))[:4]
     # products  = product.objects.all()
 
+    print(dialy_sales)
+    print(monthly_sales)
     
 
 
-
-    return render(request,'adminhome.html', {'orderplace':orderplace,'orderpaypal':orderpaypal,'orderrazorpay':orderrazorpay, 'ordercashondelivery':ordercashondelivery, 'ordershiped':ordershiped,'orderdelivered':orderdelivered})
+    return render(request,'adminhome.html', {'orderplace':orderplace,'dialy_sales':dialy_sales,'monthly_sales':monthly_sales, 'orderpaypal':orderpaypal,'orderrazorpay':orderrazorpay,'sss':sss, 'ordercashondelivery':ordercashondelivery, 'count':count,'ord':ord,'ship':ship, 'ordershiped':ordershiped,'orderdelivered':orderdelivered})
 
 
 

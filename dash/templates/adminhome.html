@@ -1,6 +1,59 @@
 {% extends 'adminbase.html' %}
 {% load static %}
 {% block content %}
+<div class="d-sm-flex align-items-center bg-secondary justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-center text-gray-800">Dash Board</h1>
+ 
+</div>
+<div class="row pb-5"></div>
+<div class="row">
+    <div class="col-sm-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title font-weight-bold">Total order - <a class="text-success">{{ord}}</a></h5>
+          <p class="card-text"></p>
+          
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card">
+        <div class="card-body">
+            <h5 class="card-title font-weight-bold">Total Users - <a class="text-success">{{count}}</a></h5>
+          <p class="card-text"></p>
+          
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title font-weight-bold">Total Shipping - <a class="text-success">{{sss}}</a></h5>
+            
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title font-weight-bold">Total Delivery - <a class="text-success">{{ship}}</a></h5>
+            <p class="card-text"></p>
+            
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="row pb-5"></div>
+
+
+
+  
+
+
+
+
+
 
 <div  class="row">
     <div class="col-lg-7">
@@ -10,6 +63,15 @@
     <div class="col-lg-4">
         <canvas  style="height: 100px; width: 100px;" id="myChart"></canvas>
     </div>
+    <div class="row pb-5"></div>
+    <div class="col-lg-">
+      <canvas  style="height: 300px; width: 800px;" id="myChartes"></canvas>
+  </div>
+  <!-- <div class="col-lg-">
+    <canvas  style="height: 300px; width: 800px;" id="myChartess"></canvas>
+</div> -->
+</div>
+
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -99,4 +161,89 @@ const myCharts = new Chart(ctxs, {
     });
     </script>
      
+
+
+
+
+
+
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+  const ctxes = document.getElementById('myChartes').getContext('2d');
+  const myChartes = new Chart(ctxes, {
+      type: 'line',
+      data: { 
+          labels: ['dialy_sales'],
+          datasets: [{
+              label: '# of Votes' ,
+              data: [{% for i in dialy_sales %} {{ i.subtotal__sum}},{% endfor %}],
+              backgroundColor: [
+                  'rgb(255,127,80)',
+                  'rgb(220,20,60)',
+                  'rgb(165,42,42)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
+  </script>    
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctxess = document.getElementById('myChartess').getContext('2d');
+const myChartess = new Chart(ctxess, {
+    type: 'line',
+    data: { 
+        labels: ['monthly_sale'],
+        datasets: [{
+            label: '# of Votes' ,
+            data: [{% for i in monthly_sales %} {{ i.subtotal__sum}},{% endfor %}],
+            backgroundColor: [
+                'rgb(255,127,80)',
+                'rgb(220,20,60)',
+                'rgb(165,42,42)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)', 
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script> 
 {% endblock content  %}

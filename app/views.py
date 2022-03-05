@@ -77,6 +77,9 @@ def login(request):
 
                 
                 moveguest(request)
+                if request.session.has_key('gust'):
+                    return redirect('buynow')
+                    
                 return redirect('home')
             else:
                 form = loginform()
@@ -178,7 +181,7 @@ def regotp(request):
         return redirect('login')
     else:
         print("]'/[;.]'/[;.'[;.['[;.[';'")
-        messages.success(request,"Please try again")
+        messages.error(request,"Wrong input")
         return render(request, 'regotp.html', {'userNum': num, 'url': '/regotp'})
 
 
@@ -202,6 +205,7 @@ def phone(request):
 
             try:
                 print("1234 ")
+                print(num)
                 account_sid = os.environ['TWILIO_ACCOUNT_SID'] = 'AC0cd89e6a2967043b31b326bf43c970e6'
                 auth_token = os.environ['TWILIO_AUTH_TOKEN'] = 'a272df0f0165a7911100ea7d372940d0'
                 client = Client(account_sid, auth_token)
@@ -244,9 +248,11 @@ def otp(request):
         request.session['user'] = name
         moveguest(request)
         
+        if request.session.has_key('gust'):
+            return redirect('buynow')
         return redirect('/')
     else:
-        messages.success(request,"Please try again")
+        messages.error(request,"Wrong input")
         return render(request, 'otp.html', {'userNum': num, 'url': '/otp'})
 
 def resendotp(request):
@@ -270,37 +276,7 @@ def resendotp(request):
 
     
     
-#     return render(request,'phone.html')
 
-# def send_otp(number):
-#     global num
-#     num = number
-#     try:
-#         account_sid = os.environ['TWILIO_ACCOUNT_SID'] = 'ACba338ac9b1f4db23a8a813312ec5a12b'
-#         auth_token = os.environ['TWILIO_AUTH_TOKEN'] = 'c413144c264d4ac353511706016ee443'
-#         client = Client(account_sid, auth_token)
-#         verification = client.verify \
-#                         .services('VAb6edc28e3758f37bef1650062e5b45fd') \
-#                         .verifications \
-#                         .create(to=num, channel='sms')
-#         return True
-#     except:
-#         return False
-
-# def verify_otp(otp):
-#     account_sid = os.environ['TWILIO_ACCOUNT_SID'] = 'ACba338ac9b1f4db23a8a813312ec5a12b'
-#     auth_token = os.environ['TWILIO_AUTH_TOKEN'] = 'c413144c264d4ac353511706016ee443'
-#     client = Client(account_sid, auth_token)
-
-#     verification_check = client.verify \
-#                             .services('VAb6edc28e3758f37bef1650062e5b45fd') \
-#                             .verification_checks \
-#                             .create(to=num, code=otp)
-
-    
-#     return verification_check.status        
-
-    
 
 def home(request):
     brand = Brand.objects.all()
@@ -1357,7 +1333,11 @@ def buynow(request):
     u = found(request)
     if request.session.has_key('user'):
 
+        
+
+
         user = request.session['user']
+        
         user1 =CustomUser.objects.get(username=user)
         details  = [p for p  in user_details.objects.all() if  p.user==user1]
         cart_product = [p for p  in cartproduct.objects.all() if  p.user==user1]
@@ -1365,7 +1345,15 @@ def buynow(request):
         for i in cart_product:
              count = count+1
 
-        prod_id = request.GET.get('id')   
+        if request.session.has_key('gust'):
+            prod_id=request.session['gust']
+            del request.session['gust']
+
+        elif not request.session.has_key['gust']:
+            return redirect ('/')    
+        else:    
+            prod_id = request.GET.get('id')   
+
         buynow = product.objects.get(id = prod_id)
         order =  buyproduct()
         order.id = 1
@@ -1380,6 +1368,10 @@ def buynow(request):
         print(valu.value)
 
         return redirect('showcheckout')
+    else:
+        request.session['gust']=request.GET.get('id')  
+        return redirect('login')
+
         
         
     #     return render(request,'checkout1.html',{'found': u,'buynow': order,'id':id,'valu':valu, 'count':count,'details':details})    

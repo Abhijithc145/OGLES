@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'watch.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'WATCHS',  
+        'NAME': 'ogles',  
         'USER': 'root',  
         'PASSWORD': 'Abhijith@123',  
         'HOST': 'localhost',  
@@ -123,7 +123,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATIC_ROOT =BASE_DIR/'static'
 STATICFILE_DIRS = [

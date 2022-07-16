@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import render,redirect
 from .forms import *
 from dash.models import *
+import razorpay
 from .models import *
 from django.contrib.auth import authenticate
 from django.views.decorators.cache import never_cache
@@ -17,11 +18,11 @@ from django.db.models import Sum
 
 from twilio.rest import Client
 import razorpay
-
+from decouple import config
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-client = razorpay.Client(auth=("rzp_test_xFSWIL714S4Ayy", "qpHgGRQLtFruIlax45rLXP0M"))
+client = razorpay.Client(auth=(config("rzp"), config("qph")))
 
 
 key ={'0':'paypal','1':'cash_on_delivery', '3': 'razorpay'}
@@ -99,12 +100,12 @@ def signup(request):
 
             try:
                 print("1234 ")
-                account_sid = os.environ['TWILIO_ACCOUNT_SID'] = 'AC0cd89e6a2967043b31b326bf43c970e6'
-                auth_token = os.environ['TWILIO_AUTH_TOKEN'] = 'a272df0f0165a7911100ea7d372940d0'
+                account_sid = os.environ['TWILIO_ACCOUNT_SID'] =config("TWILIO_ACCOUNT_SID")
+                auth_token = os.environ['TWILIO_AUTH_TOKEN'] =config("TWILIO_AUTH_TOKEN")
                 client = Client(account_sid, auth_token)
                 
                 verification = client.verify \
-                                .services('VAa2d5b75d4f3752b5f4cdb33425b40f65') \
+                                .services(config("services")) \
                                 .verifications \
                                 .create(to="+91"+num, channel='sms')
                 form.save()     
@@ -159,21 +160,21 @@ def regotp(request):
 
     print(num, '--------------------------')
 
-    account_sid = os.environ['TWILIO_ACCOUNT_SID'] = 'AC0cd89e6a2967043b31b326bf43c970e6'
-    auth_token = os.environ['TWILIO_AUTH_TOKEN'] = 'a272df0f0165a7911100ea7d372940d0'
+    account_sid = os.environ['TWILIO_ACCOUNT_SID'] = config("TWILIO_ACCOUNT_SID")
+    auth_token = os.environ['TWILIO_AUTH_TOKEN'] =config("TWILIO_AUTH_TOKEN")
     print("123456789")
     client = Client(account_sid, auth_token)
 
     verification_check = client.verify \
-                            .services('VAa2d5b75d4f3752b5f4cdb33425b40f65') \
+                            .services(config("services")) \
                             .verification_checks \
                             .create(to="+91"+num, code=otp)
 
-    print("asdfghjktryuiocvbnmfghjkasdfghjklwertyuiopxcvhjnm")
+    
     print( verification_check.status  ) 
 
     if verification_check.status == "approved":
-        print("2134567890-54432134567890987654432314567")
+        
 
         
         
@@ -206,11 +207,11 @@ def phone(request):
             try:
                 print("1234 ")
                 print(num)
-                account_sid = os.environ['TWILIO_ACCOUNT_SID'] = 'AC0cd89e6a2967043b31b326bf43c970e6'
-                auth_token = os.environ['TWILIO_AUTH_TOKEN'] = 'a272df0f0165a7911100ea7d372940d0'
+                account_sid = os.environ['TWILIO_ACCOUNT_SID'] = config("TWILIO_ACCOUNT_SID")
+                auth_token = os.environ['TWILIO_AUTH_TOKEN'] = config("TWILIO_AUTH_TOKEN")
                 client = Client(account_sid, auth_token)
                 verification = client.verify \
-                                .services('VAa2d5b75d4f3752b5f4cdb33425b40f65') \
+                                .services(config("services")) \
                                 .verifications \
                                 .create(to="+91"+num, channel='sms')
 
@@ -229,12 +230,12 @@ def otp(request):
 
     print(num, '///////////////////////////')
 
-    account_sid = os.environ['TWILIO_ACCOUNT_SID'] = 'AC0cd89e6a2967043b31b326bf43c970e6'
-    auth_token = os.environ['TWILIO_AUTH_TOKEN'] = 'a272df0f0165a7911100ea7d372940d0'
+    account_sid = os.environ['TWILIO_ACCOUNT_SID'] = config("TWILIO_ACCOUNT_SID")
+    auth_token = os.environ['TWILIO_AUTH_TOKEN'] = config("TWILIO_AUTH_TOKEN")
     client = Client(account_sid, auth_token)
 
     verification_check = client.verify \
-                            .services('VAa2d5b75d4f3752b5f4cdb33425b40f65') \
+                            .services(config("services")) \
                             .verification_checks \
                             .create(to="+91"+num, code=otp)
 
@@ -262,11 +263,11 @@ def resendotp(request):
         var =request.GET['num']
         print(var)
     
-        account_sid = os.environ['TWILIO_ACCOUNT_SID'] = 'AC0cd89e6a2967043b31b326bf43c970e6'
-        auth_token = os.environ['TWILIO_AUTH_TOKEN'] = 'a272df0f0165a7911100ea7d372940d0'
+        account_sid = os.environ['TWILIO_ACCOUNT_SID'] = config("TWILIO_ACCOUNT_SID")
+        auth_token = os.environ['TWILIO_AUTH_TOKEN'] = config("TWILIO_AUTH_TOKEN")
         client = Client(account_sid, auth_token)
         verification = client.verify \
-                        .services('VAa2d5b75d4f3752b5f4cdb33425b40f65') \
+                        .services(config("services")) \
                         .verifications \
                         .create(to="+91"+var, channel='sms')
     except:

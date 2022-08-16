@@ -81,12 +81,12 @@ WSGI_APPLICATION = 'watch.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ogles',  
-        'USER': 'root',  
-        'PASSWORD': 'Abhijith@123',  
-        'HOST': 'localhost',  
-        'PORT': '3306', 
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ddba30kmm4sumb',  
+        'USER': 'vixmiwvewpextk',  
+        'PASSWORD': '9d0eb1c257fa4ff96299f35a4f3534094103dd2bbfef267cdb8c26759515c228',  
+        'HOST': 'ec2-54-85-56-210.compute-1.amazonaws.com',  
+        'PORT': '5432', 
     }
 }
 
@@ -129,7 +129,7 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT =os.path.join(BASE_DIR/'static')
 STATICFILE_DIRS = [
-                    os.path.join(BASE_DIR,'static')
+                    os.path.join(BASE_DIR,'staticfiles')
                     ]   
 django_heroku.settings(locals())                     
 

@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from json import load
 from pathlib import Path,os
-
+import django_heroku
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -125,10 +127,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT =BASE_DIR/'static'
+STATIC_ROOT =os.path.join(BASE_DIR/'static')
 STATICFILE_DIRS = [
                     os.path.join(BASE_DIR,'static')
-                    ]    
+                    ]   
+django_heroku.settings(locals())                     
 
 # if DEBUG:
 #   STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
